@@ -29,7 +29,9 @@ For Administrators (SPSO)
 Clone the Repository:
 
 
-bash
+bash:
+
+
 git clone [https://github.com/HCMUT-SSPS/hcmut_ssps.git](https://github.com/PhiuTheWind/CNPM_Project.git)
 (Navigate to the Project Directory)
 
