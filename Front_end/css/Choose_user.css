@@ -50,7 +50,7 @@ header {
 /* Avatar */
 .avatar {
     position: absolute;
-    top: -40px;
+    top: -38px;
     left: 50%;
     transform: translateX(-50%);
     width: 70px;
@@ -79,56 +79,53 @@ header {
     overflow: hidden;
 }
 
-.banner img {
+/* Styling for the main banner image */
+.banner-image {
     width: 100%;
     height: auto;
     display: block;
     transition: filter 0.3s ease;
 }
 
-.banner:hover img {
+/* Darken the banner image on hover */
+.banner:hover .banner-image {
     filter: brightness(0.4);
 }
 
-/* Nút Login 1 */
-.student-button {
+/* Styling for the SPSO overlay image */
+.student-image {
     position: absolute;
-    top: 50%;
-    left: 35%; /* Điều chỉnh vị trí nút đầu tiên */
+    top: 50%; /* Center vertically */
+    left: 35%; /* Adjust positioning if needed */
     transform: translate(-50%, -50%);
-    padding: 20px 50px;
-    font-size: 1.2rem;
-    background-color: #00aaff;
-    color: white;
-    border: none;
-    border-radius: 30px;
+    width: 300px; /* Adjusted size for visibility */
     cursor: pointer;
-    opacity: 0; /* Ẩn nút ban đầu */
-    transition: opacity 0.3s ease;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+    
 }
 
-/* Nút Login 2 */
-.spso-button {
+/* Styling for the SPSO overlay image */
+.spso-image {
     position: absolute;
-    top: 50%;
-    left: 65%; /* Điều chỉnh vị trí nút thứ hai */
+    top: 50%; /* Center vertically */
+    left: 65%; /* Adjust positioning if needed */
     transform: translate(-50%, -50%);
-    padding: 20px 50px;
-    font-size: 1.2rem;
-    background-color: #ffaa00;
-    color: white;
-    border: none;
-    border-radius: 30px;
+    width: 300px; /* Adjusted size for visibility */
     cursor: pointer;
-    opacity: 0; /* Ẩn nút ban đầu */
-    transition: opacity 0.3s ease;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+    
 }
 
-/* Hiển thị cả hai nút khi hover vào banner */
-.banner:hover .student-button,
-.banner:hover .spso-button {
-    opacity: 1; /* Hiển thị các nút */
-}
+/* Make SPSO image appear when hovering over the banner */
+.banner:hover .student-image,
+.banner:hover .spso-image
+{
+    opacity: 1;
+} 
+
+
 
 
 

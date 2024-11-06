@@ -50,7 +50,7 @@ header {
 /* Avatar */
 .avatar {
     position: absolute;
-    top: -40px;
+    top: -38px;
     left: 50%;
     transform: translateX(-50%);
     width: 70px;
@@ -79,40 +79,37 @@ header {
     overflow: hidden;
 }
 
-.banner img {
+/* Styling for the main banner image */
+.banner-image {
     width: 100%;
     height: auto;
     display: block;
     transition: filter 0.3s ease;
 }
 
-.banner:hover img {
+/* Darken the banner image on hover */
+.banner:hover .banner-image {
     filter: brightness(0.4);
 }
 
-
-
-/* Nút Login */
-.login-button {
+/* Styling for the login image (button) */
+.login-image {
     position: absolute;
-    top: 60%; /* Điều chỉnh vị trí của nút */
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 30px 60px; /* Tăng kích thước padding để làm nút bự hơn */
-    font-size: 5rem; /* Tăng kích thước font để làm nút bự hơn */
-    background-color: #00aaff;
-    color: white;
-    border: none;
-    border-radius: 30px;
+    width: 400px; /* Adjusted size */
     cursor: pointer;
-    opacity: 0; /* Ẩn nút ban đầu */
-    transition: opacity 0.3s ease;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
 }
 
-/* Hiển thị nút khi hover vào banner */
-.banner:hover .login-button {
-    opacity: 1; /* Hiển thị ảnh và nút */
+/* Make the login image appear when hovering over the banner */
+.banner:hover .login-image {
+    opacity: 1;
 }
+
+
 
 
 /* Footer */
