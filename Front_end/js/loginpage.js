@@ -23,6 +23,6 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         window.location.href = "spso_homepage.html"; // Thay đổi URL nếu cần
     }
     else {
-        alert("Vui lòng nhập đầy đủ thông tin!");
+        alert("Vui lòng nhập đầy đủ thông tin chính xác!");
     }
 });
