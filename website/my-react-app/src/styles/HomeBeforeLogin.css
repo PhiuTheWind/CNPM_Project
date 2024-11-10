@@ -1,0 +1,111 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung */
+}
+
+/* Container để giới hạn chiều rộng */
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    margin: 0 auto;
+}
+
+/* Header */
+header {
+    height: 160px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+}
+
+/* Logo */
+.header-logo img {
+    height: 350px;
+    width: auto;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Container chứa avatar và nút */
+.avatar-container {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Avatar */
+.avatar {
+    position: absolute;
+    top: -38px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    z-index: 1;
+}
+
+/* Nút Welcome */
+.welcome-button {
+    padding: 8px 30px;
+    font-size: 1rem;
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    /* cursor: pointer; */
+    position: relative;
+    z-index: 0;
+    margin-top: 30px;
+}
+
+/* Banner */
+.banner {
+    position: relative;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+}
+
+/* Styling for the main banner image */
+.banner-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: filter 0.3s ease;
+}
+
+/* Darken the banner image on hover */
+.banner:hover .banner-image {
+    filter: brightness(0.4);
+}
+
+/* Styling for the login image (button) */
+.login-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px; /* Adjusted size */
+    cursor: pointer;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+}
+
+/* Make the login image appear when hovering over the banner */
+.banner:hover .login-image {
+    opacity: 1;
+}
+

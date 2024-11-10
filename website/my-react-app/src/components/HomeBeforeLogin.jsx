@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/ChooseUser.css';
+import '../styles/HomeBeforeLogin.css';
 import spss from '../assets/PRINTING SERVICE.png';
 import ava from '../assets/avatar.png';
 import banner from '../assets/banner.png';
-import userstu from '../assets/user_student.png';
-import userspso from '../assets/user_spso.png';
+import login from '../assets/login.png';
 import Footer from './Footer';
-
-function ChooseUser(){
-    return (
+function HomeBeforeLogin(){
+    return(
         <div className="container">
             <header>
                 <div className="header-logo">
@@ -25,18 +23,16 @@ function ChooseUser(){
 
             <section className="banner">
                 <img src={banner} alt="Banner" className="banner-image" />
-                <Link to='/login'>
-                    <img src={userstu} alt="Student Button" className="student-image" />
+                <Link to='/user'>
+                    <img src={login} alt="Login button" className="login-image"></img>                
                 </Link>
-                <Link to='/login'>
-                    <img src={userspso} alt="SPSO Button" className="spso-image" />
-                </Link>
-                
             </section>
 
             <Footer/>
+            
         </div>
+
     );
 };
 
-export default ChooseUser;
+export default HomeBeforeLogin;
