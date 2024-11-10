@@ -4,7 +4,7 @@ import spss from '../assets/PRINTING SERVICE.png';
 import cricle from '../assets/Group 169.png';
 import banner2 from '../assets/banner2.png'
 import Footer from './Footer';
-import '../styles/Loginpage.css'
+import styles from '../styles/Loginpage.module.css'
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -23,25 +23,25 @@ function LoginPage() {
   };
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <header>
-        <div className="header-logo">
+        <div className={styles.header_logo}>
             <img src={spss} alt="BK Student Smart Printing Service" />
         </div>
-        <div className="header-right">
-            <div className="frame-container">
-                <img src={cricle} className="frame" />
+        <div className={styles.header_right}>
+            <div className={styles.frame_container}>
+                <img src={cricle} className={styles.frame} />
             </div>
         </div>
       </header>
 
-      <section className="banner">
-        <img src={banner2} alt="Banner" className="banner-image" />
+      <section className={styles.banner}>
+        <img src={banner2} alt="Banner" className={styles.banner_image} />
         
         {/* Login Form */}
-        <form id="loginForm" className="login-form" onSubmit={handleSubmit}>
-          <label className="Hello">Xin chào!</label>
-          <div className="input-group">
+        <form id="loginForm" className={styles.login_form} onSubmit={handleSubmit}>
+          <label className={styles.Hello}>Xin chào!</label>
+          <div className={styles.input_group}>
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -52,7 +52,7 @@ function LoginPage() {
               required
             />
           </div>
-          <div className="input-group">
+          <div className={styles.input_group}>
             <label htmlFor="password">Password</label>
             <input
               type="password"

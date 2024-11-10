@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}   
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung */
+}
+
+/* Container để giới hạn chiều rộng */
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    margin: 0 auto;
+}
+
+/* Header */
+header {
+    height: 140px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+}
+
+/* Logo */
+.header_logo img {
+    height: 350px;
+    width: auto;
+}
+
+.header_right {
+    display: flex;
+    align-items: center;
+}
+
+/* Container chứa avatar và nút */
+.frame_container {
+    position: relative;
+    top: 0;
+    right: 20px; /* Di chuyển ảnh về bên trái một chút */
+    display: inline-block;
+    text-align: center;
+    transform: rotate(0deg); /* Nghiêng ảnh về bên phải */
+}
+
+/* Avatar */
+.frame {
+    position: absolute;
+    top: -220px;
+    right: -40px; /* Di chuyển ảnh về bên trái một chút */
+    width: 300px;
+    z-index: 1;
+}
+
+/* Banner */
+.banner {
+    height: 460px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 50px;
+    background-color: #ffffff; 
+}
+
+/* Styling for the main banner image */
+.banner_image {
+    top: 50%;
+    right: 70%; /* Dịch ảnh về bên phải một chút */
+    width: 700px;
+    height: 400px;
+    border: 2px solid #EBF0F7; /* Giảm độ dày của viền để tinh tế hơn */
+    border-radius: 57px; /* Bo tròn nhẹ các góc để mềm mại hơn */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15); /* Tăng shadow để ảnh nổi bật hơn */
+}
+
+ 
+/* LOGIN DEMO */
+.Hello {
+    font-family: 'Pacifico', sans-serif; /* Thêm sans-serif làm font dự phòng */
+    font-size: 3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+.login_form {
+    width: 600px;
+    height: 400px;
+    padding: 60px; /* Giảm padding để khối gọn gàng hơn */
+    border: 3px solid #EBF0F7; /* Đảm bảo viền rõ ràng */
+    border-radius: 90px;
+    text-align: center;
+    position: relative;
+    right: 20px;
+    background-color: #EBF0F7; /* Đặt nền trắng để viền dễ nhìn hơn */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Thêm shadow để làm nổi bật */
+    z-index: 2; /* Đưa form lên trên */
+}
+
+
+.input_group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input_group label {
+    display: block;
+}
+
+.input_group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: large;
+}
+
+button:hover {
+    background-color: #0056b3;
+}

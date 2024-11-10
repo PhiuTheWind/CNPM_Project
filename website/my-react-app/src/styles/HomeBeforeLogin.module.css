@@ -30,18 +30,18 @@ header {
 }
 
 /* Logo */
-.header-logo img {
+.header_logo img {
     height: 350px;
     width: auto;
 }
 
-.header-right {
+.header_right {
     display: flex;
     align-items: center;
 }
 
 /* Container chứa avatar và nút */
-.avatar-container {
+.avatar_container {
     position: relative;
     display: inline-block;
     text-align: center;
@@ -58,7 +58,7 @@ header {
 }
 
 /* Nút Welcome */
-.welcome-button {
+.welcome_button {
     padding: 8px 30px;
     font-size: 1rem;
     background-color: #00aaff;
@@ -80,7 +80,7 @@ header {
 }
 
 /* Styling for the main banner image */
-.banner-image {
+.banner_image {
     width: 100%;
     height: auto;
     display: block;
@@ -88,12 +88,12 @@ header {
 }
 
 /* Darken the banner image on hover */
-.banner:hover .banner-image {
+.banner:hover .banner_image {
     filter: brightness(0.4);
 }
 
 /* Styling for the login image (button) */
-.login-image {
+.login_image {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -105,7 +105,7 @@ header {
 }
 
 /* Make the login image appear when hovering over the banner */
-.banner:hover .login-image {
+.banner:hover .login_image {
     opacity: 1;
 }
 
