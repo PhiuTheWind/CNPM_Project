@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import spss from '../assets/PRINTING SERVICE.png';
-import cricle from '../assets/Group 169.png';
 import banner2 from '../assets/banner2.png'
 import Footer from './Footer';
 import styles from '../styles/Loginpage.module.css'
+import Header from './header';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -24,16 +23,7 @@ function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <header>
-        <div className={styles.header_logo}>
-            <img src={spss} alt="BK Student Smart Printing Service" />
-        </div>
-        <div className={styles.header_right}>
-            <div className={styles.frame_container}>
-                <img src={cricle} className={styles.frame} />
-            </div>
-        </div>
-      </header>
+      <Header/>
 
       <section className={styles.banner}>
         <img src={banner2} alt="Banner" className={styles.banner_image} />

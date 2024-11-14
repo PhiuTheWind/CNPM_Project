@@ -1,0 +1,51 @@
+/* Header */
+header {
+    height: 160px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f8f8;
+}
+
+/* Logo */
+.header_logo img {
+    height: 350px;
+    width: auto;
+}
+
+.header_right {
+    display: flex;
+    align-items: center;
+}
+
+/* Container chứa avatar và nút */
+.avatar_container {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Avatar */
+.avatar {
+    position: absolute;
+    top: -38px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    z-index: 1;
+}
+
+/* Nút Welcome */
+.welcome_button {
+    padding: 8px 30px;
+    font-size: 1rem;
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    /* cursor: pointer; */
+    position: relative;
+    z-index: 0;
+    margin-top: 30px;
+}

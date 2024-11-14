@@ -7,21 +7,12 @@ import banner from '../assets/banner.png';
 import userstu from '../assets/user_student.png';
 import userspso from '../assets/user_spso.png';
 import Footer from './Footer';
+import Header from './header';
 
 function ChooseUser(){
     return (
         <div className={styles.container}>
-            <header>
-                <div className={styles.header_logo}>
-                    <img src={spss} alt="BK Student Smart Printing Service" />
-                </div>
-                <div className={styles.header_right}>
-                    <div className={styles.avatar_container}>
-                        <img src={ava} className={styles.avatar} alt="Avatar" />
-                        <p className={styles.welcome_button}>XIN CHÀO</p>
-                    </div>
-                </div>
-            </header>
+            <Header/>
 
             <section className={styles.banner}>
                 <img src={banner} alt="Banner" className={styles.banner_image} />
