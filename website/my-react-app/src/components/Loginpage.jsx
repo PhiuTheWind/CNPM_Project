@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import banner2 from '../assets/banner2.png'
 import Footer from './Footer';
 import styles from '../styles/Loginpage.module.css'
-import Header from './header';
+import Header from './Header';
 
 function LoginPage() {
   const navigate = useNavigate();

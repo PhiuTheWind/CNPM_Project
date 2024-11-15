@@ -7,7 +7,7 @@ import banner from '../assets/banner.png';
 import userstu from '../assets/user_student.png';
 import userspso from '../assets/user_spso.png';
 import Footer from './Footer';
-import Header from './header';
+import Header from './Header';
 
 function ChooseUser(){
     return (

@@ -4,22 +4,24 @@ import styles from '../styles/HomeBeforeLogin.module.css';
 import banner from '../assets/banner.png';
 import login from '../assets/login.png';
 import Footer from './Footer';
-import Header from './header';
+import Header from './Header';
 
 function HomeBeforeLogin(){
     return(
         <div className={styles.container}>
             <Header/>
             <section className={styles.banner}>
-                <img src={banner} alt="Banner" className={styles.banner_image} />
-                <Link to='/user'>
-                    <img src={login} alt="Login button" className={styles.login_image}></img>                
-                </Link>
+            <img src={banner} alt="Banner" className={styles.banner_image} />
+            <Link to='/user'>
+                <img src={login} alt="Login button" className={styles.login_image}></img>                
+            </Link>
             </section>
             <Footer/>
-            
         </div>
-
+        // <div className={styles.container}>
+        //     <Header/>
+        //     <Footer/>
+        // </div>
     );
 };
 
