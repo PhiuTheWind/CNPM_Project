@@ -76,13 +76,14 @@ body {
 .boxContainer {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 50px; /* Tăng khoảng cách giữa các box */
     padding: 20px;
     margin-top: 20px;
-  }
+}
+
   
   .box {
-    background-color: #a0a0a0; /* Màu nền giống với hình */
+    background-color: #6e6e6e; /* Màu nền giống với hình */
     padding: 20px;
     border-radius: 15px;
     text-align: center;

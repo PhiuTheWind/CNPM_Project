@@ -12,7 +12,8 @@ function StudentHomepage() {
   return (
 
     <div className={styles.container}>
-        <Header/>
+        <Header text='STUDENT NAME' showLogout={true} />
+
         <section className={styles.banner}>
             <img src={banner} alt="Banner" className={styles.banner_image} />
             <Link to='/login'>
