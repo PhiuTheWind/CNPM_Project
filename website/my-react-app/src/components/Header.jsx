@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../styles/Header.module.css'
 import spss from '../assets/PRINTING SERVICE.png';
 import ava from '../assets/avatar.png';
-function header(){
+function Header(){
 
     return (
         <header className={styles.header}>
@@ -20,4 +20,4 @@ function header(){
 
 
 };
-export default header;
+export default Header;

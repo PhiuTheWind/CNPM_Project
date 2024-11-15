@@ -17,6 +17,7 @@ body {
 /* Container để giới hạn chiều rộng */
 .container {
     max-width: 1440px;
+    height: 100vh; /* Chiều cao bằng 100% viewport height */
     width: 1440px;
     margin: 0 auto;
 }
@@ -63,7 +64,7 @@ header {
 
 /* Banner */
 .banner {
-    height: 460px;
+    height: 595px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -119,6 +120,7 @@ header {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
+    border: 2px solid #bababa; /* Thêm viền đậm cho input box */
 }
 
 button {

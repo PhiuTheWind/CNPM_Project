@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../styles/ChooseUser.module.css';
-import spss from '../assets/PRINTING SERVICE.png';
-import ava from '../assets/avatar.png';
 import banner from '../assets/banner.png';
 import userstu from '../assets/user_student.png';
 import userspso from '../assets/user_spso.png';

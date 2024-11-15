@@ -16,6 +16,7 @@ body {
 .container {
     max-width: 1440px;
     width: 1440px;
+    height: 100vh; /* Chiều cao bằng 100% viewport height */
     margin: 0 auto;
 }
 
@@ -82,7 +83,7 @@ header {
 /* Styling for the main banner image */
 .banner_image {
     width: 100%;
-    height: auto;
+    height: 590px;
     display: block;
     transition: filter 0.3s ease;
 }

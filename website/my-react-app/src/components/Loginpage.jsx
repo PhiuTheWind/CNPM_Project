@@ -14,7 +14,7 @@ function LoginPage() {
     event.preventDefault();
     if (username === 'student@hcmut.edu.vn' && password === 'password') {
       navigate('/student_homepage');
-    } else if (username === 'spso@hcmut.sps.vn' && password === 'password') {
+    } else if (username === 'spso@hcmut.spso.vn' && password === 'password') {
       navigate('/spso_homepage');
     } else {
       alert('Vui lòng nhập đầy đủ thông tin chính xác!');
