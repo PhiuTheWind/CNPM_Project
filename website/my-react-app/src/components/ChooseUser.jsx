@@ -10,7 +10,7 @@ import Header from './Header';
 function ChooseUser(){
     return (
         <div className={styles.container}>
-            <Header/>
+            <Header text='XIN CHÀO'/>
 
             <section className={styles.banner}>
                 <img src={banner} alt="Banner" className={styles.banner_image} />

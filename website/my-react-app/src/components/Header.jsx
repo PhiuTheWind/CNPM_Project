@@ -2,7 +2,9 @@ import React from 'react';
 import styles from '../styles/Header.module.css'
 import spss from '../assets/PRINTING SERVICE.png';
 import ava from '../assets/avatar.png';
-function Header(){
+import { IoIosLogOut } from "react-icons/io";
+
+function header({ text, showLogout }){
 
     return (
         <header className={styles.header}>
@@ -12,8 +14,13 @@ function Header(){
             <div className={styles.header_right}>
                 <div className={styles.avatar_container}>
                     <img src={ava} className={styles.avatar} alt="Avatar" />
-                    <p className={styles.welcome_button}>XIN CHÀO</p>
+                    <p className={styles.welcome_button}>{text}</p>
                 </div>
+                {showLogout && (
+                <div className={styles.icon}>
+                    <IoIosLogOut size={50} color="#555" />
+                </div>
+                )}
             </div>
         </header>
     );

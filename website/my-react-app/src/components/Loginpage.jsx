@@ -4,6 +4,7 @@ import banner2 from '../assets/banner2.png'
 import Footer from './Footer';
 import styles from '../styles/Loginpage.module.css'
 import Header from './Header';
+import { FaUser, FaLock } from "react-icons/fa";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <Header/>
+      <Header text='XIN CHÀO'/>
 
       <section className={styles.banner}>
         <img src={banner2} alt="Banner" className={styles.banner_image} />
@@ -32,26 +33,24 @@ function LoginPage() {
         <form id="loginForm" className={styles.login_form} onSubmit={handleSubmit}>
           <label className={styles.Hello}>Xin chào!</label>
           <div className={styles.input_group}>
-            <label htmlFor="username">Username</label>
             <input
               type="text"
-              id="username"
-              name="username"
+              placeholder='Tên đăng nhập'
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
             />
+            <FaUser className={styles.icon}/>
           </div>
           <div className={styles.input_group}>
-            <label htmlFor="password">Password</label>
             <input
               type="password"
-              id="password"
-              name="password"
+              placeholder='Mật khẩu'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <FaLock className={styles.icon}/>
           </div>
           <button type="submit">Đăng nhập</button>
         </form>
