@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../styles/ChooseUser.module.css';
-import spss from '../assets/PRINTING SERVICE.png';
-import ava from '../assets/avatar.png';
 import banner from '../assets/banner.png';
 import userstu from '../assets/user_student.png';
 import userspso from '../assets/user_spso.png';
@@ -12,7 +10,7 @@ import Header from './Header';
 function ChooseUser(){
     return (
         <div className={styles.container}>
-            <Header/>
+            <Header text='XIN CHÀO'/>
 
             <section className={styles.banner}>
                 <img src={banner} alt="Banner" className={styles.banner_image} />

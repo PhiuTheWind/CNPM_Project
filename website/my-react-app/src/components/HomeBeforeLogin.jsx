@@ -9,7 +9,7 @@ import Header from './Header';
 function HomeBeforeLogin(){
     return(
         <div className={styles.container}>
-            <Header/>
+            <Header text='XIN CHÀO'/>
             <section className={styles.banner}>
             <img src={banner} alt="Banner" className={styles.banner_image} />
             <Link to='/user'>

@@ -1,0 +1,81 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center; /* Center the content */
+}
+
+/* Container to limit the width */
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    margin: 0 auto;
+}
+
+/* Banner */
+.banner {
+    position: relative;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+}
+
+/* Styling for the main banner image */
+.banner_image {
+    width: 100%;
+    height: auto;
+    display: block;
+    z-index: 1;
+}
+
+/* White rectangle with a blurred white background */
+.whiteRectangle {
+    position: absolute; /* Allow placement on top of the banner image */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust position to the exact center */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8); /* White with 50% transparency */
+    padding: 50px;
+    border-radius: 20px;
+    z-index: 2;
+    text-align: center;
+    width: 70%; /* Make the rectangle responsive */
+    max-width: 600px; /* Optional: Set a max width for large screens */
+    height: auto; /* Automatically adjust height based on content */
+    gap: 30px;
+}
+
+.button {
+    padding: 20px 20px;
+    border: none;
+    background-color: #96bde8;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    cursor: pointer;
+    width: 350px;
+    position: relative; 
+    display: flex;
+    align-items: center; /* Vertically center text and icon */
+    justify-content: center; /* Center text horizontally */
+}
+
+.button:hover {
+    color: #ffffff; /* Darken the button background on hover */
+}
+
+.noti {
+    position: absolute;
+    right: 20px; 
+    scale: 1.2;
+}

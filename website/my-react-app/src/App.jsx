@@ -6,6 +6,7 @@ import HomeBeforeLogin from './components/HomeBeforeLogin.jsx';
 import LoginPage from './components/Loginpage.jsx';
 import StudentHomepage from './components/StudentHomepage.jsx';
 import SpsoHomepage from './components/SpsoHomepage.jsx';
+import ManagePrinter from './components/ManagePrinter.jsx';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/student_homepage" element={<StudentHomepage />} />
         <Route path="/spso_homepage" element={<SpsoHomepage />} />
+        <Route path="/spso_homepage/manage_printer" element={<ManagePrinter />} />
       </Routes>
     </Router>
   );
