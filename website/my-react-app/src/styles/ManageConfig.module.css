@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Dongle", sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung */
+}
+
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.config{
+    position: relative;
+    display: block;
+    height: 750px;
+    background-color: rgb(255, 255, 255);
+    top: 0;
+    background-image: url('../assets/config.png');
+    background-size: 30%;
+    background-repeat: repeat-x;
+    background-position: bottom -20% right -10%;
+}
+
+h1{
+    font-family: "Dongle", sans-serif;
+    font-size: 60px;
+    margin-bottom: 5px;
+}
+
+.login_form {
+    width: 600px;
+    height: flex;
+    padding: 0px 20px 20px 20px; /* Giảm padding để khối gọn gàng hơn */
+    text-align: center;
+    position: relative;
+    right: 20px;
+    z-index: 1; /* Đưa form lên trên */
+    border: thick solid #68C7FF;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust position to the exact center */
+    background-color: white;
+}
+
+.input_group, .checkfiled {
+    margin-bottom: 40px;
+    text-align: left;
+    height: flex;
+    background-color: #D3EFFF;
+    padding: 10px 20px 20px 20px;
+    border-radius: 10px;
+}
+
+.input_group label, .checkfiled label{
+    display: block;
+    /* margin-bottom: 5px; */
+    font-family: 'Dongle', sans-serif;
+    font-size: xx-large;
+    font-weight: 500;
+}
+
+.input_group .datepick{
+    width: 193%;
+    height: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: white; /* Thêm viền đậm */
+    border-radius: 15px;
+    padding: 20px 20px 20px 20px;
+    font-family: 'Dongle', sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+}
+.input_group input{
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: white; /* Thêm viền đậm */
+    border-radius: 15px;
+    padding: 20px 20px 20px 20px;
+    font-family: 'Dongle', sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.filetype{
+    display: flex;
+    gap: 80px;
+    font-size: 18px;
+}
+
+.filetype .check{
+    margin-left: 5px;
+    scale: 1.5;
+}
+
+button{
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+}

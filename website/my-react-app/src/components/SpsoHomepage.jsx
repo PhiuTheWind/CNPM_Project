@@ -21,8 +21,12 @@ function SpsoHomepage() {
             Quản lý máy in
             <FaBell className={styles.noti}/>
           </button>
-          <button className={styles.button}>Quản lý cấu hình hệ thống</button>
-          <button className={styles.button}>Báo cáo in ấn</button>
+          <button className={styles.button} onClick={() => navigate('/spso_homepage/manage_cofig')}>
+            Quản lý cấu hình hệ thống
+          </button>
+          <button className={styles.button} onClick={() => navigate('/spso_homepage/spsoreport')}>
+            Báo cáo in ấn
+          </button>
         </div>
       </section>
 

@@ -1,12 +1,12 @@
 import React from 'react';
 
-function ManagePrinter() {
+function Report4SPSO() {
   return (
     <div>
-      <h1>Welcome to Manage Printer</h1>
+      <h1>Welcome to Anual Report</h1>
       <p>This is the page for spso.</p>
     </div>
   );
 }
 
-export default ManagePrinter;
+export default Report4SPSO;
