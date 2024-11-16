@@ -31,17 +31,6 @@ header {
     background-color: #ffffff;
 }
 
-/* Logo */
-.header_logo img {
-    height: 350px;
-    width: auto;
-}
-
-.header_right {
-    display: flex;
-    align-items: center;
-}
-
 /* Container chứa avatar và nút */
 .frame_container {
     position: relative;
