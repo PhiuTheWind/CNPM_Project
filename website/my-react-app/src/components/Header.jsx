@@ -4,7 +4,7 @@ import spss from '../assets/PRINTING SERVICE.png';
 import ava from '../assets/avatar.png';
 import { IoIosLogOut } from "react-icons/io";
 
-function header({ text, showLogout }){
+function Header({ text, showLogout }){
 
     return (
         <header className={styles.header}>
@@ -27,4 +27,4 @@ function header({ text, showLogout }){
 
 
 };
-export default header;
+export default Header;

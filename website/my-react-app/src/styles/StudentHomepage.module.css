@@ -19,58 +19,6 @@ body {
     margin: 0 auto;
 }
 
-/* Header */
-header {
-    height: 160px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #f8f8f8;
-}
-
-/* Logo */
-.header_logo img {
-    height: 350px;
-    width: auto;
-}
-
-.header_right {
-    display: flex;
-    align-items: center;
-}
-
-/* Container chứa avatar và nút */
-.avatar_container {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-}
-
-/* Avatar */
-.avatar {
-    position: absolute;
-    top: -38px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70px;
-    z-index: 1;
-}
-
-/* Nút Welcome */
-.welcome_button {
-    padding: 8px 30px;
-    font-size: 1rem;
-    background-color: #00aaff;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    /* cursor: pointer; */
-    position: relative;
-    z-index: 0;
-    margin-top: 30px;
-}
-
 /* Banner */
 .banner {
     position: relative;
@@ -82,7 +30,7 @@ header {
 /* Styling for the main banner image */
 .banner_image {
     width: 100%;
-    height: 595px;
+    height: 590px;
     display: block;
     transition: filter 0.3s ease;
 }
@@ -93,7 +41,7 @@ header {
 }
 
 /* Styling for the SPSO overlay image */
-.student_image {
+.print_image {
     position: absolute;
     top: 50%; /* Center vertically */
     left: 35%; /* Adjust positioning if needed */
@@ -106,7 +54,7 @@ header {
 }
 
 /* Styling for the SPSO overlay image */
-.spso_image {
+.Viewlog_image {
     position: absolute;
     top: 50%; /* Center vertically */
     left: 65%; /* Adjust positioning if needed */
@@ -119,8 +67,45 @@ header {
 }
 
 /* Make SPSO image appear when hovering over the banner */
-.banner:hover .student_image,
-.banner:hover .spso_image
+.banner:hover .print_image,
+.banner:hover .Viewlog_image
 {
     opacity: 1;
 } 
+
+.boxContainer {
+    display: flex;
+    justify-content: center;
+    gap: 50px; /* Tăng khoảng cách giữa các box */
+    padding: 20px;
+    margin-top: 20px;
+}
+
+  
+  .box {
+    background-color: #6e6e6e; /* Màu nền giống với hình */
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 250px;
+  }
+  
+  .box p {
+    color: white;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .viewButton {
+    background-color: #4aa3f0; /* Màu nút */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .viewButton:hover {
+    background-color: #379ad1; /* Màu khi hover */
+  }
+  
