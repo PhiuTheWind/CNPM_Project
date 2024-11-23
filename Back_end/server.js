@@ -7,7 +7,7 @@ const port = 3000;
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:5173',
     credentials: true,
 };
 
@@ -20,8 +20,11 @@ app.use(cookieParser());
 app.get('/', (req, res) => {
     res.send('Connected!');
 })
+// app.post('/login/student', (req, res) => {
+//     res.send('Connected!');
+// })
 
-const apiRouter = require('./routes');
+const apiRouter = require('./routes/get_home_info');
 app.use('/api', apiRouter)
 
 

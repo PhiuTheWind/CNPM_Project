@@ -14,10 +14,10 @@ function ChooseUser(){
 
             <section className={styles.banner}>
                 <img src={banner} alt="Banner" className={styles.banner_image} />
-                <Link to='/login'>
+                <Link to='/login/student'>
                     <img src={userstu} alt="Student Button" className={styles.student_image} />
                 </Link>
-                <Link to='/login'>
+                <Link to='/login/spso'>
                     <img src={userspso} alt="SPSO Button" className={styles.spso_image} />
                 </Link>
                 

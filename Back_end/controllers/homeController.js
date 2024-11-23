@@ -7,20 +7,32 @@ const { getSPSOByUsername, setSPSOLastUsed } = require('../models/spso');
 
 const loginStudent = async (req, res, next) => {
     try {
-        const result = await getStudentByUsername(req.body.username);
-        
+        //const result = await getStudentByUsername(req.body.username);
+        const result = {
+            username: 'student',
+            password: 'password'
+        };
+
         if (!result) {
           return res.status(400).send('Sai mật khẩu hoặc tên đăng nhập');
         }
-        
-        bcrypt.compare(req.body.password, result.password, async (bErr, bResult) => {
-            if (bErr) {
-                return next(bErr);
-            }
+        console.log('Request body:', req.body);
+
+        if (req.body.requestedName !== result.username) {
+            return res.status(401).send('Sai mật khẩu hoặc tên đăng nhập');
+        }
+        if (req.body.password !== result.password) {
+            return res.status(401).send('Sai mật khẩu hoặc tên đăng nhập');
+        }
+
+        // bcrypt.compare(req.body.password, result.password, async (bErr, bResult) => {
+        //     if (bErr) {
+        //         return next(bErr);
+        //     }
           
-            if (!bResult) {
-                return res.status(401).send('Sai mật khẩu hoặc tên đăng nhập');
-            }
+        //     if (!bResult) {
+        //         return res.status(401).send('Sai mật khẩu hoặc tên đăng nhập');
+        //     }
           
             const token = jwt.sign(
             {
@@ -39,7 +51,7 @@ const loginStudent = async (req, res, next) => {
             res
                 .cookie('auth', token, { maxAge: 3600 * 1000, path: '/' }) // Cookies valid for 1 hour
                 .json({ message: 'Đăng nhập thành công!', userInfo: result, token: token });
-        });
+        //});
     }
     catch (err) {
         next(err);
@@ -48,8 +60,11 @@ const loginStudent = async (req, res, next) => {
 
 const loginSPSO = async (req, res, next) => {
     try {
-        const result = await getSPSOByUsername(req.body.username);
-        
+        //const result = await getSPSOByUsername(req.body.username);
+        const result = {
+            username: 'student',
+            password: 'password'
+        };
         if (!result) {
           return res.status(400).send('Sai mật khẩu hoặc tên đăng nhập');
         }
@@ -93,7 +108,6 @@ const getUserByUsername = async(req, res, next) => {
             return res.status(404).send("Không có dữ liệu người dùng!");
         }
         let result;
-
         if (isSPSO) {
             result = await getSPSOByUsername(username);
         }
