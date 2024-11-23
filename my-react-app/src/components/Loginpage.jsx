@@ -1,26 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import banner2 from '../assets/banner2.png'
 import Footer from './Footer';
 import styles from '../styles/Loginpage.module.css'
 import Header from './Header';
 import { FaUser, FaLock } from "react-icons/fa";
+import axios from 'axios';
 
-function LoginPage() {
+
+function LoginPage({ role }) {
+  const url = `http://localhost:3000/api/login/${role}`;
+ 
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (username === 'student@hcmut.edu.vn' && password === 'password') {
-      navigate('/student_homepage');
-    } else if (username === 'spso@hcmut.spso.vn' && password === 'password') {
-      navigate('/spso_homepage');
-    } else {
-      alert('Vui lòng nhập đầy đủ thông tin chính xác!');
+  const [errors, setErrors] = useState([]);
+  const [showErrors, setShowErrors] = useState(false);
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "username") {
+      setUsername(value);
+    } 
+    else if (name === "password") {
+      setPassword(value);
     }
   };
+
+  useEffect(() => {
+    let newErrors = [];
+    if (username === "") {
+      newErrors.push("Hãy nhập tên tài khoản của bạn.");
+    }
+    if (password === "") {
+      newErrors.push("Hãy nhập mật khẩu của bạn.");
+    }
+    
+    setErrors(newErrors);
+  }, [username, password]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (errors.length > 0) {
+      setShowErrors(true);
+      return;
+    }
+    try {
+      const validation = await axios.post(url, {
+        requestedName: username,
+        password: password
+      }, {
+        withCredentials: true
+      });
+      localStorage.setItem('userCredentials', JSON.stringify({ token: validation.data.token, isSPSO: role === 'spso' }));
+      localStorage.setItem('files', JSON.stringify([]));
+
+      if( role === 'spso'){
+        window.location.assign('/spso_homepage');
+      }
+      else{
+        window.location.assign('/student_homepage');
+      }
+    }
+      
+    catch (error) {
+      if (error.response) {
+        if (error.response.status >= 400 && error.response.status < 500) {
+          setErrors(['Các thông tin mà bạn cung cấp không đúng.']);
+        }
+        if (error.response.status === 500) {
+          setErrors([error.response.data]);
+        }
+      }
+      else {
+        setErrors(['Không kết nối được đến server!']);
+      }
+      setShowErrors(true);
+    }
+  }
 
   return (
     <div className={styles.container}>
@@ -36,8 +94,9 @@ function LoginPage() {
             <input
               type="text"
               placeholder='Tên đăng nhập'
+              name="username" 
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={handleChange}
               required
             />
             <FaUser className={styles.icon}/>
@@ -46,12 +105,15 @@ function LoginPage() {
             <input
               type="password"
               placeholder='Mật khẩu'
+              name="password" 
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
               required
             />
             <FaLock className={styles.icon}/>
           </div>
+
+
           <button type="submit">Đăng nhập</button>
         </form>
       </section>

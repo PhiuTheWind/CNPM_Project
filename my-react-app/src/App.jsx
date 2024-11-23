@@ -1,5 +1,8 @@
 // src/App.js
 import React from 'react';
+import { UserContext } from './context/UserContext.js'
+import { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ChooseUser from './components/ChooseUser.jsx';
 import HomeBeforeLogin from './components/HomeBeforeLogin.jsx';
@@ -11,19 +14,39 @@ import ManageConfig from './components/ManageConfig.jsx';
 import Report4SPSO from './components/Report4SPSO.jsx';
 
 function App() {
+  const [user, setUser] = useState({ token: null, isSPSO: false, listFiles: [] });
+  const [cookies] = useCookies();
+  
+  useEffect(() => {
+    const userCredentials = JSON.parse(localStorage.getItem('userCredentials'));
+    
+    if (userCredentials === null || userCredentials === undefined) {
+      setUser({ token: null, isSPSO: false, listFiles: [] });
+    }
+    else {
+      setUser({ ...user, ...userCredentials });
+    }
+  }, [cookies]);
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomeBeforeLogin />} />
-        <Route path="/user" element={<ChooseUser />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/student_homepage" element={<StudentHomepage />} />
-        <Route path="/spso_homepage" element={<SpsoHomepage />} />
-        <Route path="/spso_homepage/manage_printer" element={<ManagePrinter />} />
-        <Route path="/spso_homepage/manage_cofig" element={<ManageConfig />} />
-        <Route path="/spso_homepage/spsoreport" element={<Report4SPSO />} />
-      </Routes>
-    </Router>
+    <UserContext.Provider value={{ user, setUser }}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomeBeforeLogin />} />
+          <Route path="/user" element={<ChooseUser />} />
+          <Route path='login'>
+              <Route index element={<LoginPage />}/>
+              <Route path='student' element={<LoginPage role='student' />}/>
+              <Route path='spso' element={<LoginPage role='spso' />}/>
+          </Route>
+          <Route path="/student_homepage" element={<StudentHomepage />} />
+          <Route path="/spso_homepage" element={<SpsoHomepage />} />
+          <Route path="/spso_homepage/manage_printer" element={<ManagePrinter />} />
+          <Route path="/spso_homepage/manage_cofig" element={<ManageConfig />} />
+          <Route path="/spso_homepage/spsoreport" element={<Report4SPSO />} />
+        </Routes>
+      </Router>
+    </UserContext.Provider>
   );
 }
 
