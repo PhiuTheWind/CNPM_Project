@@ -1,12 +1,21 @@
 {
   "name": "cnpm_project",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "**Student Smart Printing Service (HCMUT_SSPS)**",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm i concurrently npm-run-all && npm-run-all install-deps start-services",
+    "install-deps": "npm-run-all --parallel install-backend install-frontend",
+    "install-backend": "cd Back_end && npm install",
+    "install-frontend": "cd my-react-app && npm install",
+    "start-services": "concurrently \"npm start --prefix Back_end\" \"npm start --prefix my-react-app\""
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.1.0",
+    "npm-run-all": "^4.1.5"
+  }
 }

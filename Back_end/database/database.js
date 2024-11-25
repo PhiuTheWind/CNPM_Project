@@ -1,5 +1,5 @@
 const mysql = require('mysql2/promise');
-require('dotenv').config({ path: './database/.env' });
+require('dotenv').config({ path: './.env' });
 
 const pool = mysql.createPool({
     host: process.env.db_host || 'localhost',
@@ -7,7 +7,5 @@ const pool = mysql.createPool({
     password: process.env.db_password || '',
     database: process.env.db_name || 'CNPM',
 });
-
-
 
 module.exports = pool;
