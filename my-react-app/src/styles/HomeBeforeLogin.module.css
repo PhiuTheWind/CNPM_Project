@@ -20,16 +20,6 @@ body {
     margin: 0 auto;
 }
 
-/* Header */
-header {
-    height: 160px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #f8f8f8;
-}
-
 /* Logo */
 .header_logo img {
     height: 350px;

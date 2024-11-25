@@ -104,8 +104,19 @@ h1{
     scale: 1.5;
 }
 
-button{
+.button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     font-family: 'Nunito Sans', sans-serif;
     font-size: 30px;
     font-weight: bold;
+}
+
+.button:hover {
+    color: #ffffff; /* Darken the button background on hover */
+    background-color: rgb(20, 78, 194);
 }

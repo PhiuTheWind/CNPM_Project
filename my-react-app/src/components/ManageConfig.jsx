@@ -40,7 +40,7 @@ function ManageConfig() {
               <p> png <input className={styles.check} type='checkbox'/></p>
             </div>
           </div>
-          <button type="submit">LƯU THAY ĐỔI</button>
+          <button className={styles.button} type="submit">LƯU THAY ĐỔI</button>
         </form>
 
       </section>

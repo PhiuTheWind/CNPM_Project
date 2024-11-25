@@ -126,7 +126,7 @@ function LoginPage({ role }) {
           </div>
 
 
-          <button type="submit">Đăng nhập</button>
+          <button className={styles.button}type="submit">Đăng nhập</button>
 
 
           {showErrors && errors.length > 0 && (
@@ -135,6 +135,7 @@ function LoginPage({ role }) {
                 <p key={index} className={styles.error_message}>
                   {error}
                 </p>
+
               ))}
             </div>
           )}

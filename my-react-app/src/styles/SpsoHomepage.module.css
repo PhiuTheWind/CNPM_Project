@@ -68,10 +68,12 @@ body {
     display: flex;
     align-items: center; /* Vertically center text and icon */
     justify-content: center; /* Center text horizontally */
+    border-radius: 5px;
 }
 
 .button:hover {
     color: #ffffff; /* Darken the button background on hover */
+    background-color: rgb(20, 78, 194);
 }
 
 .noti {

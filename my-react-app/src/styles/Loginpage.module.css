@@ -9,7 +9,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f4f4f4;
+    background-color: #ffffff;
     display: flex;
     justify-content: center; /* Căn giữa nội dung */
 }
@@ -22,15 +22,6 @@ body {
     margin: 0 auto;
 }
 
-/* Header */
-header {
-    height: 140px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #ffffff;
-}
 
 /* Container chứa avatar và nút */
 .frame_container {
@@ -80,7 +71,7 @@ header {
     font-weight: 600;
     color: #333;
     position: relative; 
-    top: -10%;
+    top: -20%;
 }
 
 .login_form {
@@ -94,20 +85,19 @@ header {
     right: 20px;
     background-color: #EBF0F7; /* Đặt nền trắng để viền dễ nhìn hơn */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Thêm shadow để làm nổi bật */
-    z-index: 2; /* Đưa form lên trên */
+    z-index: 1; /* Đưa form lên trên */
 }
 
 
 
 .input_group {
-    margin-bottom: 20px;
+    position: relative;
+    margin-top: 20px;
     text-align: left;
     height: 70px;
+    top: -15%;
 }
 
-.input_group label {
-    display: block;
-}
 
 .input_group input {
     width: 100%;
@@ -127,7 +117,7 @@ header {
     scale: 1.5;
 }
 
-button {
+.button {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -135,9 +125,33 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-weight: 600;
-    font-size: large;
+    font-size: x-large;
+    position: relative;
+    top: -10%;
+    margin-bottom: -10%;
 }
 
-button:hover {
-    background-color: #0056b3;
+.button:hover {
+    background-color: #0018b3; /* Slightly darker green on hover */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+  }
+  
+  /* Active (pressed) state */
+  .enter:active {
+    background-color: #388e3c; /* Even darker green when clicked */
+    transform: scale(0.98); /* Slightly shrink the button */
+  }
+  
+  /* Disabled state */
+  .enter:disabled {
+    background-color: #bdbdbd; /* Grey for disabled */
+    cursor: not-allowed; /* Change cursor to indicate non-interactivity */
+    opacity: 0.6; /* Reduce opacity to show it's disabled */
+  }
+
+.error_message{
+    font-family:'Courier New', Courier, monospace;
+    color: rgb(255, 0, 0);
+    font-weight: bolder;
+    font-size: large;
 }
