@@ -56,6 +56,30 @@ CREATE TABLE IF NOT EXISTS `Report_reference` (
     foreign key (`request_id`) references `Request`(`request_id`)
 );
 
+CREATE TABLE IF NOT EXISTS `maintenance` (
+    `id` int auto_increment primary key,
+    `content` text,
+    `date_update` datetime,
+    `spso_update` varchar(255),
+    foreign key (`spso_update`) references `SPSO`(`username`)
+);
+
+CREATE TABLE IF NOT EXISTS `guideline` (
+    `id` int auto_increment primary key,
+    `content` text,
+    `date_update` datetime,
+    `spso_update` varchar(255),
+    foreign key (`spso_update`) references `SPSO`(`username`)
+);
+
+CREATE TABLE IF NOT EXISTS `contact` (
+    `id` int auto_increment primary key,
+    `content` text,
+    `date_update` datetime,
+    `spso_update` varchar(255),
+    foreign key (`spso_update`) references `SPSO`(`username`)
+);
+
 INSERT IGNORE INTO `Student` (`username`, `password`)
 VALUES
 ('student1', 'password1');
@@ -63,3 +87,7 @@ VALUES
 INSERT IGNORE INTO `SPSO` (`username`, `password`)
 VALUES
 ('spso1', 'password1');
+
+INSERT IGNORE INTO `maintenance` (`content`, `date_update`)
+VALUES
+('Ahahahahahahahahahhahahaahahahhahahahahahahahahahaha', '2024-11-25 15:30:30');

@@ -1,13 +1,8 @@
-const database = require('../database/database');
+const infoController = require('../models/pageInformation');
 
 const maintenance = async (req, res) => {
     try {
-        const [maintenanceData] = await database.query(`
-            SELECT content
-            FROM maintenance
-            ORDER BY date_update DESC
-            LIMIT 1
-        `);
+        const [maintenanceData] = await infoController.maintenance();
         if ([maintenanceData].length === 0) {
             return res.status(404).json({
                 success: false,
@@ -29,12 +24,7 @@ const maintenance = async (req, res) => {
 
 const guideline = async (req, res) => {
     try {
-        const [guidelineData] = await database.query(`
-            SELECT content
-            FROM guideline
-            ORDER BY date_update DESC
-            LIMIT 1
-        `);
+        const [guidelineData] = await infoController.guideline();
         if ([guidelineData].length === 0) {
             return res.status(404).json({
                 success: false,
@@ -56,12 +46,7 @@ const guideline = async (req, res) => {
 
 const contact = async (req, res) => {
     try {
-        const contactData = await database.query(`
-            SELECT content
-            FROM contact
-            ORDER BY date_update DESC
-            LIMIT 1
-        `);
+        const [contactData] = await infoController.contact();
         if (contactData.length === 0) {
             return res.status(404).json({
                 success: false,
