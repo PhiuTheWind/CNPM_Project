@@ -51,9 +51,10 @@ CREATE TABLE IF NOT EXISTS `SPSO_Manage_Printer` (
 CREATE TABLE IF NOT EXISTS `Report_reference` (
     `report_id` int,
     `request_id` int,
+    `student_send` varchar(255),
     primary key (`report_id`, `request_id`),
     foreign key (`report_id`) references `Report`(`report_id`),
-    foreign key (`request_id`) references `Request`(`request_id`)
+    foreign key (`request_id`, `student_send`) references `Request`(`request_id`, `student_send`)
 );
 
 CREATE TABLE IF NOT EXISTS `maintenance` (
