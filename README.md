@@ -24,17 +24,12 @@ For Administrators (SPSO)
 
 
 **Installation**
-
-
-Clone the Repository:
-
-
-bash:
-
-
-git clone [https://github.com/HCMUT-SSPS/hcmut_ssps.git](https://github.com/PhiuTheWind/CNPM_Project.git)
-(Navigate to the Project Directory)
-
+1. Install NodeJS.
+2. Clone the repository.
+3. Navigate to the project folder.
+4. Install MySQL.
+4. Terminate "npm run start".
+5. Go to VITE local address.
 
 
 **Contact**

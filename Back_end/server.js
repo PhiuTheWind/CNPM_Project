@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-
 const port = 3000;
+const setupdb = require('./db_setup');
+
+setupdb.setupDatabase();
 
 const app = express();
 
@@ -24,7 +26,10 @@ app.get('/', (req, res) => {
 //     res.send('Connected!');
 // })
 
+
+
 const apiRouter = require('./routes');
+const { getConnection } = require('./database/database');
 app.use('/api', apiRouter)
 
 
