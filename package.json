@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm-run-all install-deps start-services",
+    "start": "npm i concurrently npm-run-all && npm-run-all install-deps start-services",
     "install-deps": "npm-run-all --parallel install-backend install-frontend",
     "install-backend": "cd Back_end && npm install",
     "install-frontend": "cd my-react-app && npm install",
@@ -13,5 +13,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.1.0",
+    "npm-run-all": "^4.1.5"
+  }
 }
