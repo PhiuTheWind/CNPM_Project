@@ -1,7 +1,7 @@
 const database = require('../database/database');
 
 // Add a new printer to the database
-const addNewPrinter = async (req, res) => {
+const add_printer = async (req, res) => {
     const { name, ipAddress, status, settings } = req.body;
 
     try {
@@ -34,7 +34,7 @@ const addNewPrinter = async (req, res) => {
 };
 
 // Update settings of an existing printer
-const change_PrinterSetting = async (req, res) => {
+const modify_status = async (req, res) => {
     const { printerId, newSettings } = req.body;
 
     try {
