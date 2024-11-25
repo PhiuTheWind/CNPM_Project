@@ -28,8 +28,9 @@ For Administrators (SPSO)
 2. Clone the repository.
 3. Navigate to the project folder.
 4. Install MySQL.
-4. Terminate "npm run start".
-5. Go to VITE local address.
+5. Change configuration in /Back_end/.env
+6. Terminate "npm run start".
+7. Go to VITE local address ("http://localhost:5173").
 
 
 **Contact**
