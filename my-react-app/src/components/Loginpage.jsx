@@ -27,17 +27,27 @@ function LoginPage({ role }) {
       setPassword(value);
     }
   };
+  // useEffect(() => {
+  //   if (errors.length > 0) {
+  //     console.log(errors);
+  //     setShowErrors(true) 
+  //   }
+  // }, [errors]);
 
+  
   useEffect(() => {
     let newErrors = [];
-    if (username === "") {
-      newErrors.push("Hãy nhập tên tài khoản của bạn.");
-    }
-    if (password === "") {
-      newErrors.push("Hãy nhập mật khẩu của bạn.");
-    }
-    
+    // if (username === "" &&  password === ""){
+    //   newErrors.push("Bạn chưa nhập tài khoản và mật khẩu");
+    // }
+    // else if (username === "") {
+    //   newErrors.push("Bạn chưa nhập tài khoản");
+    // }
+    // else if (password === "") {
+    //   newErrors.push("Bạn chưa nhập mật khẩu");
+    // }
     setErrors(newErrors);
+    setShowErrors(true);
   }, [username, password]);
 
   const handleSubmit = async (event) => {
@@ -55,7 +65,7 @@ function LoginPage({ role }) {
       });
       localStorage.setItem('userCredentials', JSON.stringify({ token: validation.data.token, isSPSO: role === 'spso' }));
       localStorage.setItem('files', JSON.stringify([]));
-
+    
       if( role === 'spso'){
         window.location.assign('/spso_homepage');
       }
@@ -67,7 +77,8 @@ function LoginPage({ role }) {
     catch (error) {
       if (error.response) {
         if (error.response.status >= 400 && error.response.status < 500) {
-          setErrors(['Các thông tin mà bạn cung cấp không đúng.']);
+          
+          setErrors([error.response.data]);
         }
         if (error.response.status === 500) {
           setErrors([error.response.data]);
@@ -77,6 +88,7 @@ function LoginPage({ role }) {
         setErrors(['Không kết nối được đến server!']);
       }
       setShowErrors(true);
+      
     }
   }
 
@@ -115,6 +127,19 @@ function LoginPage({ role }) {
 
 
           <button type="submit">Đăng nhập</button>
+
+
+          {showErrors && errors.length > 0 && (
+            <div className={styles.error_container}>
+              {errors.map((error, index) => (
+                <p key={index} className={styles.error_message}>
+                  {error}
+                </p>
+              ))}
+            </div>
+          )}
+
+
         </form>
       </section>
 

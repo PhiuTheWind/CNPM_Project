@@ -11,7 +11,6 @@ function authenticate(req, res, next) {
         if (err) {
             return res.status(401).send('Truy cập bị từ chối');
         }
-        
         req.userInfo = decoded;
         next();
     });

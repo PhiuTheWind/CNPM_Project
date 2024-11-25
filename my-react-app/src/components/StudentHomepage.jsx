@@ -28,33 +28,27 @@ function StudentHomepage() {
             'Authorization': `Bearer ${token}`
         }
       });
+ 
       if (response.status === 200) {
         setStudentInfo({
-          name: response.data.name,               // Lưu tên sinh viên
-          pagebalance: response.data.pagebalance // Lưu pagebalance
+          name: response.data[0].username,              
+          pagebalance: response.data[0].page_num 
         });
       }
       else if (response.status === 404) {
-          navigate('/');            // Điều hướng tới homepage
+          navigate('/');           
       }
       console.log(response)
 
     }
     catch (error) {
       console.log(error)
-  // if (error.response && error.response.status === 401) {
-  //     // Nếu token không hợp lệ hoặc hết hạn, điều hướng tới trang login
-  //     navigate('/login'); // Điều hướng tới trang login
-  // }
     }    
   }                  
-  
-
   
   useEffect(() => {
     Getinfo();  
   }, []); 
-
 
   return (
 

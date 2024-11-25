@@ -12,7 +12,7 @@ function SpsoHomepage() {
 
   return (
     <div className={styles.container}>
-      <Header text='SPSO NAME' showLogout={true} />
+      <Header text='SPSO' showLogout={true} />
 
       <section className={styles.banner}>
         <img src={banner} alt="Banner" className={styles.banner_image} />

@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 //     res.send('Connected!');
 // })
 
-const apiRouter = require('./routes/get_home_info');
+const apiRouter = require('./routes');
 app.use('/api', apiRouter)
 
 
