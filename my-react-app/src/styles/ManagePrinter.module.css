@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Dongle", sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    /* Căn giữa nội dung */
+}
+
+.icon2 {
+    height: 50px;
+    width: 50px;
+}
+
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.button{
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.table_printer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin-left: 20%;
+    background-color: #d3efff;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    outline: #68C7FF dashed 5px;
+}
+
+.table_wrapper {
+    width: 100%;
+    max-height: 90vh; 
+    overflow: auto;
+}
+
+
+.table {
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0 10px;
+}
+
+
+.th {
+    position: sticky;
+    top: 0; 
+    background-color: #d3efff;; 
+    z-index: 1; 
+    text-align: center;
+    padding: 0.5rem;
+    font-size: larger;
+}
+
+/* Table cell styling */
+.td {
+    padding: 0.3rem;
+    text-align: center;
+    font-size: large;
+}
+
+.table td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.table td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.table tr{
+    background-color: #ffffff;
+}
+
+.table_wrapper::-webkit-scrollbar{
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+.table_wrapper::-webkit-scrollbar-thumb{
+    border-radius: .5rem;
+    background-color: #0004;
+    visibility: hidden;
+}
+
+.table_wrapper:hover::-webkit-scrollbar-thumb{ 
+    visibility: visible;
+}
+
+.statusBadge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    text-align: center;
+    width: 100px;
+}
+  
+  /* Specific styles based on status */
+.bật {
+    background-color: #E5FBE0; /* Green */
+    color: #30C10F;
+    border-color: red;
+}
+  
+.tắt {
+    color: #f44336;
+    background-color: #FFE1E1;
+}
+  
+.bảo_trì {
+    color: #ffc107; /* Yellow */
+    background-color: #FBF5D7; /* Yellow */
+}
+
+.search_add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin-left: 20%;
+    gap: 300px
+}
+
+.search_wrapper{
+    background-color: #D9D9D9;
+    width: 400px;
+    height: 50px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchInput{
+    color: black;
+    height: 30px;
+    width: 80%;
+    padding: 10px;
+    font-size: medium;
+    border: none;
+    background-color: #D9D9D9;
+}
+
+.searchInput::placeholder{
+    color: gray;
+    opacity: 0.5;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.search_icon{
+    margin-right: 5px;
+    height: 20px;
+    width: 20px;
+}
+
+.addPrinter{
+    width: 150px;
+    height: 50px;
+    background-color:#ffffff;
+    color: #68C7FF;
+    border-radius: 5px;
+    border: solid #68C7FF;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: larger;
+}
+
+.addPrinter:hover{
+    color: #68C7FF;
+}
