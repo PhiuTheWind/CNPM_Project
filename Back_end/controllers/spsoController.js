@@ -1,5 +1,6 @@
 const database = require('../database/database');
-
+require('dotenv').config({ path: './.env' });
+const envconf = require('../models/envconfig');
 // Add a new printer to the database
 const add_printer = async (req, res) => {
     const { name, ipAddress, status, settings } = req.body;
@@ -76,7 +77,42 @@ const modify_status = async (req, res) => {
     }
 };
 
+const get_config = async (req, res) => {
+    if (!process.env.defaultdate || !process.env.defaultpage || !process.env.defaulttype) {
+        return res.status(404).json({
+            success: false,
+            message: "No configuration on server exists !",
+        });
+    }
+    return res.status(200).json({
+        success: true,
+        page: process.env.defaultpage,
+        date: process.env.defaultdate,
+        type: process.env.defaulttype,
+    });
+};
+
+const patch_config = async (req, res) => {
+    const { page, date, type } = req.body;
+    if (page) {
+        envconf.update('defaultpage', page);
+    }
+    if (date) {
+        envconf.update('defaultdate', date);
+    }
+    if (type) {
+        envconf.update('defaulttype', type);
+    }
+    return res.status(200).json({
+        success: true,
+        message: 'Configuration updated successfully.',
+    });
+
+};
+
 module.exports = {
     add_printer,
     modify_status,
+    get_config,
+    patch_config,
 };
