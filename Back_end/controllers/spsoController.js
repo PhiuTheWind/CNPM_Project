@@ -77,6 +77,6 @@ const modify_status = async (req, res) => {
 };
 
 module.exports = {
-    addNewPrinter,
-    change_PrinterSetting,
+    add_printer,
+    modify_status,
 };
