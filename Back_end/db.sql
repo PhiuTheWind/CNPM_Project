@@ -21,16 +21,21 @@ CREATE TABLE IF NOT EXISTS `Printer` (
 );
 
 CREATE TABLE IF NOT EXISTS `Request` (
-    `request_id` int auto_increment,
-    `paper_size` varchar(10),
-    `num_copies` int,
+    `file_name` VARCHAR(255), 
+    `request_id` INT AUTO_INCREMENT,
+    `paper_size` VARCHAR(10),
+    `num_copies` INT,
     `side_option` TINYINT(1), 
-    `page_range` varchar(255),
-    `student_send` varchar(255),
-    primary key (`request_id`, `student_send`),
-    `printer_id` int,
-    foreign key (`student_send`) references `Student`(`username`),
-    foreign key (`printer_id`) references `Printer`(`printer_id`)
+    `page_range` VARCHAR(255),
+    `selected_pages` JSON, 
+    `status` VARCHAR(255),
+    `start_date` DATE, 
+    `received_date` DATE, 
+    `student_send` VARCHAR(255),
+    `printer_id` INT,
+    PRIMARY KEY (`request_id`, `student_send`),
+    FOREIGN KEY (`student_send`) REFERENCES `Student`(`username`),
+    FOREIGN KEY (`printer_id`) REFERENCES `Printer`(`printer_id`)
 );
 
 CREATE TABLE IF NOT EXISTS `Report` (
