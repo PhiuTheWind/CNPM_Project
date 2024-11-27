@@ -6,7 +6,7 @@ import Header from './Header'
 import Footer from './Footer'
 import styles from '../styles/ManagePrinter.module.css'
 import { FaNewspaper } from "react-icons/fa6"
-import { IoSearch } from "react-icons/io5"
+import { IoSearch, IoEyeSharp, IoSettingsSharp } from "react-icons/io5"
 
 function ManagePrinter() {
   const navigate = useNavigate();
@@ -27,12 +27,14 @@ function ManagePrinter() {
       Cell: ({ value }) => (
         <div>
           {value}
-          <FaNewspaper style={{ verticalAlign: 'middle', marginLeft: '25px', height: '25px', width: '25px' }} />
+          <button className={styles.button}>
+            < FaNewspaper style={{ verticalAlign: 'middle', marginLeft: '25px', height: '25px', width: '25px' }} />
+          </button>
         </div>
       )
     },
     {
-      Header: 'TÌNH TRẠNG',
+      Header: 'TRẠNG THÁI',
       accessor: 'status',
       Cell: ({ value }) => (
         <div
@@ -48,14 +50,14 @@ function ManagePrinter() {
       )
     },
     {
-      Header: 'PRINT LOG',
+      Header: 'LỊCH SỬ IN',
       accessor: 'log',
-      Cell: ({ value }) => <button className={styles.button}><img src={value} alt="Log Icon" className={styles.icon1} /></button>,
+      Cell: () => <button className={styles.button}><IoEyeSharp className={styles.icon}/></button>,
     },
     {
       Header: 'CÀI ĐẶT',
       accessor: 'setting',
-      Cell: ({ value }) => <button className={styles.button}><img src={value} alt="Log Icon" className={styles.icon2} /></button>,
+      Cell: () => <button className={styles.button}><IoSettingsSharp className={styles.icon}/></button>,
     },
   ]
   const columns = useMemo(() => COLUMNS, [])

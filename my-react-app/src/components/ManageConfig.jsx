@@ -13,12 +13,13 @@ function ManageConfig() {
 
       <section className={styles.config}>
         <form id="loginForm" className={styles.login_form}>
-          <h1>Quản lý cấu hình hệ thống</h1>
+          <h1 className={styles.h1}>Quản lý cấu hình hệ thống</h1>
           <div className={styles.input_group}>
             <label className={styles.name}>Số giấy mặc định sinh viên nhận mỗi kỳ:</label>
             <input
               type="number"
-              placeholder='Nhập số giấy'
+              placeholder='Nhập số giấy...'
+              className={styles.input}
               value={100}
               required
             />

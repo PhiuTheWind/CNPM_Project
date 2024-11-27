@@ -1,0 +1,89 @@
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    margin: 0 auto;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: larger;
+}
+
+/* Parent container for the form */
+.add_printer_section {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    margin: auto; 
+    background-color: #ffffff; 
+    height: 700px;
+}
+  
+  /* Form container */
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; 
+    width: 50%;
+    padding: 20px 50px 20px 50px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Individual input group */
+.input_group {
+    display: flex;
+    width: 100%; /* Full width of the form */
+    height: 80px;
+    align-items: center;
+    background-color: #D3EFFF;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+/* Input labels */
+.name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+    width: 150px;
+    font-size: 20px;
+}
+
+/* Input fields */
+.input {
+    padding: 10px;  
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+    font-size: large;
+    border: none;
+    border-radius: 5px;
+    width: 470px;
+    box-sizing: border-box;
+}
+
+.input:focus{
+    outline: none;
+}
+
+/* Form header */
+.header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #007bff; /* Optional: Accent color */
+    text-align: center;
+}
+
+.addbutton{
+    width: 40%;
+    height: 50px;
+    color: white;
+    background-color: #3c99fc;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+    font-size: larger;
+}

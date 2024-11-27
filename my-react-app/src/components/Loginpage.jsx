@@ -104,6 +104,7 @@ function LoginPage({ role }) {
           <label className={styles.Hello}>Xin chào!</label>
           <div className={styles.input_group}>
             <input
+              className={styles.input}
               type="text"
               placeholder='Tên đăng nhập'
               name="username" 
@@ -115,6 +116,7 @@ function LoginPage({ role }) {
           </div>
           <div className={styles.input_group}>
             <input
+              className={styles.input}
               type="password"
               placeholder='Mật khẩu'
               name="password" 
