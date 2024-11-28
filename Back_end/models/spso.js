@@ -9,6 +9,16 @@ const getSPSOByUsername = async (username) => {
     }
 }
 
+const getInfo_Printer = async () => {
+    try {
+        const [result] = await database.query('SELECT * FROM printer');
+        return result;
+    } catch (err) {
+        throw err;
+    }
+}
+
 module.exports = {
-    getSPSOByUsername
+    getSPSOByUsername,
+    getInfo_Printer
 };

@@ -77,6 +77,22 @@ const modify_status = async (req, res) => {
     }
 };
 
+
+const get_printer_list = async (req, res, next) => {
+    try {
+        const result = await getInfo_Printer();
+        
+        res.status(200).json({
+            success: true,
+            message: "Printer list fetched successfully",
+            data: result
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+
 const get_config = async (req, res) => {
     if (!process.env.defaultdate || !process.env.defaultpage || !process.env.defaulttype) {
         return res.status(404).json({
@@ -112,6 +128,7 @@ const patch_config = async (req, res) => {
 
 module.exports = {
     add_printer,
+    get_printer_list,
     modify_status,
     get_config,
     patch_config,

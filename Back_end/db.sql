@@ -97,3 +97,25 @@ VALUES
 INSERT IGNORE INTO `maintenance` (`content`, `date_update`)
 VALUES
 ('Ahahahahahahahahahhahahaahahahhahahahahahahahahahaha', '2024-11-25 15:30:30');
+
+INSERT IGNORE INTO `printer` (num_paper, location, status)
+VALUES
+  (100, '402A5-CS1', 'Bật'),
+  (200, '402A4-CS1', 'Tắt'),
+  (110, '402A3-CS1', 'Bảo trì'),
+  (200, '402A2-CS1', 'Bật'),
+  (105, '402A4-CS1', 'Tắt'),
+  (300, '402A1-CS1', 'Bảo trì'),
+  (200, '402A2-CS1', 'Bật'),
+  (200, '402A3-CS1', 'Tắt'),
+  (100, '402A5-CS1', 'Bảo trì'),
+  (110, '402A6-CS1', 'Bật'),
+  (102, '402A7-CS1', 'Tắt'),
+  (101, '402A3-CS1', 'Bảo trì'),
+  (105, '402A4-CS1', 'Bật'),
+  (100, '402A5-CS1', 'Tắt'),
+  (140, '402A7-CS1', 'Bảo trì'),
+  (150, '402A5-CS1', 'Bật'),
+  (50, '402A4-CS1', 'Tắt'),
+  (105, '402A3-CS1', 'Bảo trì'),
+  (100, '402A2-CS1', 'Bật');
