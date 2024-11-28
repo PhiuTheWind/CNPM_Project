@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import styles from '../styles/AddPrinter.module.css'
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { IoMdArrowDropdown } from "react-icons/io";
 
 function AddPrinter() {
   const [date, setDate] = useState(new Date());
+  const [isActive, setIsActive] = useState(false);
+  const [selectedStatus, setStatus] = useState("")
+  const statusOption = ["Bật", "Tắt"]
 
   return (
     <div className={styles.container}>
@@ -54,11 +56,33 @@ function AddPrinter() {
           <div className={styles.input_group}>
             <label className={styles.name}>Trạng thái</label>
             <div className={styles.dropdown}>
-              <div className={styles.dropdown_btn}>Chọn trạng thái</div>
-              <div className={styles.dropdown_content}>
-                <div className={styles.dropdown_item}>Bật</div>
-                <div className={styles.dropdown_item}>Tắt</div>
+              <div className={styles.dropdown_btn} onClick={(e) => setIsActive(!isActive)}>
+                <p className={`
+                  ${styles.text_status} ${selectedStatus === "Bật"
+                    ? styles.on
+                    : selectedStatus === "Tắt"
+                      ? styles.off
+                      : ""
+                  }
+                `}>
+                  {selectedStatus || "Chọn trạng thái"}
+                </p>
+                <IoMdArrowDropdown className={styles.dropicon}/>
               </div>
+              {isActive && (
+                <div className={styles.dropdown_content}>
+                  {statusOption.map(option => (
+                    <div key={option} className={styles.dropdown_item} 
+                      onClick={() => {
+                        setStatus(option)
+                        setIsActive(!isActive)
+                      }
+                    }>
+                      {option}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
           <button className={styles.addbutton}>THÊM</button>

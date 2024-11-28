@@ -26,7 +26,7 @@
     width: 50%;
     padding: 20px 50px 20px 50px;
     background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(108, 161, 231, 0.601);
     border-radius: 10px;
 }
 
@@ -58,7 +58,7 @@
     font-size: large;
     border: none;
     border-radius: 5px;
-    width: 470px;
+    width: 430px;
     box-sizing: border-box;
 }
 
@@ -68,9 +68,8 @@
 
 /* Form header */
 .header {
-    font-size: 1.5rem;
+    font-size: 30px;
     font-weight: bold;
-    margin-bottom: 10px;
     color: #007bff; /* Optional: Accent color */
     text-align: center;
 }
@@ -86,4 +85,66 @@
     font-family: "Quicksand", sans-serif;
     font-weight: bold;
     font-size: larger;
+}
+
+.addbutton:hover{
+    background-color: #007bff;
+}
+
+.dropdown{
+    width: 185px;
+    user-select: none;
+}
+
+.dropdown .dropdown_btn{
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    padding: 0px 10px 0px 10px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.dropdown .dropdown_content{
+    position: absolute;
+    background-color: #ebe0ff;
+    margin-top: 5px;
+    padding: 0px 10px 0px 10px;
+    width: 185px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+.dropdown .dropdown_btn .text_status{
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.dropdown .dropdown_content .dropdown_item{
+    padding: 5px;
+    cursor: pointer;
+    width: 185px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.dropdown .dropdown_content .dropdown_item:hover{
+    background-color: #dac6ff;
+}
+
+.on{
+    color: #30C10F;
+    background-color: #E5FBE0;
+    border-radius: 10px;
+}
+
+.off{
+    color: #CD1C1C;
+    background-color: #FFE1E1;
+    border-radius: 10px;
 }
