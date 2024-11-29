@@ -13,6 +13,9 @@ import ManagePrinter from './components/ManagePrinter.jsx';
 import ManageConfig from './components/ManageConfig.jsx';
 import Report4SPSO from './components/Report4SPSO.jsx';
 import AddPrinter from './components/AddPrinter.jsx';
+import PrinterLog from './components/PrinterLog.jsx';
+import StudentViewLog from './components/StudentViewLog.jsx';
+import SpsoViewStuLog from './components/SpsoViewStuLog.jsx';
 
 function App() {
   const [user, setUser] = useState({ token: null, isSPSO: false, listFiles: [] });
@@ -41,10 +44,13 @@ function App() {
               <Route path='spso' element={<LoginPage role='spso' />}/>
           </Route>
           <Route path="/student_homepage" element={<StudentHomepage />} />
+          <Route path="/student_homepage/view_log" element={<StudentViewLog />} />
           <Route path="/spso_homepage" element={<SpsoHomepage />} />
           <Route path="/spso_homepage/manage_printer" element={<ManagePrinter />} />
           <Route path="/spso_homepage/manage_printer/add_printer" element={<AddPrinter />} />
+          <Route path="/spso_homepage/manage_printer/printer_log" element={<PrinterLog />} />
           <Route path="/spso_homepage/manage_cofig" element={<ManageConfig />} />
+          <Route path="/spso_homepage/view_stu_log" element={<SpsoViewStuLog />} />
           <Route path="/spso_homepage/spsoreport" element={<Report4SPSO />} />
         </Routes>
       </Router>

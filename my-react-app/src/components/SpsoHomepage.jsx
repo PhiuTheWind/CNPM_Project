@@ -12,7 +12,7 @@ function SpsoHomepage() {
 
   return (
     <div className={styles.container}>
-      <Header text='SPSO' showLogout={true} />
+      <Header text='SPSO' showLogout={true} isStudent={false} />
 
       <section className={styles.banner}>
         <img src={banner} alt="Banner" className={styles.banner_image} />
@@ -23,6 +23,9 @@ function SpsoHomepage() {
           </button>
           <button className={styles.button} onClick={() => navigate('/spso_homepage/manage_cofig')}>
             Quản lý cấu hình hệ thống
+          </button>
+          <button className={styles.button} onClick={() => navigate('/spso_homepage/view_stu_log')}>
+            Thông tin in của sinh viên
           </button>
           <button className={styles.button} onClick={() => navigate('/spso_homepage/spsoreport')}>
             Báo cáo in ấn

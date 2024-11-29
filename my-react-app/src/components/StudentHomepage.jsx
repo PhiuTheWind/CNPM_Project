@@ -53,14 +53,14 @@ function StudentHomepage() {
   return (
 
     <div className={styles.container}>
-        <Header text={studentInfo.name} showLogout={true} />
+        <Header text={studentInfo.name} showLogout={true} isStudent={true}/>
 
         <section className={styles.banner}>
             <img src={banner} alt="Banner" className={styles.banner_image} />
             <Link to='/login'>
                     <img src={Print} alt="Print Button" className={styles.print_image} />
                 </Link>
-                <Link to='/login'>
+                <Link to='/student_homepage/view_log'>
                     <img src={Viewlog} alt="Viewlog Button" className={styles.Viewlog_image} />
                 </Link>
           </section>

@@ -5,7 +5,6 @@ import styles from '../styles/AddPrinter.module.css'
 import { IoMdArrowDropdown } from "react-icons/io";
 
 function AddPrinter() {
-  const [date, setDate] = useState(new Date());
   const [isActive, setIsActive] = useState(false);
   const [selectedStatus, setStatus] = useState("")
   const statusOption = ["Bật", "Tắt"]

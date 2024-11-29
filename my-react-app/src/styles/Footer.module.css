@@ -22,7 +22,7 @@ footer {
 
 .footer_left .overlay_logo {
     position: absolute;
-    top: -80px; /* Đặt logo gần phía trên cùng của footer */
+    top: -20px; /* Đặt logo gần phía trên cùng của footer */
     left: -35px; /* Dịch logo về bên trái */
     width: 100%;
     height: auto;
