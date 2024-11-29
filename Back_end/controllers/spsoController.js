@@ -1,6 +1,7 @@
 const database = require('../database/database');
 require('dotenv').config({ path: './.env' });
 const envconf = require('../models/envconfig');
+const { getInfo_Printer} = require('../models/spso');
 // Add a new printer to the database
 const add_printer = async (req, res) => {
     const { name, ipAddress, status, settings } = req.body;
@@ -81,14 +82,22 @@ const modify_status = async (req, res) => {
 const get_printer_list = async (req, res, next) => {
     try {
         const result = await getInfo_Printer();
-        
+        const format_printer_ID = result.map(printer => ({
+            ...printer,
+            printer_id: `PRINTER#${printer.printer_id}`
+        }));
+        //console.log(format_printer_ID)
         res.status(200).json({
             success: true,
             message: "Printer list fetched successfully",
-            data: result
+            data: format_printer_ID
         });
-    } catch (err) {
-        next(err);
+    } catch (error) {
+        console.error('Error get printer list:', error);
+        return res.status(501).json({
+            success: false,
+            message: 'Failed to get printer list.',
+        });
     }
 };
 
