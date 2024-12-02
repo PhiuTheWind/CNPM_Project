@@ -16,7 +16,6 @@ const GetStudentLog = async(req, res, next) => {
         if (!result) {
             return res.status(400).send('User không tồn tại');
         }
-        delete result.password;
         res.json(result);
     }
     catch (err) {
@@ -39,7 +38,6 @@ const GetStudentLogDetail = async(req, res, next) => {
         if (!result) {
             return res.status(400).send('User or request không tồn tại');
         }
-        delete result.password;
         res.json(result);
     }
     catch (err) {
