@@ -1,4 +1,5 @@
 const infoController = require('../models/pageInformation');
+const {getInfo_Printer, getPageBalance} = require('../models/student');
 
 const maintenance = async (req, res) => {
     try {
@@ -82,9 +83,53 @@ const savePrintRequest = async (req, res) => {
     }
 };
 
+
+const get_printer_list_for_student = async (req, res, next) => {
+    try {
+        const result = await getInfo_Printer();
+        const format_printer_ID = result.map(printer => ({
+            ...printer,
+            printer_id: `PRINTER#${printer.printer_id}`
+        }));
+    
+        res.status(200).json({
+            success: true,
+            message: "Printer list fetched successfully",
+            data: format_printer_ID
+        });
+    } catch (error) {
+        console.error('Error get printer list:', error);
+        return res.status(501).json({
+            success: false,
+            message: 'Failed to get printer list.',
+        });
+    }
+};
+
+const get_pagebalance = async (req, res, next) => {
+    try {
+        const username = req.body;
+        const result = await getPageBalance(username);
+
+        res.status(200).json({
+            success: true,
+            message: "page balance fetched successfully",
+            data: result
+        });
+    } catch (error) {
+        console.error('Error get page balance:', error);
+        return res.status(501).json({
+            success: false,
+            message: 'Failed to get page balance',
+        });
+    }
+};
+
 module.exports = {
     maintenance,
     guideline,
     contact,
     savePrintRequest,
+    get_printer_list_for_student,
+    get_pagebalance
 };
