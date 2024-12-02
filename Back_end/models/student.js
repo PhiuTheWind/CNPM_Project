@@ -37,6 +37,14 @@ async function updatePageBalance(username, addedPage) {
     }
   }
 
+const getInfo_Printer = async () => {
+    try {
+        const [result] = await database.query('SELECT printer_id, location, status FROM printer');
+        return result;
+    } catch (err) {
+        throw err;
+    }
+}
 
 async function getStudentLogInfo(username) {
     try {
@@ -69,5 +77,6 @@ module.exports = {
     getPageBalance,
     updatePageBalance,
     getStudentLogInfo,
-    getStudentLogDetail
+    getStudentLogDetail,
+    getInfo_Printer
 };
