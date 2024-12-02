@@ -1,16 +1,18 @@
 const getStudentLogInfo = require('../models/student');
-
+const getStudentLogDetail = require('../models/student');
 
 const GetStudentLog = async(req, res, next) => {
     try {
-        const username = req.userInfo.username, isSPSO = req.userInfo.isSPSO;
+        const username = req.body;
 
-        if (username === undefined || isSPSO === undefined) {
-            return res.status(404).send("Không có dữ liệu người dùng!");
+        if (!username) {
+            return res.status(400).json({
+                success: false,
+                message: 'Username are required.',
+            });
         }
-        if (!isSPSO) {
-            result = await getStudentLogInfo(username);
-        }
+        result = await getStudentLogInfo(username);
+        
         if (!result) {
             return res.status(400).send('User không tồn tại');
         }
@@ -22,6 +24,30 @@ const GetStudentLog = async(req, res, next) => {
     }
 }
 
+const GetStudentLogDetail = async(req, res, next) => {
+    try {
+        const {username, request_id} = req.body;
+
+        if (!username || !request_id) {
+            return res.status(400).json({
+                success: false,
+                message: 'Username and request_id are required.',
+            });
+        }
+        result = await getStudentLogDetail(username, request_id);
+        
+        if (!result) {
+            return res.status(400).send('User or request không tồn tại');
+        }
+        delete result.password;
+        res.json(result);
+    }
+    catch (err) {
+        next(err)
+    }
+}
+
 module.exports = {
-    GetStudentLog
+    GetStudentLog,
+    GetStudentLogDetail
 };
