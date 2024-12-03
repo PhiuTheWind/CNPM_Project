@@ -14,7 +14,7 @@ const getStudentByUsername = async (username) => {
 
 async function getPageBalance(username) {
     try {
-        const [result] = await db.query(`SELECT page FROM student WHERE username = ?`, [username]);
+        const [result] = await database.query(`SELECT page FROM student WHERE username = ?`, [username]);
         return result[0].page;
     } catch (err) {
         throw err;
@@ -48,7 +48,7 @@ const getInfo_Printer = async () => {
 
 async function getStudentLogInfo(username) {
     try {
-        const [result] = await db.query(`SELECT E.request_id, E.start_date, E.file_name, F.location, E.status  
+        const [result] = await database.query(`SELECT E.request_id, E.start_date, E.file_name, F.location, E.status  
                                         FROM request E
                                         JOIN printer F ON F.printer_id = E.printer_id
                                         WHERE E.student_send = ?`, [username]);
@@ -61,7 +61,7 @@ async function getStudentLogInfo(username) {
 
 async function getStudentLogDetail(username, request_id) {
     try {
-        const [result] = await db.query(`SELECT E.file_name, E.start_date, E.received_date, F.location, F.printer_id, E.paper_size, E.page_range, E.side_option, E.num_copies 
+        const [result] = await database.query(`SELECT E.file_name, E.start_date, E.received_date, F.location, F.printer_id, E.paper_size, E.page_range, E.side_option, E.num_copies 
                                         FROM request E
                                         JOIN printer F ON F.printer_id = E.printer_id
                                         WHERE E.student_send = ? AND E.request_id = ?`, [username, request_id]);
