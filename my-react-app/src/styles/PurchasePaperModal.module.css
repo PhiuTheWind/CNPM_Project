@@ -1,0 +1,138 @@
+/* PurchasePaperModal.css */
+
+.modal_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal_content {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    color: #333;
+    position: relative;
+    font-size: 18px;
+}
+
+.modal_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal_header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.close_button {
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.close_button:hover {
+    color: #ff0000;
+}
+
+.payment_section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price_info {
+    background: #d7f2d7;
+    padding: 20px;
+    border-radius: 10px;
+    width: 45%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.price {
+    font-size: 36px;
+    font-weight: bold;
+    color: #3c6e47;
+}
+
+.price span {
+    font-size: 24px;
+}
+
+.name_button {
+    background: #a6e5a6;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: default;
+    margin: 15px 0;
+}
+
+.input_section {
+    margin-top: 10px;
+}
+
+.input_section label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.input_section input {
+    width: 80px;
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid #3c6e47;
+    border-radius: 5px;
+}
+
+.card_section {
+    text-align: center;
+    margin-left: 50px; /* Đẩy toàn bộ phần tử sang bên phải */
+    width: fit-content; /* Chỉ lấy đủ chiều rộng nội dung để phù hợp với margin-left */
+}
+
+.card_image {
+    max-width: 100%;
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+.pay_button {
+    background: #ffcc66;
+    color: #333;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+.pay_button:hover {
+    background: #ffa726;
+}
+

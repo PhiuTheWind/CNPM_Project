@@ -1,39 +1,41 @@
 /* Modal.module.css */
 .modal_overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /* Màn che tối */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  
-  .modal_content {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    max-width: 400px;
-    width: 100%;
-  }
-  
-  .close_button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #0099ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .close_button:hover {
-    background-color: #007acc;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Màn che tối */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal_content {
+  background: #ffffff;
+  padding: 40px; /* Tăng khoảng cách bên trong modal để trông lớn hơn */
+  border-radius: 15px; /* Tăng độ bo tròn để modal trông mềm mại hơn */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Tăng độ đổ bóng để modal nổi bật */
+  text-align: center;
+  max-width: 600px; /* Tăng kích thước tối đa của modal */
+  width: 90%; /* Đảm bảo modal không vượt quá 90% chiều rộng màn hình */
+  font-size: 20px; /* Tăng kích thước chữ để dễ đọc hơn */
+}
+
+.close_button {
+  margin-top: 30px; /* Tăng khoảng cách giữa nội dung và nút để tạo không gian thoải mái */
+  padding: 15px 30px; /* Tăng kích thước của nút */
+  background-color: #007bff; /* Màu xanh */
+  color: white;
+  border: none;
+  border-radius: 8px; /* Tăng độ bo tròn để nút trông đẹp hơn */
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px; /* Tăng kích thước chữ của nút */
+  transition: background-color 0.3s ease; /* Thêm hiệu ứng chuyển màu mượt mà */
+}
+
+.close_button:hover {
+  background-color: #0056b3; /* Thay đổi màu khi hover để tạo sự tương tác tốt hơn */
+}

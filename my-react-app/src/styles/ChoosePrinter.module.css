@@ -1,0 +1,459 @@
+.icon {
+    height: 25px;
+    width: 25px;
+    vertical-align: middle;
+}
+
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    margin: 0 auto;
+    background-color: white;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+}
+
+.button {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.table_printer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin-left: 20%;
+    background-color: #d3efff;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    outline: #68C7FF dashed 5px;
+}
+
+.table_wrapper {
+    width: 100%;
+    max-height: 90vh;
+    overflow: auto;
+}
+
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+
+.th {
+    position: sticky;
+    top: 0;
+    background-color: #d3efff;
+    z-index: 1;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: larger;
+}
+
+/* Table cell styling */
+.td {
+    padding: 0.3rem;
+    text-align: center;
+    font-size: large;
+}
+
+.table td:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.table td:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.table tr {
+    background-color: #ffffff;
+}
+
+.table_wrapper::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+.table_wrapper::-webkit-scrollbar-thumb {
+    border-radius: .5rem;
+    background-color: #0004;
+    visibility: hidden;
+}
+
+.table_wrapper:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+.statusBadge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    text-align: center;
+    width: 100px;
+}
+
+/* Specific styles based on status */
+.bật {
+    background-color: #E5FBE0;
+    /* Green */
+    color: #30C10F;
+    border-color: red;
+}
+
+.tắt {
+    color: #f44336;
+    background-color: #FFE1E1;
+}
+
+.bảo_trì {
+    color: #ffc107;
+    /* Yellow */
+    background-color: #FBF5D7;
+    /* Yellow */
+}
+
+.search_add {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin-left: 20%;
+    gap: 300px
+}
+
+.search_wrapper {
+    background-color: #D9D9D9;
+    width: 400px;
+    height: 50px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchInput {
+    color: black;
+    height: 30px;
+    width: 80%;
+    padding: 10px;
+    font-size: larger;
+    border: none;
+    background-color: #D9D9D9;
+}
+
+.searchInput::placeholder {
+    color: gray;
+    opacity: 0.5;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.search_icon {
+    margin-right: 5px;
+    height: 20px;
+    width: 20px;
+}
+
+.addPrinter {
+    width: 150px;
+    height: 50px;
+    background-color: #ffffff;
+    color: #68C7FF;
+    border-radius: 5px;
+    border: solid #68C7FF;
+    box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: larger;
+}
+
+.addPrinter:hover {
+    color: #68C7FF;
+}
+
+/* Popup container styling */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup_info {
+    background: white;
+    padding: 20px 40px 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+}
+
+/* Popup heading */
+.popup_info .h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.info{
+    outline: dashed black;
+    padding: 10px 0 5px 0;
+}
+.mod{
+    outline: dashed black;
+    padding: 10px 0 5px 0;
+    margin-top: 20px;
+}
+
+/* Row container for field and value */
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 20px 10px 20px;
+    font-size: large;
+}
+
+
+/* Field label styling */
+.field {
+    font-weight: bold;
+    color: #555;
+    flex: 1.5;
+    text-align: left;
+}
+
+/* Value styling */
+.value {
+    flex: 1;
+    color: #000;
+    text-align: left;
+    /* margin-left: 50px; */
+}
+
+/* Close button */
+.popup_btn{
+    display: flex;
+}
+
+.save_popup {
+    font-family: "Quicksand", sans-serif;
+    font-size: large;
+    font-weight: bold;
+    background: #0061c8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto 0;
+    text-align: center;
+}
+
+.close_popup {
+    font-family: "Quicksand", sans-serif;
+    font-size: large;
+    font-weight: bold;
+    background: white;
+    color: #0061c8;
+    padding: 10px 20px;
+    border: solid ;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto 0;
+    text-align: center;
+}
+
+.save_popup:hover {
+    background: #007bff;
+}
+
+.close_popup:hover {
+    background: #b8dcff;
+}
+
+.dropdown{
+    flex: 1;
+}
+
+.dropdown_btn{
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+}
+
+.dropdown_content{
+    background-color: #b8dcff;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+
+.dropdown_item{
+    height: 30px;
+    align-items: center;
+    text-align: center;
+    padding-top: 4px;
+}
+
+.dropdown_item:hover{
+    background-color: #68C7FF;
+}
+
+.on{
+    color: green;
+}
+
+.off{
+    color: red;
+}
+
+.mantenance{
+    color: orange;
+}
+
+/* CSS cho checkbox */
+.checkbox {
+    width: 20px; /* Chiều rộng của hộp chọn */
+    height: 20px; /* Chiều cao của hộp chọn */
+    cursor: pointer; /* Con trỏ chuyển thành hình bàn tay khi di chuột qua */
+    accent-color: #4CAF50; /* Màu của hộp chọn khi đã chọn (màu này có thể thay đổi tùy ý) */
+    border: 2px solid #ccc; /* Đường viền xám cho hộp chọn */
+    border-radius: 3px; /* Làm cho hộp chọn có góc tròn một chút */
+    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi nhẹ khi tương tác */
+    margin-left: 15px; /* Dịch checkbox sang phải một chút */
+}
+
+.checkbox:checked {
+    border: 2px solid #4CAF50; /* Đường viền màu xanh khi đã chọn */
+}
+
+.checkbox:hover {
+    border: 2px solid #888; /* Đường viền đậm hơn khi di chuột qua */
+}
+
+/* CSS for the check button */
+.check_button_wrapper {
+    display: flex;
+    justify-content: center; /* Căn giữa */
+    margin-top: 20px;
+    padding-left: 50%; /* Thêm khoảng đẩy nhẹ sang phải */
+}
+
+.check_button {
+    background-color: #004AAD;
+    color: white;
+    border: none;
+    padding: 20px 40px; /* Tăng kích thước nút */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px; /* Tăng kích thước chữ */
+    font-weight: bold;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 20px;
+}
+
+.check_button:hover {
+    background-color: #3da5ff;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popup_info {
+    background: white;
+    padding: 40px;
+    width: 600px;
+    max-width: 90%;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    animation: popup-fade-in 0.3s ease-in-out;
+  }
+  
+  .popup_info .error {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d9534f;
+    margin-bottom: 20px;
+  }
+  
+  .popup_info .success {
+    font-size: 18px;
+    font-weight: bold;
+    color: #28a745; /* Màu xanh lá cho thông báo thành công */
+    margin-bottom: 20px;
+  }
+  
+  .close_popup {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .close_popup:hover {
+    background-color: #0056b3;
+  }
+  
+  @keyframes popup-fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .close_popup {
+    background-color: #28a745; /* Màu xanh lá để phù hợp với trạng thái thành công */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .close_popup:hover {
+    background-color: #218838; /* Màu xanh lá đậm hơn khi hover */
+  }
+  
+  
