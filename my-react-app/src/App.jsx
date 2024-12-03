@@ -16,7 +16,7 @@ import AddPrinter from './components/AddPrinter.jsx';
 import PrinterLog from './components/PrinterLog.jsx';
 import StudentViewLog from './components/StudentViewLog.jsx';
 import SpsoViewStuLog from './components/SpsoViewStuLog.jsx';
-
+import PrintingConfigure from './components/Printing_configure.jsx';
 function App() {
   const [user, setUser] = useState({ token: null, isSPSO: false, listFiles: [] });
   const [cookies] = useCookies();
@@ -52,6 +52,7 @@ function App() {
           <Route path="/spso_homepage/manage_cofig" element={<ManageConfig />} />
           <Route path="/spso_homepage/view_stu_log" element={<SpsoViewStuLog />} />
           <Route path="/spso_homepage/spsoreport" element={<Report4SPSO />} />
+          <Route path="/printing_configure" element={<PrintingConfigure />} />
         </Routes>
       </Router>
     </UserContext.Provider>

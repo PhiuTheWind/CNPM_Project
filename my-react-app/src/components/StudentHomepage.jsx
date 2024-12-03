@@ -8,7 +8,9 @@ import banner from '../assets/banner.png';
 import Print from '../assets/Printbutton.png';
 import Viewlog from '../assets/Viewlogbutton.png';
 import axios from 'axios';
-
+import Bar from '../assets/Bar.png';
+import wel_circle from '../assets/wel.png';
+import welcome_box from '../assets/welcome.png';
 function StudentHomepage() {
   const url = `http://localhost:3000/api`;
   const token = localStorage.getItem('userCredentials') ? JSON.parse(localStorage.getItem('userCredentials')).token : null;
@@ -57,7 +59,7 @@ function StudentHomepage() {
 
         <section className={styles.banner}>
             <img src={banner} alt="Banner" className={styles.banner_image} />
-            <Link to='/login'>
+            <Link to='/printing_configure'>
                     <img src={Print} alt="Print Button" className={styles.print_image} />
                 </Link>
                 <Link to='/student_homepage/view_log'>
@@ -80,7 +82,19 @@ function StudentHomepage() {
             <button className={styles.viewButton}>View</button>
           </div>
         </section>
-      
+
+        <div className={styles.lineSection}>
+          <img src={Bar} alt="Full Bar" className={styles.fullBarImage} />
+        </div>
+
+        <div className={styles.imageSection}>
+          <img src={wel_circle} alt="Welcome Circles" className={styles.welcomeImage} />
+        </div>
+
+        <div className={styles.bottomImageSection}>
+          <img src= {welcome_box} alt="Welcome Character" className={styles.bottomImage} />
+        </div>
+
 
 
         

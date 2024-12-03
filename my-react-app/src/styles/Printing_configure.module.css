@@ -1,0 +1,391 @@
+/* Reset mặc định */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body chính */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Căn trên */
+    padding: 20px 0;
+}
+
+/* Container chính */
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    padding: 0; /* Giữ nguyên padding */
+    height: auto;
+}
+
+/* Thanh ngang */
+.thanh_section {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.thanh_image {
+    width: 90%; /* Làm cho thanh dài ra (chiếm 90% chiều rộng màn hình) */
+    max-width: 1400px; /* Giới hạn chiều rộng tối đa */
+    height: 35px; /* Chiều cao nhỏ hơn */
+    border-radius: 5px; /* Bo góc để trông mềm mại hơn */
+}
+
+
+/* Nội dung chính */
+.main_content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    max-width: 1200px; /* Giới hạn chiều rộng tổng thể */
+    margin: 0 auto;
+    gap: 15px;
+    margin-bottom: 60px; /* Thêm khoảng cách bên dưới */
+    margin-top: 60px; /* Thêm khoảng cách bên dưới */
+}
+
+
+
+
+/* Phần bên trái */
+.left_section {
+    flex: 1; /* Đáp ứng linh hoạt */
+    min-width: 300px; /* Chiều rộng tối thiểu */
+    max-width: 40%; /* Tối đa 45% màn hình */
+    background-color: #e6f7ff;
+    padding: 20px;
+    border-radius: 30px;
+    border: 2px dashed #0099ff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Khung tải lên */
+.upload_box {
+    text-align: center;
+}
+
+.upicon_section {
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung ngang */
+    align-items: center; /* Căn giữa nội dung dọc */
+    margin-bottom: 10px; /* Khoảng cách phía dưới */
+    padding: 10px; /* Thêm khoảng cách xung quanh */
+}
+
+.upcion_image {
+    width: 200px; /* Chiều rộng của ảnh */
+    height: auto; /* Giữ tỉ lệ khung hình */
+    margin-bottom: 5px; /* Khoảng cách phía dưới ảnh */
+}
+
+.upload_instructions {
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.upload_label {
+    display: inline-block;
+    background-color: #0099ff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px; /* Thêm khoảng cách phía trên */
+    margin-bottom: 0px; /* Thêm khoảng cách phía dưới */
+}
+
+.upload_label:hover {
+    background-color: #007acc;
+}
+
+.file_input {
+    display: none;
+}
+
+.uploaded_files {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.uploaded_files ul {
+    list-style: none;
+    padding: 0;
+}
+
+.uploaded_files li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.file_icon {
+    width: 30px;
+    height: 30px;   
+    margin-right: 10px;
+}
+
+.file_item span {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+    word-break: break-word; /* Ngăn chữ bị tràn */
+}
+
+.delete_button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #ff4d4f;
+    transition: color 0.3s;
+}
+
+.delete_button:hover {
+    color: #ff0000;
+}
+
+/* Phần bên phải */
+.right_section {
+    flex: 1;
+    min-width: 300px;
+    max-width: 40%;
+    background-color: #e6f7ff;
+    padding: 20px;
+    border-radius: 30px;
+    border: 2px dashed #0099ff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hộp tùy chọn */
+.options_box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option_item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    font-weight: bold;
+    color: #000;
+}
+
+.dropdown {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #0099ff;
+    border-radius: 8px;
+    background-color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230099FF'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+.dropdown:focus {
+    outline: none;
+    border-color: #007acc;
+}
+
+.checkbox_group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 15px;
+}
+
+.checkbox_group label {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    gap: 5px;
+}
+
+.checkbox_group input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #0099ff;
+}
+
+/* Nút kiểm tra */
+.check_button {
+    background-color: #0099ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.check_button:hover {
+    background-color: #007acc;
+}
+
+/* Thông tin file */
+.fileInfo {
+    font-size: 15px;
+    font-weight: normal;
+    color: #555;
+    margin-top: 10px; /* Thêm khoảng cách phía trên */
+    margin-bottom: 10px; /* Thêm khoảng cách phía dưới */
+}
+
+.inputField {
+    width: 100%; /* Chiều rộng 100% của container */
+    height: 45px; /* Tăng chiều cao */
+    padding: 10px; /* Thêm khoảng đệm bên trong */
+    font-size: 16px; /* Kích thước chữ lớn hơn */
+    border: 2px solid #0099ff; /* Viền màu xanh */
+    border-radius: 8px; /* Bo góc */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+    margin-top: 10px; /* Thêm khoảng cách phía trên */
+    background-color: #ffffff; /* Nền trắng */
+}
+
+.inputField:focus {
+    outline: none; /* Bỏ viền mặc định */
+    border-color: #007acc; /* Đổi màu viền khi focus */
+    box-shadow: 0 2px 8px rgba(0, 121, 204, 0.5); /* Hiệu ứng focus */
+}
+
+.inputFieldLarge {
+    width: 100%; /* Chiều rộng đầy đủ */
+    height: 45px; /* Chiều cao lớn hơn */
+    padding: 10px; /* Thêm khoảng đệm */
+    font-size: 16px; /* Tăng kích thước chữ */
+    border: 2px solid #0099ff; /* Viền màu xanh */
+    border-radius: 8px; /* Bo tròn góc */
+    background-color: #ffffff; /* Màu nền trắng */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+    margin-top: 10px; /* Khoảng cách phía trên */
+}
+
+.inputFieldLarge:focus {
+    outline: none; /* Bỏ viền mặc định khi focus */
+    border-color: #007acc; /* Màu viền khi focus */
+    box-shadow: 0 2px 8px rgba(0, 121, 204, 0.5); /* Hiệu ứng khi focus */
+}
+
+.error_message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.alertBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Nền tối mờ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.alertContent {
+    background-color: #fff;
+    padding: 20px 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.alertContent p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.closeButton {
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #0099ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.closeButton:hover {
+    background-color: #007acc;
+}
+
+
+.inspect_file {
+    position: fixed;
+    top: 45%;
+    left: 7.6%; /* Dịch khung về bên trái, thay đổi từ 50% thành 10% */
+    transform: translateY(-50%); /* Chỉ cần dịch theo trục Y để canh giữa theo chiều dọc */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 80%;
+    height: 80%;
+    max-width: 800px;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.file_preview {
+    width: 100%;
+    height: 100%;
+    border: none;
+    overflow: hidden;
+    object-fit: contain;
+}
+
+.close_button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #0099ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.close_button:hover {
+    background-color: #007acc;
+}
+
