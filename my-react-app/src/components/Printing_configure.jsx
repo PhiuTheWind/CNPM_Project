@@ -39,6 +39,8 @@ const PrintingConfigure = () => {
     png: PngIcon,
   };
 
+  const supportedExtensions = ["pdf", "docx", "jpg", "png"]; // Các loại file được hỗ trợ
+
   const getFileIcon = (extension) => {
     return fileIcons[extension] || Upload_icon;
   };
@@ -80,16 +82,24 @@ const PrintingConfigure = () => {
 
     if (files.length > 0) {
       const file = files[0];
+      const extension = file.name.split(".").pop().toLowerCase();
+
+      if (!supportedExtensions.includes(extension)) {
+        setErrorMessage("Định dạng tệp không được hỗ trợ!");
+        setPopupMessage("Định dạng tệp không được hỗ trợ!");
+        return;
+      }
+
       const newFile = {
         name: file.name.split(".").slice(0, -1).join("."),
-        extension: file.name.split(".").pop().toLowerCase(),
+        extension: extension,
         content: file,
       };
 
       setUploadedFiles([newFile]);
       setRemovedFiles([]);
       setErrorMessage("");
-      setPopupMessage("Tệp của bạn đã tải lên thành công!"); // Popup thông báo tệp đã được tải lên
+      setPopupMessage("Tệp của bạn đã tải lên thành công!");
     }
   };
 
@@ -97,11 +107,63 @@ const PrintingConfigure = () => {
     setUploadedFiles([]);
     setErrorMessage("");
     setSelectedFileURL(null);
-    setPopupMessage("Tệp đã bị xóa!"); // Popup thông báo tệp đã bị xóa
+    setPopupMessage("Tệp đã bị xóa!");
+  };
+
+  const handleInspectFile = (file) => {
+    if (file.extension === "jpg" || file.extension === "png") {
+      const fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        setSelectedFileURL(e.target.result);
+      };
+      fileReader.readAsDataURL(file.content);
+    } else if (file.extension === "pdf") {
+      const fileBlob = new Blob([file.content], { type: "application/pdf" });
+      const fileURL = URL.createObjectURL(fileBlob);
+      setSelectedFileURL(fileURL);
+    } else if (file.extension === "docx") {
+      // Tải file lên một dịch vụ lưu trữ công khai và sử dụng Google Docs Viewer
+      uploadFileToPublicURL(file.content)
+        .then((publicURL) => {
+          const googleViewerURL = `https://docs.google.com/viewer?url=${encodeURIComponent(publicURL)}&embedded=true`;
+          setSelectedFileURL(googleViewerURL);
+        })
+        .catch(() => {
+          setErrorMessage("Không thể tải file lên để xem trước.");
+          setPopupMessage("Không thể tải file lên để xem trước.");
+        });
+    } else {
+      setErrorMessage("Không thể xem trước loại file này.");
+      setPopupMessage("Không thể xem trước loại file này.");
+    }
+  };
+
+  const handleCloseInspect = () => {
+    setSelectedFileURL(null);
+  };
+
+  const uploadFileToPublicURL = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("https://file.io", {
+        method: "POST",
+        body: formData,
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data.link; // Trả về URL của file đã được upload
+      } else {
+        throw new Error("Failed to upload file");
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      throw error;
+    }
   };
 
   const handleCheckSettings = () => {
-    // Kiểm tra xem tất cả điều kiện in đã được thiết lập hay chưa
     if (uploadedFiles.length === 0) {
       setPopupMessage("Vui lòng tải lên một tệp để in!");
       return;
@@ -118,12 +180,11 @@ const PrintingConfigure = () => {
       setPopupMessage("Vui lòng nhập số bản sao hợp lệ!");
       return;
     }
-    if (pageSelection === "custom" && (customPage === "" || isNaN(customPage))) {
+    if (pageSelection === "custom" && (customPage === "" || isNaN(customPage)) || Number(customPage) <= 0) {
       setPopupMessage("Vui lòng nhập số trang hợp lệ!");
       return;
     }
 
-    // Nếu tất cả điều kiện hợp lệ
     setPopupMessage("Các cài đặt in hợp lệ! Vui lòng chọn máy in");
   };
 
@@ -142,28 +203,18 @@ const PrintingConfigure = () => {
         <div className={styles.left_section}>
           <div className={styles.upload_box}>
             <div className={styles.upicon_section}>
-              <img
-                src={Upload_icon}
-                alt="Upload Icon"
-                className={styles.upcion_image}
-              />
+              <img src={Upload_icon} alt="Upload Icon" className={styles.upcion_image} />
             </div>
 
             <div className={styles.upload_instructions}>
               <p className={styles.uploadText}>
-                {uploadedFiles.length === 0
-                  ? "Xin hãy lựa chọn tệp tin của bạn"
-                  : "Tệp của bạn đã tải lên thành công"}
+                {uploadedFiles.length === 0 ? "Xin hãy lựa chọn tệp tin của bạn" : "Tệp của bạn đã tải lên thành công"}
               </p>
 
               {!uploadedFiles.length && (
                 <label className={styles.upload_label}>
                   Chọn tệp
-                  <input
-                    type="file"
-                    onChange={handleFileUpload}
-                    className={styles.file_input}
-                  />
+                  <input type="file" onChange={handleFileUpload} className={styles.file_input} />
                 </label>
               )}
 
@@ -179,23 +230,13 @@ const PrintingConfigure = () => {
               <ul>
                 {uploadedFiles.map((file, index) => (
                   <li key={index} className={styles.file_item}>
-                    <img
-                      src={getFileIcon(file.extension)}
-                      alt={file.name}
-                      className={styles.file_icon}
-                    />
+                    <img src={getFileIcon(file.extension)} alt={file.name} className={styles.file_icon} />
                     <span>{file.name}</span>
                     <div>
-                      <button
-                        className={styles.inspect_button}
-                        onClick={() => handleInspectFile(file)}
-                      >
+                      <button className={styles.inspect_button} onClick={() => handleInspectFile(file)}>
                         🔍 Inspect
                       </button>
-                      <button
-                        className={styles.delete_button}
-                        onClick={handleDeleteFile}
-                      >
+                      <button className={styles.delete_button} onClick={handleDeleteFile}>
                         🗑️
                       </button>
                     </div>
@@ -203,6 +244,20 @@ const PrintingConfigure = () => {
                 ))}
               </ul>
             </div>
+
+            {/* Hiển thị xem trước file */}
+            {selectedFileURL && (
+              <div className={styles.inspect_file}>
+                {selectedFileURL.includes("google.com/viewer") ? (
+                  <iframe src={selectedFileURL} title="File Preview" className={styles.file_preview}></iframe>
+                ) : (
+                  <embed src={selectedFileURL} type="application/pdf" className={styles.file_preview} />
+                )}
+                <button className={styles.close_button} onClick={handleCloseInspect}>
+                  Đóng
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -288,9 +343,7 @@ const PrintingConfigure = () => {
       </div>
 
       {/* Hiển thị Popup nếu có thông báo */}
-      {popupMessage && (
-        <Popup message={popupMessage} onClose={() => setPopupMessage("")} />
-      )}
+      {popupMessage && <Popup message={popupMessage} onClose={() => setPopupMessage("")} />}
 
       <Footer />
     </div>
