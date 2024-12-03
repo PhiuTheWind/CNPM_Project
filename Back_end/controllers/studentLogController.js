@@ -1,9 +1,10 @@
-const getStudentLogInfo = require('../models/student');
-const getStudentLogDetail = require('../models/student');
+const {getStudentLogInfo} = require('../models/student');
+const {getStudentLogDetail} = require('../models/student');
 
 const GetStudentLog = async(req, res, next) => {
     try {
-        const username = req.body;
+        const username = req.userInfo.username
+      
 
         if (!username) {
             return res.status(400).json({
@@ -25,7 +26,9 @@ const GetStudentLog = async(req, res, next) => {
 
 const GetStudentLogDetail = async(req, res, next) => {
     try {
-        const {username, request_id} = req.body;
+        const username = req.userInfo.username
+        
+        const request_id = req.body;
 
         if (!username || !request_id) {
             return res.status(400).json({
