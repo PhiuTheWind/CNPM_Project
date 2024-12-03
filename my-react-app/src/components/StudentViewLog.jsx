@@ -8,9 +8,77 @@ import MOCK_DATA from '../assets/PRINTER_LOG_MOCK_DATA.json'
 import { IoSearch, IoEyeSharp } from "react-icons/io5"
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti"
 import DatePicker from 'react-datepicker';
+import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function StudentViewLog() {
+    const log_url = `http://localhost:3000/api/log`;
+    const logdetail_url = `http://localhost:3000/api/logdetail`;
+
+    const token = localStorage.getItem('userCredentials') ? JSON.parse(localStorage.getItem('userCredentials')).token : null;
+    const [studentLogInfo, setStudentLogInfo] = useState([]);
+    
+    //List Log lưu trong studentLogInfo
+    
+    //Hàm trả về danh sách request 
+    const Getinfo = async () => {                
+        try {
+          const response = await axios.post(log_url,{},{
+            withCredentials: true,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+          });
+     
+        if (response.status === 200) {
+            setStudentLogInfo(response.data)
+        }
+        else if (response.status === 404) {
+            navigate('/');           
+        }
+        console.log(response)
+    
+        }
+        catch (error) {
+          console.log(error)
+        }    
+    }     
+    
+      //Hàm trả về thông tin chi tiết của request với tham số là request_id ( request_id có dc ở hàm Getinfo)
+    const Getinfo_detail = async (request_id) => {                
+        try {
+          const response = await axios.post(logdetail_url,
+            {
+                request_id
+            },
+            {
+            withCredentials: true,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+            });
+     
+        if (response.status === 200) {
+            setStudentLogInfo(response.data)
+        }
+        else if (response.status === 404) {
+            navigate('/');           
+        }
+        console.log(response)
+    
+        }
+        catch (error) {
+          console.log(error)
+        }    
+    }     
+      
+
+
+    useEffect(() => {
+        Getinfo();  
+    }, []); 
+
+
     const navigate = useNavigate()
 
     const [start_date, setStartDate] = useState(null)
