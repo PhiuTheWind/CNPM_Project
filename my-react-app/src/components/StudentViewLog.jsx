@@ -1,15 +1,15 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useTable, useSortBy } from 'react-table'
 import { useNavigate } from 'react-router-dom';
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./utils/Header";
+import Footer from "./utils/Footer";
 import styles from '../styles/StudentViewLog.module.css'
-import MOCK_DATA from '../assets/PRINTER_LOG_MOCK_DATA.json'
 import { IoSearch, IoEyeSharp } from "react-icons/io5"
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti"
 import DatePicker from 'react-datepicker';
 import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
+import { Getinfo } from './utils/GetInfo'
 
 function StudentViewLog() {
     const log_url = `http://localhost:3000/api/log`;
@@ -21,7 +21,7 @@ function StudentViewLog() {
     //List Log lưu trong studentLogInfo
     
     //Hàm trả về danh sách request 
-    const Getinfo = async () => {                
+    const GetLogInfo = async () => {                
         try {
           const response = await axios.post(log_url,{},{
             withCredentials: true,
@@ -44,8 +44,8 @@ function StudentViewLog() {
         }    
     }     
     
-      //Hàm trả về thông tin chi tiết của request với tham số là request_id ( request_id có dc ở hàm Getinfo)
-    const Getinfo_detail = async (request_id) => {                
+    //   //Hàm trả về thông tin chi tiết của request với tham số là request_id ( request_id có dc ở hàm GetLogInfo)
+    const GetLogInfo_detail = async (request_id) => {                
         try {
           const response = await axios.post(logdetail_url,
             {
@@ -74,20 +74,35 @@ function StudentViewLog() {
       
 
 
-    useEffect(() => {
-        Getinfo();  
-    }, []); 
-
-
     const navigate = useNavigate()
-
+    const [studentInfo, setStudentInfo] = useState({
+        name: 'STUDENT',
+        pagebalance: 0,
+    });
+    const [error, setError] = useState(null);
     const [start_date, setStartDate] = useState(null)
     const [end_date, setEndDate] = useState(null)
     const [filename, setFilename] = useState("")
     const [selectedrow, setSelectedRow] = useState(null)
     const [isView, setIsViewOpen] = useState(false)
 
-    const data = useMemo(() => MOCK_DATA, [])
+
+    useEffect(() => {
+        const fetchStudentInfo = async () => {
+            try {
+                const data = await Getinfo();
+                setStudentInfo(data); // Update state with fetched data
+            } catch (err) {
+                setError('Failed to fetch student information');
+                console.error(err);
+            }
+        };
+
+        fetchStudentInfo();
+        GetLogInfo();
+    }, []);
+
+    const data = useMemo(() => studentLogInfo, [])
     const columns = useMemo(
         () => [
             {
@@ -151,7 +166,7 @@ function StudentViewLog() {
 
     return (
         <div className={styles.container}>
-            <Header text='STUDENT' showLogout={true} isStudent={true}/>
+            <Header text={studentInfo.name} paper={studentInfo.pagebalance} showLogout={true} isStudent={true} />
 
             <div className={styles.search}>
                 <div className={styles.input_group}>
@@ -174,7 +189,7 @@ function StudentViewLog() {
                 </div>
                 <div className={styles.input_filename}>
                     <label className={styles.search_label}><IoSearch /> Tên file</label>
-                    <input 
+                    <input
                         type='text'
                         className={styles.input}
                         placeholder='Nhập tên file'

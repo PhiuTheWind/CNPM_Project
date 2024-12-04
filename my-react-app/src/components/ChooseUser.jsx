@@ -4,8 +4,8 @@ import styles from '../styles/ChooseUser.module.css';
 import banner from '../assets/banner.png';
 import userstu from '../assets/user_student.png';
 import userspso from '../assets/user_spso.png';
-import Footer from './Footer';
-import Header from './Header';
+import Footer from './utils/Footer';
+import Header from './utils/Header';
 
 function ChooseUser(){
     return (

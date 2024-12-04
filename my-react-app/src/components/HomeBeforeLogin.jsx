@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 //import { useCookies } from "react-cookie";
 import banner from '../assets/banner.png';
 import login from '../assets/login.png';
-import Footer from './Footer';
-import Header from './Header';
+import Footer from './utils/Footer';
+import Header from './utils/Header';
 import { useLocation } from 'react-router-dom';
 
 function HomeBeforeLogin(){

@@ -46,17 +46,18 @@ function App() {
               <Route path='spso' element={<LoginPage role='spso' />}/>
           </Route>
           <Route path="/student_homepage" element={<StudentHomepage />} />
-          <Route path="/student_homepage/view_log" element={<StudentViewLog />} />
+            <Route path="/student_homepage/printing_configure" element={<PrintingConfigure />} />
+            <Route path="/student_homepage/chooseprinter" element={<ChoosePrinter />} />
+            <Route path="/student_homepage/purchase_paper" element={<PurchasePaperModal />} />
+            <Route path="/student_homepage/view_log" element={<StudentViewLog />} />
+
           <Route path="/spso_homepage" element={<SpsoHomepage />} />
-          <Route path="/spso_homepage/manage_printer" element={<ManagePrinter />} />
-          <Route path="/spso_homepage/manage_printer/add_printer" element={<AddPrinter />} />
-          <Route path="/spso_homepage/manage_printer/printer_log" element={<PrinterLog />} />
-          <Route path="/spso_homepage/manage_cofig" element={<ManageConfig />} />
-          <Route path="/spso_homepage/view_stu_log" element={<SpsoViewStuLog />} />
-          <Route path="/spso_homepage/spsoreport" element={<Report4SPSO />} />
-          <Route path="/printing_configure" element={<PrintingConfigure />} />
-          <Route path="/chooseprinter" element={<ChoosePrinter />} />
-          <Route path="/purchase_paper" element={<PurchasePaperModal />} />
+            <Route path="/spso_homepage/manage_printer" element={<ManagePrinter />} />
+            <Route path="/spso_homepage/manage_printer/add_printer" element={<AddPrinter />} />
+            <Route path="/spso_homepage/manage_printer/printer_log" element={<PrinterLog />} />
+            <Route path="/spso_homepage/manage_cofig" element={<ManageConfig />} />
+            <Route path="/spso_homepage/view_stu_log" element={<SpsoViewStuLog />} />
+            <Route path="/spso_homepage/spsoreport" element={<Report4SPSO />} />
         </Routes>
       </Router>
     </UserContext.Provider>

@@ -2,8 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/SpsoHomepage.module.css';
 import banner from '../assets/banner.png';
-import Footer from './Footer';
-import Header from './Header';
+import Footer from './utils/Footer';
+import Header from './utils/Header';
 import { FaBell } from "react-icons/fa";
 
 

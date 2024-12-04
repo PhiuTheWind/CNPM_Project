@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import Header from './Header';
-import Footer from './Footer';
+import Header from './utils/Header';
+import Footer from './utils/Footer';
 import styles from '../styles/ManageConfig.module.css'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function ManageConfig() {
-  const [date, setDate] = useState(new Date());
+  const [paper, setPaper] = useState(null)
+  const [date, setDate] = useState(null);
   return (
     <div className={styles.container}>
       <Header text='SPSO NAME' showLogout={true} />
@@ -20,14 +21,22 @@ function ManageConfig() {
               type="number"
               placeholder='Nhập số giấy...'
               className={styles.input}
-              value={100}
-              required
+              value={paper}
+              onChange={(e) => 
+              {
+                if (!isNaN(e.target.value)) {
+                  setPaper(e.target.value); // Only update if the value is a valid number
+                }
+              }
+              }
+              
             />
           </div>
           <div className={styles.input_group}>
             <label className={styles.name}>Ngày cấp giấy cho sinh viên:</label>
             <DatePicker className={styles.datepick}
               selected={date}
+              placeholderText="dd/mm/yyyy"
               onChange={date => setDate(date)}
               dateFormat='dd/MM/yyyy'
             />
@@ -35,10 +44,10 @@ function ManageConfig() {
           <div className={styles.checkfiled}>
             <label className={styles.name}>Định dạng file cho phép:</label>
             <div className={styles.filetype}>
-              <p> pdf <input className={styles.check} type='checkbox'/></p>
-              <p> docx <input className={styles.check} type='checkbox'/></p>
-              <p> jpg <input className={styles.check} type='checkbox'/></p>
-              <p> png <input className={styles.check} type='checkbox'/></p>
+              <p className={styles.type}> pdf <input className={styles.check} type='checkbox'/></p>
+              <p className={styles.type}> docx <input className={styles.check} type='checkbox'/></p>
+              <p className={styles.type}> jpg <input className={styles.check} type='checkbox'/></p>
+              <p className={styles.type}> png <input className={styles.check} type='checkbox'/></p>
             </div>
           </div>
           <button className={styles.button} type="submit">LƯU THAY ĐỔI</button>

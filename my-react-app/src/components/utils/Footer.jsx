@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from'../styles/Footer.module.css';
-import spss from '../assets/PRINTING SERVICE.png';
-import bkname from '../assets/bk_name_en.png';
+import styles from'../../styles/Footer.module.css';
+import spss from '../../assets/PRINTING SERVICE.png';
+import bkname from '../../assets/bk_name_en.png';
 
 function Footer(){
     return(

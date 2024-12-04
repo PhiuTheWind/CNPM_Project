@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from '../styles/Header.module.css'
-import spss from '../assets/PRINTING SERVICE.png';
-import ava from '../assets/avatar.png';
+import styles from '../../styles/Header.module.css'
+import spss from '../../assets/PRINTING SERVICE.png';
+import ava from '../../assets/avatar.png';
 import { IoIosLogOut } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 
-function Header({ text, showLogout, isStudent }) {
+function Header({ text, paper, showLogout, isStudent }) {
     const navigate = useNavigate()
 
     return (
@@ -39,7 +39,7 @@ function Header({ text, showLogout, isStudent }) {
                 <div className={styles.stuhomebar}>
                     <div className={styles.bar}>
                         <button className={styles.button} onClick={() => navigate('/student_homepage')}>HOME</button>
-                        <button className={styles.button} onClick={() => navigate('/student_homepage')}>IN TÀI LIỆU</button>
+                        <button className={styles.button} onClick={() => navigate('/student_homepage/printing_configure')}>IN TÀI LIỆU</button>
                         <button className={styles.button} onClick={() => navigate('/student_homepage/view_log')}>LỊCH SỬ IN</button>
                     </div>
                 </div>
@@ -47,7 +47,10 @@ function Header({ text, showLogout, isStudent }) {
             <div className={styles.header_right}>
                 <div className={styles.avatar_container}>
                     <img src={ava} className={styles.avatar} alt="Avatar" />
-                    <p className={styles.welcome_button}>{text}</p>
+                    <div className={styles.info}>
+                        <p className={styles.username}>{text}</p>
+                        {showLogout && isStudent && <p className={styles.paper}>Số trang: {paper}</p>}
+                    </div>
                 </div>
                 {showLogout && (
                     <button className={styles.icon} onClick={() => navigate('/')}>

@@ -1,8 +1,8 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useTable, useSortBy } from 'react-table'
 import { useNavigate } from 'react-router-dom';
-import Header from './Header'
-import Footer from './Footer'
+import Header from './utils/Header'
+import Footer from './utils/Footer'
 import styles from '../styles/ManagePrinter.module.css'
 import { FaNewspaper } from "react-icons/fa6"
 import { IoSearch, IoEyeSharp, IoSettingsSharp } from "react-icons/io5"
@@ -13,6 +13,7 @@ function ManagePrinter() {
   const [loading, setLoading] = useState(true); // State to show loading state
   const [error, setError] = useState(null); // State to handle errors
   const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState([]); // Filtered data
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   const [selectedPrinter, setSelectedPrinter] = useState(null);
   const [isActive, setIsActive] = useState(false);
@@ -27,6 +28,7 @@ function ManagePrinter() {
 
       if (json.success) {
         setData(json.data); // Populate the table with data
+        setFilteredData(json.data);
       } else {
         throw new Error(json.message); // Handle API error
       }
@@ -41,6 +43,17 @@ function ManagePrinter() {
   useEffect(() => {
     fetchPrinters();
   }, []);
+
+  useEffect(() => {
+    if (searchTerm) {
+      const filtered = data.filter((printer) =>
+        printer.location.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data); // Reset to original data if search term is empty
+    }
+  }, [searchTerm, data]);
 
   // Define table columns
   const columns = useMemo(
@@ -108,7 +121,7 @@ function ManagePrinter() {
   const tableInstance = useTable(
     {
       columns,
-      data,
+      data: filteredData,
     },
     useSortBy
   );
@@ -134,7 +147,7 @@ function ManagePrinter() {
           <input
             type="text"
             className={styles.searchInput}
-            placeholder="Nhập ID máy in"
+            placeholder="Nhập vị trí máy in"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);

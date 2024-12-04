@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import Header from './Header';
-import Footer from './Footer';
+import Header from './utils/Header';
+import Footer from './utils/Footer';
 import styles from '../styles/AddPrinter.module.css'
 import { IoMdArrowDropdown } from "react-icons/io";
 

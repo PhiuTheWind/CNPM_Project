@@ -1,26 +1,43 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useTable, useSortBy } from 'react-table';
 import { useNavigate } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
+import Header from './utils/Header';
+import Footer from './utils/Footer';
 import styles from '../styles/ChoosePrinter.module.css';
-import { FaNewspaper } from "react-icons/fa6";
-import { IoSearch, IoEyeSharp, IoSettingsSharp } from "react-icons/io5";
+import { IoSearch} from "react-icons/io5";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
+import { Getinfo } from './utils/GetInfo'
 
 function ChoosePrinter() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [filteredData, setFilteredData] = useState([]); // Filtered data
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   const [selectedPrinter, setSelectedPrinter] = useState(null);
-  const [isActive, setIsActive] = useState(false);
-  const [selectedStatus, setStatus] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [successPopup, setSuccessPopup] = useState(false); // Popup cho trường hợp hợp lệ
-  const statusOption = ["Bật", "Tắt", "Bảo trì"];
   const navigate = useNavigate();
+
+  const [studentInfo, setStudentInfo] = useState({
+    name: "STUDENT",
+    pagebalance: 0,
+  });
+
+  useEffect(() => {
+    const fetchStudentInfo = async () => {
+      try {
+        const data = await Getinfo();
+        setStudentInfo(data); // Update state with fetched data
+      } catch (err) {
+        setError('Failed to fetch student information');
+        console.error(err);
+      }
+    };
+
+    fetchStudentInfo();
+  }, []);
 
   const fetchPrinters = async () => {
     try {
@@ -39,45 +56,20 @@ function ChoosePrinter() {
     }
   };
 
-  const url = `http://localhost:3000/api`;
-  const token = localStorage.getItem("userCredentials")
-    ? JSON.parse(localStorage.getItem("userCredentials")).token
-    : null;
-
-  const [studentInfo, setStudentInfo] = useState({
-    name: "vvvvv",
-    pagebalance: 0,
-  });
-
-  const fetchStudentInfo = async () => {
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setStudentInfo({
-          name: data[0].username,
-          pagebalance: data[0].page_num,
-        });
-      } else {
-        console.error("Failed to fetch student info");
-      }
-    } catch (error) {
-      console.error("Error fetching student info:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchStudentInfo();
-  }, []);
-
   useEffect(() => {
     fetchPrinters();
   }, []);
+
+  useEffect(() => {
+    if (searchTerm) {
+      const filtered = data.filter((printer) =>
+        printer.location.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data); // Reset to original data if search term is empty
+    }
+  }, [searchTerm, data]);
 
   const columns = useMemo(
     () => [
@@ -120,7 +112,7 @@ function ChoosePrinter() {
   const tableInstance = useTable(
     {
       columns,
-      data,
+      data: filteredData,
     },
     useSortBy
   );
@@ -152,7 +144,7 @@ function ChoosePrinter() {
 
   return (
     <div className={styles.container}>
-      <Header text={studentInfo.name} showLogout={true} isStudent={true} />
+      <Header text={studentInfo.name} paper={studentInfo.pagebalance} showLogout={true} isStudent={true} />
       {loading && <p>Loading...</p>}
       {error && <p className={styles.error}>{error}</p>}
 
@@ -162,7 +154,7 @@ function ChoosePrinter() {
           <input
             type="text"
             className={styles.searchInput}
-            placeholder="Nhập ID máy in"
+            placeholder="Nhập vị trí máy in"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);

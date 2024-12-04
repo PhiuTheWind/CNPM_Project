@@ -5,6 +5,8 @@ USE `hcmut_spss`;
 CREATE TABLE IF NOT EXISTS `Student` (
     `username` varchar(255) primary key,
     `password` varchar(255) not null,
+    `stu_id` char(7) unique not null,
+    `stu_name` varchar(255) not null,
     `page_num` int
 );
 
@@ -17,7 +19,9 @@ CREATE TABLE IF NOT EXISTS `Printer` (
     `printer_id` int auto_increment primary key,
     `num_paper` int,
     `location` varchar(255),
-    `status` varchar(255)
+    `status` varchar(255),
+    `printer_name` varchar(255),
+    `ip` varchar(255)
 );
 
 CREATE TABLE IF NOT EXISTS `Request` (
@@ -30,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `Request` (
     `selected_pages` JSON, 
     `status` VARCHAR(255),
     `start_date` DATE, 
+    `end_date`	DATE,
     `received_date` DATE, 
     `student_send` VARCHAR(255),
     `printer_id` INT,
@@ -86,9 +91,9 @@ CREATE TABLE IF NOT EXISTS `contact` (
     foreign key (`spso_update`) references `SPSO`(`username`)
 );
 
-INSERT IGNORE INTO `Student` (`username`, `password`)
+INSERT IGNORE INTO `Student` (`username`, `password`, stu_id, stu_name, page_num)
 VALUES
-('student1', 'password1');
+('student1', 'password1', '2252898', 'Huỳnh Ngọc Văn', 100);
 
 INSERT IGNORE INTO `SPSO` (`username`, `password`)
 VALUES

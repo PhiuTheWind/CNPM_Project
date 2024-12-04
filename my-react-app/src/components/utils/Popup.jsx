@@ -1,6 +1,6 @@
 // Popup.js
 import React, { useEffect } from "react";
-import styles from "../styles/Popup.module.css";
+import styles from "../../styles/Popup.module.css";
 
 const Popup = ({ message, onClose, duration = 3000 }) => {
     return (

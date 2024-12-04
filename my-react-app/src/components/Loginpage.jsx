@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import banner2 from '../assets/banner2.png'
-import Footer from './Footer';
+import Footer from './utils/Footer';
 import styles from '../styles/Loginpage.module.css'
-import Header from './Header';
+import Header from './utils/Header';
 import { FaUser, FaLock } from "react-icons/fa";
 import axios from 'axios';
 

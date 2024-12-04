@@ -1,8 +1,8 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useTable, useSortBy } from 'react-table'
 import { useNavigate } from 'react-router-dom';
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./utils/Header";
+import Footer from "./utils/Footer";
 import styles from '../styles/SpsoViewStuLog.module.css'
 import MOCK_DATA from '../assets/PRINTER_LOG_MOCK_DATA.json'
 import { IoSearch, IoEyeSharp } from "react-icons/io5"

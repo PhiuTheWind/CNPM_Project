@@ -36,6 +36,8 @@
     left: 50%; /* Center horizontally */
     transform: translate(-50%, -50%); /* Adjust position to the exact center */
     background-color: white;
+    border-radius: 20px;
+    outline: 1rem solid #68c8ff57;
 }
 
 .input_group, .checkfiled {
@@ -55,16 +57,16 @@
 }
 
 .input_group .datepick{
-    width: 193%;
+    width: 510px;
     height: 50px;
     padding: 10px;
     box-sizing: border-box;
     border: white; /* Thêm viền đậm */
     border-radius: 15px;
     padding: 20px 20px 20px 20px;
-    font-family: 'Dongle', sans-serif;
-    font-size: 30px;
-    font-weight: 400;
+    font-family: "Quicksand", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
 }
 .input_group .input{
     width: 100%;
@@ -74,15 +76,20 @@
     border: white; /* Thêm viền đậm */
     border-radius: 15px;
     padding: 20px 20px 20px 20px;
-    font-family: 'Dongle', sans-serif;
-    font-size: 30px;
-    font-weight: 400;
+    font-family: "Quicksand", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .filetype{
     display: flex;
     gap: 80px;
     font-size: 18px;
+}
+
+.filetype .type{
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
 }
 
 .filetype .check{
@@ -97,8 +104,8 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-family: 'Nunito Sans', sans-serif;
-    font-size: 30px;
+    font-family: "Quicksand", sans-serif;
+    font-size: 25px;
     font-weight: bold;
 }
 
