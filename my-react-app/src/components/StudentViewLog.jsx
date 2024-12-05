@@ -13,14 +13,11 @@ import { Getinfo } from './utils/GetInfo'
 
 function StudentViewLog() {
     const log_url = `http://localhost:3000/api/log`;
-    const logdetail_url = `http://localhost:3000/api/logdetail`;
 
     const token = localStorage.getItem('userCredentials') ? JSON.parse(localStorage.getItem('userCredentials')).token : null;
     const [studentLogInfo, setStudentLogInfo] = useState([]);
     
-    //List Log lưu trong studentLogInfo
     
-    //Hàm trả về danh sách request 
     const GetLogInfo = async () => {                
         try {
           const response = await axios.post(log_url,{},{
@@ -29,7 +26,7 @@ function StudentViewLog() {
                 'Authorization': `Bearer ${token}`
             }
           });
-     
+          console.log(response.data)
         if (response.status === 200) {
             setStudentLogInfo(response.data)
         }
@@ -44,35 +41,6 @@ function StudentViewLog() {
         }    
     }     
     
-    //   //Hàm trả về thông tin chi tiết của request với tham số là request_id ( request_id có dc ở hàm GetLogInfo)
-    const GetLogInfo_detail = async (request_id) => {                
-        try {
-          const response = await axios.post(logdetail_url,
-            {
-                request_id
-            },
-            {
-            withCredentials: true,
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-            });
-     
-        if (response.status === 200) {
-            setStudentLogInfo(response.data)
-        }
-        else if (response.status === 404) {
-            navigate('/');           
-        }
-        console.log(response)
-    
-        }
-        catch (error) {
-          console.log(error)
-        }    
-    }     
-      
-
 
     const navigate = useNavigate()
     const [studentInfo, setStudentInfo] = useState({
