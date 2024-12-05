@@ -3,7 +3,7 @@ const fs = require('fs');
 function readEnvFile() {
     try {
         const content = fs.readFileSync('./.env', 'utf8');
-        return content;
+        return content.replace(/\r\n/g, '\n').trim();
     } catch (error) {
         if (error.code === 'ENOENT') {
             console.error('.env not found.')
