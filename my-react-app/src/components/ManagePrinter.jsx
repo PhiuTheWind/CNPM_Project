@@ -308,6 +308,7 @@ function ManagePrinter() {
 
                     if (response.ok && result.success) {
                       //alert('Cập nhật trạng thái thành công!');
+                      // pop up ... neu can ?..
                       setIsSettingOpen(false);
 
                       // Optionally refresh the data to reflect the updated status
