@@ -49,11 +49,11 @@ const modify_status = async (req, res) => {
         }
 
         const query = `
-            UPDATE printers
-            SET settings = ?
-            WHERE id = ?
+            UPDATE printer
+            SET status = ?
+            WHERE printer_id = ?
         `;
-        const values = [JSON.stringify(newSettings), printerId];
+        const values = [newSettings, printerId];
 
         const result = await database.query(query, values);
 
@@ -65,9 +65,11 @@ const modify_status = async (req, res) => {
             });
         }
 
+        const [updatedPrinter] = await database.query('SELECT * FROM printer WHERE printer_id = ?', [printerId]);
         return res.status(200).json({
             success: true,
             message: 'Printer settings updated successfully.',
+            data: updatedPrinter,
         });
     } catch (error) {
         console.error('Error updating printer settings:', error);
@@ -84,7 +86,8 @@ const get_printer_list = async (req, res, next) => {
         const result = await getInfo_Printer();
         const format_printer_ID = result.map(printer => ({
             ...printer,
-            printer_id: `PRINTER#${printer.printer_id}`
+            //printer_id: `PRINTER#${printer.printer_id}`
+            printer_id: printer.printer_id
         }));
         //console.log(format_printer_ID)
         res.status(200).json({

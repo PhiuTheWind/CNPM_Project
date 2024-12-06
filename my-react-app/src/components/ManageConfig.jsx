@@ -75,6 +75,7 @@ function ManageConfig() {
       if (response.ok) {
         console.log('Response:', result);
         alert('Configuration updated successfully!');
+        //de cai alert tam, them pop up thi xoa alert
       } else {
         console.error('Error:', result.message);
         alert(`Failed to update configuration: ${result.message}`);
