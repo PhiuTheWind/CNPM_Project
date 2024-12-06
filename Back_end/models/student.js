@@ -14,8 +14,8 @@ const getStudentByUsername = async (username) => {
 
 async function getPageBalance(username) {
     try {
-        const [result] = await database.query(`SELECT page FROM student WHERE username = ?`, [username]);
-        return result[0].page;
+        const [result] = await database.query(`SELECT page_num FROM student WHERE username = ?`, [username]);
+        return result;
     } catch (err) {
         throw err;
     }
@@ -39,7 +39,7 @@ async function updatePageBalance(username, addedPage) {
 
 const getInfo_Printer = async () => {
     try {
-        const [result] = await database.query('SELECT printer_id, location, status FROM printer');
+        const [result] = await database.query('SELECT * FROM printer');
         return result;
     } catch (err) {
         throw err;

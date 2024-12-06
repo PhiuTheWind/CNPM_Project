@@ -91,7 +91,7 @@ const get_printer_list_for_student = async (req, res, next) => {
 
 const get_pagebalance = async (req, res, next) => {
     try {
-        const username = req.body;
+        const username = req.userInfo.username;
         const result = await getPageBalance(username);
 
         res.status(200).json({

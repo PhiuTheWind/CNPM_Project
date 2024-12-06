@@ -7,6 +7,8 @@ import styles from '../styles/ChoosePrinter.module.css';
 import { IoSearch} from "react-icons/io5";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { Getinfo } from './utils/GetInfo'
+import axios from 'axios';
+
 
 function ChoosePrinter() {
   const [data, setData] = useState([]);
@@ -20,10 +22,51 @@ function ChoosePrinter() {
   const [successPopup, setSuccessPopup] = useState(false); // Popup cho trường hợp hợp lệ
   const navigate = useNavigate();
 
+  const token = localStorage.getItem('userCredentials') ? JSON.parse(localStorage.getItem('userCredentials')).token : null;
+
   const [studentInfo, setStudentInfo] = useState({
     name: "STUDENT",
     pagebalance: 0,
   });
+
+  const sendPrintRequest = async() => {
+    const currentTime = new Date();
+    const start_date_value = currentTime.toISOString();
+    const end_date_value = new Date(currentTime.getTime() + 15 * 60 * 1000).toISOString();
+    const received_date_value = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000).toISOString();
+
+    try {
+      const response = await axios.post('http://localhost:3000/api/print',
+        {
+          file_name: "file.doc",
+          paper_size: "A4",
+          num_copies: 1,
+          side_option: "2",
+          selected_pages: "All",
+          status: "Chưa nhận",
+          start_date: start_date_value,
+          end_date: end_date_value,
+          received_date: received_date_value,
+          printer_id: 1
+        },
+        {
+          withCredentials: true,
+          headers: {
+              'Authorization': `Bearer ${token}`
+        }
+      });
+
+    if (response.status === 200) {
+        console.log("Cập nhật thành công:");
+    }
+    else if (response.status === 404) {
+        navigate('/');           
+    }
+    }
+    catch (error) {
+      console.log("Lỗi từ server:", error)
+    }    
+  }
 
   useEffect(() => {
     const fetchStudentInfo = async () => {
@@ -43,6 +86,7 @@ function ChoosePrinter() {
     try {
       const response = await fetch('http://localhost:3000/api/manage_printer');
       const json = await response.json();
+      console.log(json)
 
       if (json.success) {
         setData(json.data);
