@@ -16,6 +16,8 @@ function AddPrinter() {
   const [successMessage, setSuccessMessage] = useState("");
   const statusOptions = ["Bật", "Tắt"];
 
+  const [error, setError] = useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,6 +25,13 @@ function AddPrinter() {
       setErrorMessage("Vui lòng nhập tất cả các trường!");
       return;
     }
+
+    if (Number(numPaper) < 0) {
+      setError('Số lượng giấy phải lớn hơn 0.');
+      return;
+    }
+
+    setError('');
 
     const statusValue = selectedStatus === "Bật" ? "Bật" : "Tắt"; 
 

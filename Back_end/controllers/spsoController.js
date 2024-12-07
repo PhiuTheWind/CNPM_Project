@@ -8,7 +8,7 @@ const add_printer = async (req, res) => {
 
     try {
         // Validate inputs
-        if (!num_paper || !location || !status) {
+        if (!location || !status) {
             return res.status(400).json({
                 success: false,
                 message: 'Missing are required.',
