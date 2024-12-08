@@ -39,11 +39,6 @@ function ManagePrinter() {
     }
   };
 
-  // // Fetch data from API
-  // useEffect(() => {
-  //   fetchPrinters(); 
-  // }, []);
-
   useEffect(() => {
     // Chi fetch data mot lan khi load (refill khong load de khong bi loi)
     if (data.length === 0) {

@@ -104,41 +104,41 @@ INSERT IGNORE INTO `maintenance` (`content`, `date_update`)
 VALUES
 ('Ahahahahahahahahahhahahaahahahhahahahahahahahahahaha', '2024-11-25 15:30:30');
 
-INSERT IGNORE INTO `Printer` (`num_paper`, `location`, `status`, `printer_name`, `ip`)
-VALUES
-  (100, '402A5-CS1', 'Bật', 'Printer A5', '192.168.1.1'),
-  (200, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
-  (110, '402A3-CS1', 'Bảo trì', 'Printer A3', '192.168.1.3'),
-  (200, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4'),
-  (105, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
-  (300, '402A1-CS1', 'Bảo trì', 'Printer A1', '192.168.1.5'),
-  (200, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4'),
-  (200, '402A3-CS1', 'Tắt', 'Printer A3', '192.168.1.3'),
-  (100, '402A5-CS1', 'Bảo trì', 'Printer A5', '192.168.1.1'),
-  (110, '402A6-CS1', 'Bật', 'Printer A6', '192.168.1.6'),
-  (102, '402A7-CS1', 'Tắt', 'Printer A7', '192.168.1.7'),
-  (101, '402A3-CS1', 'Bảo trì', 'Printer A3', '192.168.1.3'),
-  (105, '402A4-CS1', 'Bật', 'Printer A4', '192.168.1.2'),
-  (100, '402A5-CS1', 'Tắt', 'Printer A5', '192.168.1.1'),
-  (140, '402A7-CS1', 'Bảo trì', 'Printer A7', '192.168.1.7'),
-  (150, '402A5-CS1', 'Bật', 'Printer A5', '192.168.1.1'),
-  (50, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
-  (105, '402A3-CS1', 'Bảo trì', 'Printer A3', '192.168.1.3'),
-  (100, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4');
+-- INSERT IGNORE INTO `Printer` (`num_paper`, `location`, `status`, `printer_name`, `ip`)
+-- VALUES
+--   (100, '402A5-CS1', 'Bật', 'Printer A5', '192.168.1.1'),
+--   (200, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
+--   (110, '402A3-CS1', 'Bảo trì', 'Printer A3', '192.168.1.3'),
+--   (200, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4'),
+--   (105, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
+--   (300, '402A1-CS1', 'Bảo trì', 'Printer A1', '192.168.1.5'),
+--   (200, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4'),
+--   (200, '402A3-CS1', 'Tắt', 'Printer A3', '192.168.1.3'),
+--   (100, '402A5-CS1', 'Bảo trì', 'Printer A5', '192.168.1.1'),
+--   (110, '402A6-CS1', 'Bật', 'Printer A6', '192.168.1.6'),
+--   (102, '402A7-CS1', 'Tắt', 'Printer A7', '192.168.1.7'),
+--   (101, '402A3-CS1', 'Bảo trì', 'Printer A3', '192.168.1.3'),
+--   (105, '402A4-CS1', 'Bật', 'Printer A4', '192.168.1.2'),
+--   (100, '402A5-CS1', 'Tắt', 'Printer A5', '192.168.1.1'),
+--   (140, '402A7-CS1', 'Bảo trì', 'Printer A7', '192.168.1.7'),
+--   (150, '402A5-CS1', 'Bật', 'Printer A5', '192.168.1.1'),
+--   (50, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
+--   (105, '402A3-CS1', 'Bảo trì', 'Printer A3', '192.168.1.3'),
+--   (100, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4');
   
 
 
 
-INSERT IGNORE INTO `Request` 
-(`file_name`, `paper_size`, `num_copies`, `side_option`, `selected_pages`, `status`, `start_date`, `end_date`, `received_date`, `student_send`, `printer_id`)
-VALUES
-('assignment1.doc', 'A4', 2, 1, '"All"', "Đã nhận", '2024-11-01', '2024-11-02', '2024-11-03', 'student1', 1),
-('report2.pdf', 'A3', 1, 2 , '"All"', "Chưa nhận", '2024-11-02', '2024-11-03', '2024-11-04', 'student1', 2),
-('notes3.doc', 'A4', 3, 2, '"All"', "Đã nhận", '2024-11-03', '2024-11-04', '2024-11-05', 'student1', 3),
-('project4.pdf', 'A3', 4, 1, '"All"', "Chưa nhận", '2024-11-04', '2024-11-05', '2024-11-06', 'student1', 4),
-('document5.doc', 'A4', 1, 1, '"All"', "Đã nhận", '2024-11-05', '2024-11-06', '2024-11-07', 'student1', 5),
-('assignment6.pdf', 'A3', 2, 2, '"All"', "Chưa nhận", '2024-11-06', '2024-11-07', '2024-11-08', 'student1', 6),
-('summary7.doc', 'A4', 5, 1, '"All"', "Đã nhận", '2024-11-07', '2024-11-08', '2024-11-09', 'student1', 7),
-('presentation8.pdf', 'A3', 3, 2, '"All"', "Chưa nhận", '2024-11-08', '2024-11-09', '2024-11-10', 'student1', 8),
-('report9.doc', 'A4', 4, 2, '"All"', "Đã nhận", '2024-11-09', '2024-11-10', '2024-11-11', 'student1', 9),
-('notes10.pdf', 'A3', 1, 2, '"All"', "Chưa nhận", '2024-11-10', '2024-11-11', '2024-11-12', 'student1', 10);
+-- INSERT IGNORE INTO `Request` 
+-- (`file_name`, `paper_size`, `num_copies`, `side_option`, `selected_pages`, `status`, `start_date`, `end_date`, `received_date`, `student_send`, `printer_id`)
+-- VALUES
+-- ('assignment1.doc', 'A4', 2, 1, '"All"', "Đã nhận", '2024-11-01', '2024-11-02', '2024-11-03', 'student1', 1),
+-- ('report2.pdf', 'A3', 1, 2 , '"All"', "Chưa nhận", '2024-11-02', '2024-11-03', '2024-11-04', 'student1', 2),
+-- ('notes3.doc', 'A4', 3, 2, '"All"', "Đã nhận", '2024-11-03', '2024-11-04', '2024-11-05', 'student1', 3),
+-- ('project4.pdf', 'A3', 4, 1, '"All"', "Chưa nhận", '2024-11-04', '2024-11-05', '2024-11-06', 'student1', 4),
+-- ('document5.doc', 'A4', 1, 1, '"All"', "Đã nhận", '2024-11-05', '2024-11-06', '2024-11-07', 'student1', 5),
+-- ('assignment6.pdf', 'A3', 2, 2, '"All"', "Chưa nhận", '2024-11-06', '2024-11-07', '2024-11-08', 'student1', 6),
+-- ('summary7.doc', 'A4', 5, 1, '"All"', "Đã nhận", '2024-11-07', '2024-11-08', '2024-11-09', 'student1', 7),
+-- ('presentation8.pdf', 'A3', 3, 2, '"All"', "Chưa nhận", '2024-11-08', '2024-11-09', '2024-11-10', 'student1', 8),
+-- ('report9.doc', 'A4', 4, 2, '"All"', "Đã nhận", '2024-11-09', '2024-11-10', '2024-11-11', 'student1', 9),
+-- ('notes10.pdf', 'A3', 1, 2, '"All"', "Chưa nhận", '2024-11-10', '2024-11-11', '2024-11-12', 'student1', 10);

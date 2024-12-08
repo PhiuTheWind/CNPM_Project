@@ -7,7 +7,11 @@ import { useNavigate } from 'react-router-dom';
 
 function Header({ text, paper, showLogout, isStudent }) {
     const navigate = useNavigate()
-
+    const handleClickAvatar = () =>{
+        if (isStudent){
+            navigate('/student_homepage/summary')
+        }
+    }
     return (
         <header className={styles.header}>
             <div className={styles.header_logo}>
@@ -45,7 +49,7 @@ function Header({ text, paper, showLogout, isStudent }) {
                 </div>
             )}
             <div className={styles.header_right}>
-                <div className={styles.avatar_container}>
+                <div className={styles.avatar_container} onClick={handleClickAvatar}>
                     <img src={ava} className={styles.avatar} alt="Avatar" />
                     <div className={styles.info}>
                         <p className={styles.username}>{text}</p>

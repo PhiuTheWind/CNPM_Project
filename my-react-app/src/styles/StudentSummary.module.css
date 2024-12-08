@@ -1,0 +1,220 @@
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    margin: 0 auto;
+    background-color: white;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 500;
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Quicksand", sans-serif;
+    font-weight: bolder;
+    font-size: x-large;
+    margin-top: 10px;
+}
+
+.info{
+    width: 300px;
+    height: 580px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #D3EFFF;
+    border: 5px solid white;
+    border-radius: 5px;
+    outline: 20px solid #D3EFFF;
+    position: relative;
+    margin: 30px 0 30px 150px;
+    gap: 20px;
+}
+
+.ava {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.name{
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.paper{
+    font-family: "Quicksand", sans-serif;
+    font-weight: 600;
+    font-size: large;
+}
+
+.buy_paper{
+    width: 150px;
+    height: 40px;
+    font-family: "Quicksand", sans-serif;
+    font-weight: bolder;
+    font-size: large;
+    border: none;
+    background-color: #38B6FF;
+    color: white;
+    text-decoration: underline;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.buy_paper:hover{
+    background-color: #009ef9;
+}
+
+.paper_size_title{
+    margin-left: 10px;
+    font-size: larger;
+    font-weight: bold;
+    color: #347758;
+}
+
+.size_input_group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 10px 10px 0;
+}
+
+.file_date_search{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.file_input_group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file_search_label, .size_search_label{
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+    font-size: medium;
+    margin-right: 5px;
+}
+
+.file_datepick, .size_datepick{
+    width: 100px;
+    font-family: "Quicksand", sans-serif;
+    font-size: medium;
+    text-align: center;
+    border: 1px solid#347758;
+    height: 25px;
+    border-radius: 5px;
+}
+
+.file_datepick{
+    border: 1px solid#FF8C8C;
+}
+
+.paper_size{
+    position: absolute;
+    background-color: white;
+    outline: 10px solid #E5FBE0;
+    top: 150px;
+    left: 550px;
+    width: 380px;
+    height: 255px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.doughnutchart{
+    margin-left: -15px;
+}
+
+.file_type_title{
+    padding: 5px 0 5px 10px;
+    font-size: larger;
+    font-weight: bold;
+    color: #FF8C8C;
+}
+
+.file_type{
+    position: absolute;
+    background-color: white;
+    outline: 10px solid #FFE1E1;
+    top: 150px;
+    left: 970px;
+    width: 380px;
+    height: 255px;
+    border-radius: 10px;
+}
+
+.barchart{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.print_freq{
+    position: absolute;
+    background-color: white;
+    outline: 10px solid #FFE1B7;
+    top: 430px;
+    left: 550px;
+    width: 800px;
+    height: 317px;
+    border-radius: 10px;
+}
+
+.print_freq_title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+}
+
+.print_freq_input_lable{
+    font-size: larger;
+    font-weight: bold;
+    color: #faaf45;
+}
+
+.print_freq_input_year{
+    width: 55px;
+    font-family: "Quicksand", sans-serif;
+    font-size: larger;
+    font-weight: bold;
+    color: #faaf45;
+    text-align: center;
+    border: 1px solid rgba(255, 166, 0, 0.253);
+}
+
+.print_freq_input_year::placeholder{
+    color: #faaf45;
+}
+
+.view_log_btn{
+    font-family: "Quicksand", sans-serif;
+    font-size: large;
+    font-weight: bold;
+    background-color: #faaf45;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    height: 30px;
+    width: 150px;
+    cursor: pointer;
+}
+
+.view_log_btn:hover{
+    background-color: #f49919;
+}
+
+.linechart{
+    height: 250px;
+    width: 800px;
+}
