@@ -9,9 +9,11 @@ import { Chart as ChartJS } from 'chart.js/auto';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import PurchasePaperModal from './PurchasePaperModal';
 
 function StudentSummary() {
     const navigate = useNavigate()
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [studentInfo, setStudentInfo] = useState({
         name: 'STUDENT',
         pagebalance: 0,
@@ -44,6 +46,14 @@ function StudentSummary() {
         fetchStudentInfo();
     }, []);
 
+    const handleOpenModal = () => {
+        setIsModalOpen(true); // Show the modal
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false); // Hide the modal
+    };
+
     return (
         <div className={styles.container}>
             <Header text={studentInfo.name} paper={studentInfo.pagebalance} showLogout={true} isStudent={true} />
@@ -52,7 +62,7 @@ function StudentSummary() {
                 <img src={ava} className={styles.ava} alt="Avatar" />
                 <p className={styles.name}>{studentInfo.name}</p>
                 <p className={styles.paper}>Số trang: {studentInfo.pagebalance}</p>
-                <button className={styles.buy_paper}>Mua thêm giấy</button>
+                <button className={styles.buy_paper} onClick={handleOpenModal}>Mua thêm giấy</button>
             </div>
             <div className={styles.paper_size}>
                 <div className={styles.paper_size_title}>
@@ -297,7 +307,10 @@ function StudentSummary() {
                     />
                 </div>
             </div>
-
+            
+            {isModalOpen && (
+                <PurchasePaperModal onClose={handleCloseModal} name={studentInfo.name}/>
+            )}
             <Footer />
         </div>
     );

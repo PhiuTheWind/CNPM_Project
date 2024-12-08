@@ -15,7 +15,7 @@
 
 .modal_content {
     background: #ffffff;
-    padding: 40px;
+    padding-bottom: 20px;
     border-radius: 15px;
     text-align: center;
     max-width: 600px;
@@ -30,10 +30,14 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    background-color: #CBEFC4;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    height: 50px;
 }
 
-.modal_header h2 {
-    margin: 0;
+.modal_header .h2 {
+    margin-left: 200px;
     font-size: 24px;
     color: #333;
 }
@@ -44,6 +48,7 @@
     font-size: 30px;
     cursor: pointer;
     color: #333;
+    margin-right: 10px;
     transition: color 0.3s;
 }
 
@@ -60,8 +65,9 @@
 .price_info {
     background: #d7f2d7;
     padding: 20px;
+    margin-left: 20px;
     border-radius: 10px;
-    width: 45%;
+    width: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
 }
@@ -76,12 +82,12 @@
     font-size: 24px;
 }
 
-.name_button {
+.name {
     background: #a6e5a6;
     color: #333;
     border: none;
     padding: 10px 15px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     border-radius: 5px;
     cursor: default;
@@ -92,14 +98,14 @@
     margin-top: 10px;
 }
 
-.input_section label {
+.input_section .label {
     display: block;
     font-size: 16px;
     margin-bottom: 5px;
     color: #333;
 }
 
-.input_section input {
+.input_section .input {
     width: 80px;
     padding: 5px;
     font-size: 16px;
@@ -110,14 +116,13 @@
 
 .card_section {
     text-align: center;
-    margin-left: 50px; /* Đẩy toàn bộ phần tử sang bên phải */
     width: fit-content; /* Chỉ lấy đủ chiều rộng nội dung để phù hợp với margin-left */
 }
 
 .card_image {
     max-width: 100%;
     width: 300px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .pay_button {
@@ -127,6 +132,7 @@
     border: none;
     border-radius: 8px;
     font-weight: bold;
+    font-size: medium;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: background 0.3s ease;
@@ -134,5 +140,6 @@
 
 .pay_button:hover {
     background: #ffa726;
+    color: white;
 }
 

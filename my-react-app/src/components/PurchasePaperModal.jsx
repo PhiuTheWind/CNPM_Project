@@ -3,33 +3,32 @@ import { useNavigate } from 'react-router-dom'; // Import hook useNavigate
 import styles from '../styles/PurchasePaperModal.module.css'; // Import file CSS để tạo kiểu cho modal
 import OCB from '../assets/OCB.png'; // Import file ảnh OCB.png
 
-function PurchasePaperModal() {
+function PurchasePaperModal({onClose, name}) {
     const [paperCount, setPaperCount] = useState(100);
-    const navigate = useNavigate(); // Sử dụng hook useNavigate để điều hướng
 
     const handleCloseModal = () => {
-        alert('Đóng modal');
+        onClose();
     };
 
     const handlePayment = () => {
         alert(`Thanh toán thành công!`);
-        navigate('/student_homepage'); // Điều hướng về /student_homepage sau khi thanh toán thành công
+        onClose();
     };
 
     return (
         <div className={styles.modal_overlay}>
             <div className={styles.modal_content}>
                 <div className={styles.modal_header}>
-                    <h2>MUA THÊM GIẤY IN</h2>
+                    <h2 className={styles.h2}>MUA THÊM GIẤY IN</h2>
                     <button className={styles.close_button} onClick={handleCloseModal}>×</button>
                 </div>
                 <div className={styles.payment_section}>
                     <div className={styles.price_info}>
                         <p className={styles.price}>500.000 <span>VNĐ</span></p>
-                        <button className={styles.name_button}>HUỲNH NGỌC VĂN</button>
+                        <p className={styles.name}>{name.toUpperCase()}</p>
                         <div className={styles.input_section}>
-                            <label htmlFor="paper_count">Số giấy mua thêm</label>
-                            <input
+                            <label className={styles.label} htmlFor="paper_count">Số giấy mua thêm</label>
+                            <input className={styles.input}
                                 type="number"
                                 id="paper_count"
                                 value={paperCount}
