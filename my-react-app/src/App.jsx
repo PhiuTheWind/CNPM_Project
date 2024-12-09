@@ -11,7 +11,8 @@ import StudentHomepage from './components/StudentHomepage.jsx';
 import SpsoHomepage from './components/SpsoHomepage.jsx';
 import ManagePrinter from './components/ManagePrinter.jsx';
 import ManageConfig from './components/ManageConfig.jsx';
-import Report4SPSO from './components/Report4SPSO.jsx';
+import Report4SPSOMonth from './components/Report4SPSOMonth.jsx';
+import Report4SPSOYear from './components/Report4SPSOYear.jsx';
 import AddPrinter from './components/AddPrinter.jsx';
 import PrinterLog from './components/PrinterLog.jsx';
 import StudentViewLog from './components/StudentViewLog.jsx';
@@ -60,7 +61,8 @@ function App() {
             <Route path="/spso_homepage/manage_printer/printer_log" element={<PrinterLog />} />
             <Route path="/spso_homepage/manage_cofig" element={<ManageConfig />} />
             <Route path="/spso_homepage/view_stu_log" element={<SpsoViewStuLog />} />
-            <Route path="/spso_homepage/spsoreport" element={<Report4SPSO />} />
+            <Route path="/spso_homepage/spso_report_month" element={<Report4SPSOMonth />} />
+            <Route path="/spso_homepage/spso_report_year" element={<Report4SPSOYear />} />
 
           <Route path="/printing_configure" element={<PrintingConfigure />} />
         </Routes>
