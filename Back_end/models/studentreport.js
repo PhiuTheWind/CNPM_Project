@@ -110,9 +110,6 @@ const fileextentionsum = async (username, start, end) => {
 const frequencysum = async (username, year) => {
     try {
 
-        console.log("year", year);
-
-
         if (!year) {
             const currentDate = new Date();
             year = currentDate.getFullYear(); 
@@ -123,22 +120,35 @@ const frequencysum = async (username, year) => {
         }
 
         const result = new Array(12).fill(0);
-
+     
         for (let month = 1; month <= 12; month++) {
-            const monthStart = `${year}-${String(month).padStart(2, '0')}-01`;
-            const monthEnd = `${year}-${String(month).padStart(2, '0')}-31`;
-
-            const queryParams = [monthStart, monthEnd, username];
-
+    
+            let monthEnd;
+            if (month === 2) {
+      
+                const isLeapYear = (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0));
+                monthEnd = isLeapYear ? '29' : '28'; 
+            } else if ([4, 6, 9, 11].includes(month)) {
+         
+                monthEnd = '30';
+            } else {
+         
+                monthEnd = '31';
+            }
+        
+            const queryParams = [`${year}-${String(month).padStart(2, '0')}-01`, `${year}-${String(month).padStart(2, '0')}-${monthEnd}`, username];
+            
             const [resultMonth] = await database.query(
                 `SELECT COUNT(*) AS total_requests
                  FROM Request 
-                 WHERE start_date BETWEEN ? AND ? 
+                 WHERE start_date >= ? AND start_date <= ?
                    AND student_send = ?`,
                 queryParams
             );
+        
             result[month - 1] = resultMonth[0].total_requests;
         }
+        
 
         return result;
     } catch (err) {
