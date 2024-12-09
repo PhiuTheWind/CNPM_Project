@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `Request` (
     `request_id` INT AUTO_INCREMENT,
     `paper_size` VARCHAR(10),
     `num_copies` INT,
-    `side_option` TINYINT(1), 
+    `side_option` VARCHAR(10), 
 
     `selected_pages` JSON, 
     `status` VARCHAR(255),
