@@ -8,6 +8,7 @@ import { IoSearch } from "react-icons/io5";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { Getinfo } from './utils/GetInfo';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 function ChoosePrinter() {
   const [data, setData] = useState([]);
@@ -144,27 +145,27 @@ function ChoosePrinter() {
     } else {
       setSuccessPopup(true); // Hiển thị Popup cho máy in hợp lệ
 
-      // Gửi request in tới server
-      const request = {
-        printer_id: selectedPrinter.printer_id,
+    }
+  };
+  
+    const handleRedirectToHomepage = () => {
+      const printingInfor = {
         uploadedFiles,
         printSide,
         paperSize,
         numCopies,
         pageSelection,
         customPage,
+        printer_id: selectedPrinter?.printer_id
       };
-      console.log(request);
-
-    }
-  };
+      console.log(printingInfor);
+      sendPrintRequest(printingInfor);
+      navigate('/student_homepage', { replace: true });
+      setTimeout(() => {
+        localStorage.removeItem('printingConfig');
+      }, 100);
+    };
   
-  const handleRedirectToHomepage = () => {
-    navigate('/student_homepage', { replace: true });
-    setTimeout(() => {
-      localStorage.removeItem('printingConfig'); // Xóa printingConfig khỏi localStorage sau khi chuyển hướng
-    }, 100);
-  };
   
 
   const handleBackToPrintingConfig = () => {
@@ -181,6 +182,42 @@ function ChoosePrinter() {
       },
     });
   };
+
+    const sendPrintRequest = async () => {
+      const currentTime = new Date();
+      const start_date_value = currentTime.toISOString();
+      const end_date_value = new Date(currentTime.getTime() + 15 * 60 * 1000).toISOString();
+      const received_date_value = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000).toISOString();
+      const token = localStorage.getItem('token');
+      try {
+        const response = await axios.post(
+          'http://localhost:3000/api/print',
+          {
+            ...printingInfo,
+            start_date: start_date_value,
+            end_date: end_date_value,
+            received_date: received_date_value,
+            status: "Chưa nhận"
+          },
+          {
+            withCredentials: true,
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          }
+        );
+    
+        if (response.status === 200) {
+          console.log("Cập nhật thành công");
+        } else {
+          console.error(`Lỗi từ server: ${response.status}`);
+        }
+      } catch (error) {
+        console.error("Lỗi từ server:", error);
+      }
+    };
+    
+  
   
   return (
     <div className={styles.container}>

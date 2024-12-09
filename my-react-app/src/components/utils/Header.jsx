@@ -13,6 +13,10 @@ function Header({ text, paper, showLogout, isStudent }) {
             navigate('/student_homepage/summary')
         }
     }
+    const handleLogout = () => {
+        localStorage.removeItem('printingConfig');
+        navigate('/');
+    }
     return (
         <header className={styles.header}>
             <div className={styles.header_logo}>

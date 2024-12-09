@@ -391,3 +391,15 @@ label {
     background-color: #007acc;
 }
 
+.pageInfo {
+    font-size: 16px; /* Kích thước chữ vừa phải */
+    color: #4CAF50; /* Màu xanh lá nhấn mạnh */
+    margin-top: 10px; /* Khoảng cách phía trên */
+    text-align: center; /* Căn giữa văn bản */
+    font-weight: bold; /* Chữ đậm để dễ nhìn */
+    padding: 5px 10px; /* Tạo khoảng cách trong cho phần văn bản */
+    border: 1px solid #4CAF50; /* Viền xanh lá */
+    border-radius: 8px; /* Góc bo tròn */
+    background-color: #f9fff9; /* Nền xanh nhạt */
+  }
+  
