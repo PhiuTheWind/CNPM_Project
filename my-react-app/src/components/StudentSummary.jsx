@@ -10,6 +10,11 @@ import { Bar, Doughnut, Line } from 'react-chartjs-2';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import PurchasePaperModal from './PurchasePaperModal';
+import axios from 'axios';
+
+
+const token = localStorage.getItem('userCredentials') ? JSON.parse(localStorage.getItem('userCredentials')).token : null;
+
 
 function StudentSummary() {
     const navigate = useNavigate()
@@ -28,9 +33,58 @@ function StudentSummary() {
 
     const [year, setYear] = useState(null);
 
-    const paper_size_data = [50, 10] // A4, A3
-    const file_type_data = [50, 10, 5, 5] // ["pdf", "doc", "jpg", "png"]
-    const print_freq_data = [20, 10, 5, 5, 30, 10, 1, 5, 0, 26, 11, 8] // ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"]
+    const [paper_size_data, setPaperSizeData] = useState(null); // A4, A3
+    const [file_type_data, setFileTypeData] = useState(null); // ["pdf", "doc", "jpg", "png"]
+    const [print_freq_data, setPrintFreqData] = useState(null); // ["T1", ..., "T12"]
+
+
+    const GetSummaryInfo = async () => {
+        try {
+            const response_size = await axios.post(`http://localhost:3000/api/papersize_summary`, 
+                {
+                    start: size_start_date,
+                    end: size_end_date
+                }, {
+                withCredentials: true,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const response_type = await axios.post(`http://localhost:3000/api/fileextension_summary`, {
+                    start: file_start_date,
+                    end: file_end_date
+            }, {
+                withCredentials: true,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            const response_frequen = await axios.post(`http://localhost:3000/api/frequency_summary`, 
+                {
+                    year: year
+                }, {
+                withCredentials: true,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response_size.status === 200) {
+                setPaperSizeData(response_size.data)
+            }
+            if (response_type.status === 200) {
+                setFileTypeData(response_type.data)
+            }
+            if (response_frequen.status === 200) {
+                setPrintFreqData(response_frequen.data)
+            }
+            if (response_size.status === 404 || response_type.status === 404 || response_frequen.status === 404) {
+                navigate('/');
+            }
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         const fetchStudentInfo = async () => {
@@ -45,6 +99,16 @@ function StudentSummary() {
 
         fetchStudentInfo();
     }, []);
+
+    useEffect(() => {
+        GetSummaryInfo();
+    }, [
+        size_start_date, 
+        size_end_date, 
+        file_start_date, 
+        file_end_date,
+        year
+    ]);
 
     const handleOpenModal = () => {
         setIsModalOpen(true); // Show the modal
