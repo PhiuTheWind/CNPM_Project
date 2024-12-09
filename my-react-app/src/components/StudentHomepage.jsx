@@ -33,7 +33,7 @@ function StudentHomepage() {
 
     fetchStudentInfo();
   }, []);
-
+  
   return (
 
     <div className={styles.container}>

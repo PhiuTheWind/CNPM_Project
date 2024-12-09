@@ -52,6 +52,7 @@ function PrintingConfigure() {
   
     const printingConfig = {
       uploadedFiles,
+      file_name: uploadedFiles[0].name,
       printSide,
       paperSize,
       numCopies,
@@ -67,6 +68,7 @@ function PrintingConfigure() {
   
 
   const supportedExtensions = ["pdf", "docx", "jpg", "png"]; // Các loại file được hỗ trợ
+
   
   // Get username and page balance
   useEffect(() => {
@@ -74,6 +76,7 @@ function PrintingConfigure() {
     const savedConfig = localStorage.getItem("printingConfig");
     if (savedConfig) {
       const {
+        file_name,
         uploadedFiles,
         printSide,
         paperSize,
@@ -90,6 +93,8 @@ function PrintingConfigure() {
       setPageSelection(pageSelection || "all");
       setCustomPage(customPage || "");
       setNumPages(numPages || 0);
+
+      
     }
 
     // Fetch thông tin sinh viên

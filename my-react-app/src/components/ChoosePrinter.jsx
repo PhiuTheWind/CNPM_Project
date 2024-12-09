@@ -22,7 +22,7 @@ function ChoosePrinter() {
   const [successPopup, setSuccessPopup] = useState(false); // Popup cho trường hợp hợp lệ
   const navigate = useNavigate();
   const location = useLocation();
-  const { uploadedFiles, printSide, paperSize, numCopies, pageSelection, customPage } = location.state || {};
+  const { uploadedFiles, printSide, paperSize, numCopies, pageSelection, customPage, file_name } = location.state || {};
   const [studentInfo, setStudentInfo] = useState({
     name: "STUDENT",
     pagebalance: 0,
@@ -38,12 +38,13 @@ function ChoosePrinter() {
     const fetchStudentInfo = async () => {
       try {
         const data = await Getinfo();
-        setStudentInfo(data); // Update state with fetched data
+        setStudentInfo(data); // Cập nhật thông tin sinh viên
       } catch (err) {
-        setError('Failed to fetch student information');
+        setError("Không thể lấy thông tin sinh viên. Vui lòng kiểm tra lại.");
         console.error(err);
       }
     };
+    
 
     fetchStudentInfo();
   }, []);
@@ -147,27 +148,47 @@ function ChoosePrinter() {
 
     }
   };
-  
-    const handleRedirectToHomepage = () => {
-      const printingInfor = {
-        uploadedFiles,
-        printSide,
-        paperSize,
-        numCopies,
-        pageSelection,
-        customPage,
-        printer_id: selectedPrinter?.printer_id
-      };
-      console.log(printingInfor);
-      sendPrintRequest(printingInfor);
-      navigate('/student_homepage', { replace: true });
-      setTimeout(() => {
-        localStorage.removeItem('printingConfig');
-      }, 100);
-    };
-  
-  
 
+  const printingInfor = {
+    file_name,
+    uploadedFiles,
+    printSide,
+    paperSize,
+    numCopies,
+    pageSelection,
+    customPage,
+    printer_id: selectedPrinter?.printer_id
+  };
+  console.log(printingInfor);
+  const getToken = () => {
+    try {
+      const userCredentials = localStorage.getItem("userCredentials");
+      if (userCredentials) {
+        const parsedCredentials = JSON.parse(userCredentials);
+        return parsedCredentials.token; // Trả về token
+      }
+      return null; // Trường hợp không có token
+    } catch (error) {
+      console.error("Lỗi khi lấy token:", error);
+      return null;
+    }
+  };
+  
+  const handleRedirectToHomepage = () => {
+    if (!printingInfor.printer_id) {
+      alert("Chưa chọn máy in. Vui lòng chọn lại.");
+      return;
+    }
+  
+    sendPrintRequest(printingInfor); // Truyền đúng biến
+    navigate("/student_homepage", { replace: true });
+    setTimeout(() => {
+      localStorage.removeItem("printingConfig");
+    }, 100);
+  };
+  
+  
+  
   const handleBackToPrintingConfig = () => {
     // Điều hướng quay lại trang /printing_configure với state đã lưu
     navigate('/student_homepage/printing_configure', {
@@ -183,41 +204,56 @@ function ChoosePrinter() {
     });
   };
 
-    const sendPrintRequest = async () => {
-      const currentTime = new Date();
-      const start_date_value = currentTime.toISOString();
-      const end_date_value = new Date(currentTime.getTime() + 15 * 60 * 1000).toISOString();
-      const received_date_value = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000).toISOString();
-      const token = localStorage.getItem('token');
-      try {
-        const response = await axios.post(
-          'http://localhost:3000/api/print',
-          {
-            ...printingInfo,
-            start_date: start_date_value,
-            end_date: end_date_value,
-            received_date: received_date_value,
-            status: "Chưa nhận"
+  const sendPrintRequest = async (printingInfor) => {
+  const token = getToken(); // Lấy token từ localStorage
+    if (!token) {
+      console.error("Token không tồn tại. Yêu cầu đăng nhập lại.");
+      alert("Vui lòng đăng nhập để tiếp tục.");
+      return;
+    }
+
+    const currentTime = new Date();
+    const start_date_value = currentTime.toISOString();
+    const end_date_value = new Date(currentTime.getTime() + 15 * 60 * 1000).toISOString();
+    const received_date_value = new Date(currentTime.getTime() + 24 * 60 * 60 * 1000).toISOString();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/print",
+        {
+          print_infor: printingInfor,
+          start_date: start_date_value,
+          end_date: end_date_value,
+          received_date: received_date_value,
+          status: "Chưa nhận",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Truyền token vào header
           },
-          {
-            withCredentials: true,
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          }
-        );
-    
-        if (response.status === 200) {
-          console.log("Cập nhật thành công");
-        } else {
-          console.error(`Lỗi từ server: ${response.status}`);
         }
-      } catch (error) {
-        console.error("Lỗi từ server:", error);
+      );
+
+      if (response.status === 200) {
+        console.log("Cập nhật thành công:", response.data);
+      } else {
+        console.error(`Lỗi từ server: ${response.status}`);
       }
-    };
-    
-  
+    } catch (error) {
+      console.error("Lỗi từ server:", error.response?.data || error.message);
+    }
+
+    console.log("Request Body gửi lên:", {
+      print_infor: printingInfor,
+      start_date: start_date_value,
+      end_date: end_date_value,
+      received_date: received_date_value,
+      status: "Chưa nhận",
+    });
+  };
+
+
+
   
   return (
     <div className={styles.container}>
