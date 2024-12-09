@@ -349,33 +349,54 @@
     border: 2px solid #888; /* Đường viền đậm hơn khi di chuột qua */
 }
 
-/* CSS for the check button */
-.check_button_wrapper {
+.button_group {
     display: flex;
-    justify-content: center; /* Căn giữa */
-    margin-top: 20px;
-    padding-left: 50%; /* Thêm khoảng đẩy nhẹ sang phải */
+    justify-content: flex-start; /* Căn hai nút sang bên trái */
+    gap: 20px; /* Tăng khoảng cách giữa hai nút */
+    margin-top: 30px;
+    padding-left: 800px; /* Đẩy nhóm nút sang phải từ cạnh trái */
+    margin-bottom: 30px; /* Thêm khoảng cách phía dưới để tạo sự thoáng mát */
+}
+
+.back_button {
+    padding: 20px 40px; /* Tăng kích thước nút để lớn hơn */
+    font-size: 18px; /* Tăng kích thước chữ */
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #888; /* Màu nền cho nút Back */
+    border: none;
+    border-radius: 10px; /* Tăng độ bo tròn của nút để nhìn hài hòa hơn */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Thêm hiệu ứng chuyển màu và di chuyển khi hover */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng cho nút để tạo cảm giác nổi bật */
+}
+
+.back_button:hover {
+    background-color: #555; /* Màu nền khi hover cho nút Back */
+    transform: translateY(-2px); /* Tạo hiệu ứng di chuyển nhẹ khi hover */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15); /* Tăng độ bóng khi hover */
 }
 
 .check_button {
-    background-color: #004AAD;
-    color: white;
-    border: none;
-    padding: 20px 40px; /* Tăng kích thước nút */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 20px; /* Tăng kích thước chữ */
+    padding: 20px 40px; /* Tăng kích thước nút để lớn hơn */
+    font-size: 18px; /* Tăng kích thước chữ */
     font-weight: bold;
-    margin: 4px 2px;
+    color: #ffffff;
+    background-color: #007bff; /* Màu nền cho nút Check */
+    border: none;
+    border-radius: 10px; /* Tăng độ bo tròn của nút để nhìn hài hòa hơn */
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    border-radius: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Thêm hiệu ứng chuyển màu và di chuyển khi hover */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng cho nút để tạo cảm giác nổi bật */
 }
 
 .check_button:hover {
-    background-color: #3da5ff;
+    background-color: #0056b3; /* Màu nền khi hover cho nút Check */
+    transform: translateY(-2px); /* Tạo hiệu ứng di chuyển nhẹ khi hover */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15); /* Tăng độ bóng khi hover */
 }
+
+  
 
 .popup {
     position: fixed;

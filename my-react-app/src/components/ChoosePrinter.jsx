@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import Header from './utils/Header';
 import Footer from './utils/Footer';
 import styles from '../styles/ChoosePrinter.module.css';
-import { IoSearch} from "react-icons/io5";
+import { IoSearch } from "react-icons/io5";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
-import { Getinfo } from './utils/GetInfo'
+import { Getinfo } from './utils/GetInfo';
+import { useLocation } from 'react-router-dom';
 
 function ChoosePrinter() {
   const [data, setData] = useState([]);
@@ -19,11 +20,18 @@ function ChoosePrinter() {
   const [showPopup, setShowPopup] = useState(false);
   const [successPopup, setSuccessPopup] = useState(false); // Popup cho trường hợp hợp lệ
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const { uploadedFiles, printSide, paperSize, numCopies, pageSelection, customPage } = location.state || {};
   const [studentInfo, setStudentInfo] = useState({
     name: "STUDENT",
     pagebalance: 0,
   });
+
+  useEffect(() => {
+    if (uploadedFiles && uploadedFiles.length > 0) {
+      // Khôi phục các cài đặt cho uploadedFiles nếu có
+    }
+  }, [uploadedFiles]);
 
   useEffect(() => {
     const fetchStudentInfo = async () => {
@@ -135,13 +143,45 @@ function ChoosePrinter() {
       setShowPopup(true);
     } else {
       setSuccessPopup(true); // Hiển thị Popup cho máy in hợp lệ
+
+      // Gửi request in tới server
+      const request = {
+        printer_id: selectedPrinter.printer_id,
+        uploadedFiles,
+        printSide,
+        paperSize,
+        numCopies,
+        pageSelection,
+        customPage,
+      };
+      console.log(request);
+
     }
   };
-
+  
   const handleRedirectToHomepage = () => {
-    navigate('/student_homepage'); // Chuyển hướng đến trang Homepage
+    navigate('/student_homepage', { replace: true });
+    setTimeout(() => {
+      localStorage.removeItem('printingConfig'); // Xóa printingConfig khỏi localStorage sau khi chuyển hướng
+    }, 100);
   };
+  
 
+  const handleBackToPrintingConfig = () => {
+    // Điều hướng quay lại trang /printing_configure với state đã lưu
+    navigate('/student_homepage/printing_configure', {
+      state: {
+        uploadedFiles,
+        printSide,
+        paperSize,
+        numCopies,
+        pageSelection,
+        customPage,
+        //printer_id
+      },
+    });
+  };
+  
   return (
     <div className={styles.container}>
       <Header text={studentInfo.name} paper={studentInfo.pagebalance} showLogout={true} isStudent={true} />
@@ -200,7 +240,10 @@ function ChoosePrinter() {
         )}
       </div>
 
-      <div className={styles.check_button_wrapper}>
+      <div className={styles.button_group}>
+        <button className={styles.check_button} onClick={handleBackToPrintingConfig}>
+          QUAY LẠI
+        </button>
         <button className={styles.check_button} onClick={handleCheckSettings}>
           KIỂM TRA
         </button>
@@ -220,6 +263,7 @@ function ChoosePrinter() {
 
       {/* Hiển thị Popup cho máy in hợp lệ */}
       {successPopup && (
+
         <div className={styles.popup}>
           <div className={styles.popup_info}>
             <p className={styles.success}>Các cài đặt máy in đã được kiểm tra và phù hợp.</p>
@@ -229,6 +273,8 @@ function ChoosePrinter() {
             </button>
           </div>
         </div>
+
+
       )}
 
       {isSettingOpen && (

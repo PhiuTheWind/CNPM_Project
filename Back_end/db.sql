@@ -95,6 +95,7 @@ INSERT IGNORE INTO `Student` (`username`, `password`, stu_id, stu_name, page_num
 VALUES
 ('student1', 'password1', '2252898', 'Huỳnh Ngọc Văn', 100);
 
+
 INSERT IGNORE INTO `SPSO` (`username`, `password`)
 VALUES
 ('spso1', 'password1');

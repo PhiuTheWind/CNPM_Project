@@ -10,14 +10,20 @@ import PdfIcon from "../assets/pdf-icon.png";
 import JpgIcon from "../assets/jpg-icon.png";
 import PngIcon from "../assets/png-icon.png";
 import SuccessModal from "./SuccessModal.jsx"; // Import SuccessModal component
-import { Getinfo } from './utils/GetInfo'
+import { Getinfo } from './utils/GetInfo';
+import { useNavigate } from 'react-router-dom';
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
+import mammoth from "mammoth";
+
+// Cấu hình worker cho pdf.js từ CDN
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 function PrintingConfigure() {
   const [studentInfo, setStudentInfo] = useState({
     name: "STUDENT",
     pagebalance: 0,
   });
-
+  const navigate = useNavigate();
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [selectedFileURL, setSelectedFileURL] = useState(null);
   const [removedFiles, setRemovedFiles] = useState([]);
@@ -35,17 +41,57 @@ function PrintingConfigure() {
     jpg: JpgIcon,
     png: PngIcon,
   };
+  const handleRedirect = () => {
+    const printingConfig = {
+      uploadedFiles,
+      printSide,
+      paperSize,
+      numCopies,
+      pageSelection,
+      customPage,
+    };
+
+    // Lưu trữ vào localStorage trước khi điều hướng
+    localStorage.setItem("printingConfig", JSON.stringify(printingConfig));
+
+    // Điều hướng sang trang chọn máy in và truyền state
+    navigate("/student_homepage/chooseprinter", {
+      state: printingConfig,
+    });
+  };
 
   const supportedExtensions = ["pdf", "docx", "jpg", "png"]; // Các loại file được hỗ trợ
   
   // Get username and page balance
   useEffect(() => {
+    // Khôi phục thông tin từ localStorage
+    const savedConfig = localStorage.getItem("printingConfig");
+    if (savedConfig) {
+      const {
+        uploadedFiles,
+        printSide,
+        paperSize,
+        numCopies,
+        pageSelection,
+        customPage,
+        numPages,
+      } = JSON.parse(savedConfig);
+
+      setUploadedFiles(uploadedFiles || []);
+      setPrintSide(printSide || "");
+      setPaperSize(paperSize || "");
+      setNumCopies(numCopies || "");
+      setPageSelection(pageSelection || "all");
+      setCustomPage(customPage || "");
+    }
+
+    // Fetch thông tin sinh viên
     const fetchStudentInfo = async () => {
       try {
         const data = await Getinfo();
-        setStudentInfo(data); // Update state with fetched data
+        setStudentInfo(data); // Update state với dữ liệu nhận được
       } catch (err) {
-        setError('Failed to fetch student information');
+        setErrorMessage('Failed to fetch student information');
         console.error(err);
       }
     };
@@ -58,38 +104,46 @@ function PrintingConfigure() {
     return fileIcons[extension] || Upload_icon;
   };
 
-  const handleFileUpload = (event) => {
+  const handleFileUpload = async (event) => {
     const files = Array.from(event.target.files);
-
+  
     if (uploadedFiles.length > 0) {
       setErrorMessage("Bạn chỉ được upload 1 file một lần!");
       setPopupMessage("Bạn chỉ được upload 1 file một lần!");
       return;
     }
-
+  
     if (files.length > 0) {
       const file = files[0];
       const extension = file.name.split(".").pop().toLowerCase();
-
+  
       if (!supportedExtensions.includes(extension)) {
         setErrorMessage("Định dạng tệp không được hỗ trợ!");
         setPopupMessage("Định dạng tệp không được hỗ trợ!");
         return;
       }
-
+  
       const newFile = {
         name: file.name.split(".").slice(0, -1).join("."),
         extension: extension,
         content: file,
       };
-
+  
       setUploadedFiles([newFile]);
       setRemovedFiles([]);
       setErrorMessage("");
       setPopupMessage("Tệp của bạn đã tải lên thành công!");
+  
+      if (extension === "pdf") {
+        await handleGetNumberOfPages(file);
+      }
+  
+      else if (extension === "docx") {
+        handleGetNumberOfPagesDocx(file);
+      }
     }
   };
-
+  
   const handleDeleteFile = () => {
     setUploadedFiles([]);
     setErrorMessage("");
@@ -167,8 +221,14 @@ function PrintingConfigure() {
       setPopupMessage("Vui lòng nhập số bản sao hợp lệ!");
       return;
     }
-    if (pageSelection === "custom" && (customPage === "" || isNaN(customPage)) || Number(customPage) <= 0) {
-      setPopupMessage("Vui lòng nhập số trang hợp lệ!");
+    if (pageSelection === "custom") {
+      if (customPage === "" || isNaN(customPage) || Number(customPage) <= 0) {
+        setPopupMessage("Vui lòng nhập số trang hợp lệ!");
+        return;
+      }
+    } else if (pageSelection !== "all" && pageSelection !== "even" && pageSelection !== "odd") {
+      setPopupMessage("Vui lòng chọn kiểu in hợp lệ!");
+      setCustomPage(0);
       return;
     }
 
@@ -177,11 +237,44 @@ function PrintingConfigure() {
   const handleSuccessModalClose = () => {
     setShowSuccessModal(false);
   };
+  console.log(uploadedFiles);
 
-  const handleRedirect = () => {
-    window.location.href = "/student_homepage/chooseprinter";
+  const handleGetNumberOfPages = (file) => {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const typedarray = new Uint8Array(e.target.result);
+      try {
+        const pdf = await pdfjsLib.getDocument({ data: typedarray }).promise;
+        const numPages = pdf.numPages;
+        console.log(`Số trang của file PDF: ${numPages}`);
+        setPopupMessage(`Số trang của file PDF: ${numPages}`);
+      } catch (error) {
+        console.error('Có lỗi khi đọc file PDF:', error);
+        setPopupMessage('Có lỗi khi đọc file PDF');
+      }
+    };
+    reader.readAsArrayBuffer(file);
   };
 
+  const handleGetNumberOfPagesDocx = (file) => {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const arrayBuffer = e.target.result;
+      try {
+        // Sử dụng mammoth để đọc nội dung DOCX
+        const result = await mammoth.extractRawText({ arrayBuffer });
+        const text = result.value; // Nội dung text của file DOCX
+
+        // Đếm số đoạn hoặc số dòng để thay thế cho việc đếm số trang
+        const numPages = text.split("\n").length / 40; // Giả sử mỗi trang có khoảng 40 dòng
+        setPopupMessage(`Số trang ước tính của tài liệu là: ${Math.ceil(numPages)}`);
+      } catch (error) {
+        console.error("Có lỗi khi đọc file DOCX:", error);
+        setPopupMessage("Có lỗi khi đọc file DOCX");
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  };
 
   return (
     <div className={styles.container}>
@@ -348,7 +441,7 @@ function PrintingConfigure() {
 
       {showSuccessModal && (
         <SuccessModal
-          message="Các cài đặt in hợp lệ! Vui lòng chọn máy in"
+          message="Các cài đặt in hợp lệ. Vui lòng chọn máy in!"
           onClose={handleSuccessModalClose}
           onRedirect={handleRedirect}
         />

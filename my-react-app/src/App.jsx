@@ -58,7 +58,10 @@ function App() {
             <Route path="/spso_homepage/manage_cofig" element={<ManageConfig />} />
             <Route path="/spso_homepage/view_stu_log" element={<SpsoViewStuLog />} />
             <Route path="/spso_homepage/spsoreport" element={<Report4SPSO />} />
+
+          <Route path="/printing_configure" element={<PrintingConfigure />} />
         </Routes>
+        
       </Router>
     </UserContext.Provider>
   );

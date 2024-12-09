@@ -349,8 +349,8 @@ label {
 
 .inspect_file {
     position: fixed;
-    top: 53%;
-    left: 5%; /* Dịch khung về bên trái, thay đổi từ 50% thành 10% */
+    top: 42%;
+    left: 7.4%; /* Dịch khung về bên trái, thay đổi từ 50% thành 10% */
     transform: translateY(-50%); /* Chỉ cần dịch theo trục Y để canh giữa theo chiều dọc */
     background-color: #ffffff;
     padding: 20px;
@@ -360,7 +360,7 @@ label {
     width: 80%;
     height: 80%;
     max-width: 800px;
-    max-height: 550px;
+    max-height: 650px;
     display: flex;
     flex-direction: column;
     align-items: center;

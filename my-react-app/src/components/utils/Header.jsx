@@ -6,24 +6,44 @@ import { IoIosLogOut } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 
 function Header({ text, paper, showLogout, isStudent }) {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    // Sử dụng console.log để kiểm tra giá trị của text và paper
+    console.log('Username:', text);
+    console.log('Paper:', paper);
+
+    const handleLogout = () => {
+        // Xóa dữ liệu từ localStorage
+        localStorage.clear();
+    
+        // Reset các state khác nếu cần
+        // (Ví dụ: bạn có thể truyền hàm reset từ parent component để reset state)
+    
+        // Điều hướng sang trang đăng nhập
+        navigate('/');
+      };
 
     return (
         <header className={styles.header}>
             <div className={styles.header_logo}>
-                {!isStudent && showLogout && (<button className={styles.home_btn} onClick={() => navigate('/spso_homepage')}>
-                    <img className={styles.img} src={spss} alt="BK Student Smart Printing Service" />
-                </button>)}
-                {isStudent && showLogout && (<button className={styles.home_btn} onClick={() => navigate('/student_homepage')}>
-                    <img className={styles.img} src={spss} alt="BK Student Smart Printing Service" />
-                </button>)}
-                {!showLogout && (<button className={styles.home_btn} onClick={() => navigate('/')}>
-                    <img className={styles.img} src={spss} alt="BK Student Smart Printing Service" />
-                </button>)}
+                {!isStudent && showLogout && (
+                    <button className={styles.home_btn} onClick={() => navigate('/spso_homepage')}>
+                        <img className={styles.img} src={spss} alt="BK Student Smart Printing Service" />
+                    </button>
+                )}
+                {isStudent && showLogout && (
+                    <button className={styles.home_btn} onClick={() => navigate('/student_homepage')}>
+                        <img className={styles.img} src={spss} alt="BK Student Smart Printing Service" />
+                    </button>
+                )}
+                {!showLogout && (
+                    <button className={styles.home_btn} onClick={handleLogout}>
+                        <img className={styles.img} src={spss} alt="BK Student Smart Printing Service" />
+                    </button>
+                )}
             </div>
             {showLogout && !isStudent && (
                 <div className={styles.homebar}>
-
                     <div className={styles.bar}>
                         <button className={styles.button} onClick={() => navigate('/spso_homepage')}>HOME</button>
                         <button className={styles.button} onClick={() => navigate('/spso_homepage/manage_printer')}>MÁY IN</button>
@@ -33,8 +53,6 @@ function Header({ text, paper, showLogout, isStudent }) {
                     </div>
                 </div>
             )}
-
-
             {showLogout && isStudent && (
                 <div className={styles.stuhomebar}>
                     <div className={styles.bar}>
@@ -53,14 +71,13 @@ function Header({ text, paper, showLogout, isStudent }) {
                     </div>
                 </div>
                 {showLogout && (
-                    <button className={styles.icon} onClick={() => navigate('/')}>
+                    <button className={styles.icon} onClick={handleLogout}>
                         <IoIosLogOut size={30} color="#555" />
                     </button>
                 )}
             </div>
         </header>
     );
-
-
 };
+
 export default Header;
