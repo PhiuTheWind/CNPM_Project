@@ -23,6 +23,8 @@ function ChoosePrinter() {
   const navigate = useNavigate();
   const location = useLocation();
   const { uploadedFiles, printSide, paperSize, numCopies, pageSelection, customPage, file_name } = location.state || {};
+
+  const token = localStorage.getItem('userCredentials') ? JSON.parse(localStorage.getItem('userCredentials')).token : null;
   const [studentInfo, setStudentInfo] = useState({
     name: "STUDENT",
     pagebalance: 0,
@@ -160,19 +162,7 @@ function ChoosePrinter() {
     printer_id: selectedPrinter?.printer_id
   };
   console.log(printingInfor);
-  const getToken = () => {
-    try {
-      const userCredentials = localStorage.getItem("userCredentials");
-      if (userCredentials) {
-        const parsedCredentials = JSON.parse(userCredentials);
-        return parsedCredentials.token; // Trả về token
-      }
-      return null; // Trường hợp không có token
-    } catch (error) {
-      console.error("Lỗi khi lấy token:", error);
-      return null;
-    }
-  };
+
   
   const handleRedirectToHomepage = () => {
     if (!printingInfor.printer_id) {
@@ -205,12 +195,6 @@ function ChoosePrinter() {
   };
 
   const sendPrintRequest = async (printingInfor) => {
-  const token = getToken(); // Lấy token từ localStorage
-    if (!token) {
-      console.error("Token không tồn tại. Yêu cầu đăng nhập lại.");
-      alert("Vui lòng đăng nhập để tiếp tục.");
-      return;
-    }
 
     const currentTime = new Date();
     const start_date_value = currentTime.toISOString();
@@ -221,11 +205,16 @@ function ChoosePrinter() {
       const response = await axios.post(
         "http://localhost:3000/api/print",
         {
-          print_infor: printingInfor,
+          file_name: printingInfor.file_name,
+          paper_size: printingInfor.paperSize,
+          num_copies: printingInfor.numCopies,
+          side_option: printingInfor.printSide,
+          selected_pages: printingInfor.pageSelection,
           start_date: start_date_value,
           end_date: end_date_value,
           received_date: received_date_value,
-          status: "Chưa nhận",
+          printer_id: printingInfor.printer_id,
+          status: "Đang in",
         },
         {
           headers: {
