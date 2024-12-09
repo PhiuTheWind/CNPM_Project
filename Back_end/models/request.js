@@ -13,12 +13,18 @@ async function addRequest(username, body) {
     }
     const selected_pages = body.selected_pages;
     const i_status = body.status;
-    const start_date = body.start_date;
-    const end_date = body.end_date;
-    const received_date = body.received_date;
+    let start_date = body.start_date;
+    let end_date = body.end_date;
+    let received_date = body.received_date;
     const student_send = username;
     const printer_id = body.printer_id;
     const num_page = body.num_page
+    if (i_status === "Đang in") {
+        end_date = null;
+        received_date = null;
+      } else if (i_status === "Chưa nhận") {
+        received_date = null;
+      }
     try {
         const query = `
             INSERT IGNORE INTO Request (file_name, paper_size, num_copies, side_option, selected_pages, status, start_date, end_date, received_date, student_send, printer_id)
