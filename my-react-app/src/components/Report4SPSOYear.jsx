@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Footer from './utils/Footer';
 import Header from './utils/Header';
-import styles from '../styles/Report4SPSO.module.css';
+import styles from '../styles/Report4SPSOYear.module.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { IoSearch } from "react-icons/io5";
 import { Chart as ChartJS } from 'chart.js/auto';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
 
-function Report4SPSO() {
+function Report4SPSOYear() {
+  const navigate = useNavigate();
   const [year, setYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState('Tháng 1')
-  const [dateList, setDateList] = useState([]);
   const months = [
     'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
     'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
@@ -20,35 +20,19 @@ function Report4SPSO() {
   const file_type_data = [50, 10, 5, 5] // ["pdf", "doc", "jpg", "png"]
   const printer_id = ['Printer#1', 'Printer#2', 'Printer#3', 'Printer#4', 'Printer#5', 'Printer#6', 'Printer#7', 'Printer#8', 'Printer#9', 'Printer#10']
   const printer_freq = [20, 50, 10, 45, 30, 90, 10, 27, 3, 26]
-  const print_freq = [20, 50, 10, 45, 30, 90, 10, 27, 3, 26]
+  const print_freq = [20, 50, 10, 45, 30, 90, 10, 27, 3, 26, 100, 66]
 
-  // Function to generate a list of dates based on year and month
-  const generateDates = (monthIndex, year) => {
-    const daysInMonth = new Date(year, monthIndex + 1, 0).getDate(); // Get days in the month
-    const dates = Array.from({ length: daysInMonth }, (_, i) => i + 1); // Create a list [1, 2, ..., daysInMonth]
-    setDateList(dates);
-  };
-
-  // Handle month selection
-  const handleMonthSelect = (month, index) => {
-    setSelectedMonth(month);
-    generateDates(index, year); // Generate dates for the selected month and year
-  };
-
-  useEffect(() => {
-    generateDates(0, year); // Index 0 corresponds to "Tháng 1"
-  }, [year]);
 
   return (
     <div className={styles.container}>
       <Header text='SPSO NAME' showLogout={true} isStudent={false} />
+
       <div className={styles.option_wrapper}>
         <div className={styles.option}>
-          <button className={styles.month}>Tháng</button>
-          <button className={styles.year}>Năm</button>
+          <button className={styles.month} onClick={() => navigate('/spso_homepage/spso_report_month')}>Tháng</button>
+          <button className={styles.year} onClick={() => navigate('/spso_homepage/spso_report_year')}>Năm</button>
         </div>
-      </div>
-      <div className={styles.info}>
+
         <div className={styles.input_year_group}>
           <label className={styles.search_label}><IoSearch /></label>
           <DatePicker className={styles.input_year}
@@ -59,31 +43,8 @@ function Report4SPSO() {
             placeholderText={year.toString()}
           />
         </div>
-        <div className={styles.month_group}>
-          <div className={styles.leftColumn}>
-            {months.slice(0, 6).map((month, index) => (
-              <button
-                key={index}
-                className={`${styles.monthButton} ${selectedMonth === month ? styles.selected : ''}`}
-                onClick={() => handleMonthSelect(month, index)}
-              >
-                {month}
-              </button>
-            ))}
-          </div>
-          <div className={styles.rightColumn}>
-            {months.slice(6).map((month, index) => (
-              <button
-                key={index}
-                className={`${styles.monthButton} ${selectedMonth === month ? styles.selected : ''}`}
-                onClick={() => handleMonthSelect(month, index + 6)}
-              >
-                {month}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
+
 
       <div className={styles.paper_size}>
         <div className={styles.paper_size_title}>
@@ -179,7 +140,7 @@ function Report4SPSO() {
                 },
                 backgroundColor: '#FFF7E6', // Tooltip background color
                 titleColor: '#FF5733', // Tooltip title color
-                bodyColor: '#333333', // Tooltip body text color
+                bodyColor: '#FF5733', // Tooltip body text color
                 borderColor: '#FF8C8C', // Tooltip border color
                 borderWidth: 1, // Tooltip border width
               },
@@ -286,12 +247,12 @@ function Report4SPSO() {
 
       <div className={styles.print_freq}>
         <div className={styles.print_freq_title}>
-          <label className={styles.print_freq_input_lable}>Tần suất in trong tháng:</label>
+          <label className={styles.print_freq_input_lable}>Tần suất in trong năm</label>
         </div>
         <div className={styles.linechart}>
           <Line
             data={{
-              labels: dateList,
+              labels: months,
               datasets: [
                 {
                   label: 'Số lần in',
@@ -360,4 +321,4 @@ function Report4SPSO() {
   );
 }
 
-export default Report4SPSO;
+export default Report4SPSOYear;

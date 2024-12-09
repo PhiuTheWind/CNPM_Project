@@ -1,0 +1,236 @@
+.container {
+    max-width: 1440px;
+    width: 1440px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+.option_wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.option {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 170px;
+    height: 45px;
+    background-color: #D3EFFF;
+    border-radius: 20px;
+    margin-left: 44%;
+}
+
+.option .year {
+    font-family: "Quicksand", sans-serif;
+    font-size: large;
+    font-weight: bold;
+    background-color: #004AAD;
+    color: white;
+    border-radius: 20px;
+    padding: 5px;
+    width: 70px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.option .month {
+    font-family: "Quicksand", sans-serif;
+    font-size: large;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #38B6FF;
+    border-radius: 20px;
+    padding: 5px;
+    width: 70px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.input_year_group {
+    width: 200px;
+    height: 40px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #D3EFFF;
+    border-radius: 10px;
+    margin-right: 110px;
+}
+
+.input_year{
+    width: 150px;
+    height: 30px;
+    text-align: center;
+    font-family: "Quicksand", sans-serif;
+    font-size: large;
+    font-weight: bold;
+    border: none;
+    color: #227df4;
+    border-radius: 10px;
+}
+
+.month_group {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.leftColumn,
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.monthButton {
+    width: 90px;
+    height: 40px;
+    background-color: white;
+    color: #38B6FF;
+    border: 1px solid #38B6FF;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: "Quicksand", sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.monthButton:hover {
+    background-color: #92b8ff;
+    color: white;
+}
+
+.selected {
+    background-color: #227df4;
+    color: white;
+    font-weight: 700;
+}
+
+.paper_size{
+    background-color: white;
+    outline: 10px solid #E5FBE0;
+    margin: 20px 0 30px 130px;
+    width: 370px;
+    height: 235px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.doughnutchart{
+    margin-left: -15px;
+}
+
+.paper_size_title{
+    font-size: larger;
+    font-family: "Quicksand", sans-serif;
+    font-weight: bold;
+    color: #347758;
+}
+
+.file_type_title{
+    padding: 5px 0 5px 10px;
+    font-family: "Quicksand", sans-serif;
+    font-size: larger;
+    font-weight: bold;
+    color: #FF8C8C;
+}
+
+.file_type{
+    background-color: white;
+    outline: 10px solid #FFE1E1;
+    margin: 20px 0 30px 130px;
+    width: 370px;
+    height: 235px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.barchart{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.printer{
+    background-color: white;
+    outline: 10px solid #E4D0FF;
+    margin: 20px 0 30px 130px;
+    width: 1190px;
+    height: 255px;
+    border-radius: 10px;
+    overflow: auto;
+}
+
+.printer::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+}
+
+.printer::-webkit-scrollbar-thumb {
+    border-radius: .5rem;
+    background-color: #0004;
+    visibility: hidden;
+}
+
+.printer:hover::-webkit-scrollbar-thumb {
+    visibility: visible;
+}
+
+.printer_title{
+    font-family: "Quicksand", sans-serif;
+    font-size: larger;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    color: #B379FF;
+}
+
+.printer_barchart{
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 1180px;
+    height: 200px;
+}
+
+.print_freq{
+    position: absolute;
+    top: 151px;
+    left: 575px;
+    background-color: white;
+    outline: 10px solid #FFE1B7;
+    width: 785px;
+    height: 500px;
+    border-radius: 10px;
+}
+
+.print_freq_title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.print_freq_input_lable{
+    font-family: "Quicksand", sans-serif;
+    font-size: larger;
+    font-weight: bold;
+    color: #FFBA59;
+    margin: 10px;
+}
+
+.linechart{
+    width: 785px;
+    height: 450px;
+}
