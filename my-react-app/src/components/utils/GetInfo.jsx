@@ -20,6 +20,7 @@ export const Getinfo = async () => {
 
     if (response.status === 200) {
       // Return the student info
+      console.log(response)
       return {
         username: response.data[0].username,
         name: response.data[0].stu_name,

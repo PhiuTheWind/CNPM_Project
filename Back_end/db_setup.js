@@ -4,13 +4,13 @@ require('dotenv').config({ path: './.env' });
 const readlinesync = require('readline-sync');
 const envconfig = require('./models/envconfig');
 
-const username = readlinesync.question('Enter database username: ');
-const password = readlinesync.question('Enter database password: ', {
-    hideEchoBack: true
-});
+// const username = readlinesync.question('Enter database username: ');
+// const password = readlinesync.question('Enter database password: ', {
+//     hideEchoBack: true
+// });
 
-envconfig.update('db_user', username);
-envconfig.update('db_password', password);
+// envconfig.update('db_user', username);
+// envconfig.update('db_password', password);
 
 const connection = mysql.createConnection({
     host: process.env.db_host,

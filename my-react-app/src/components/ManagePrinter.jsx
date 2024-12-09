@@ -39,10 +39,12 @@ function ManagePrinter() {
     }
   };
 
-  // Fetch data from API
   useEffect(() => {
-    fetchPrinters();
-  }, []);
+    // Chi fetch data mot lan khi load (refill khong load de khong bi loi)
+    if (data.length === 0) {
+      fetchPrinters();
+    }
+  }, [data.length]); 
 
   useEffect(() => {
     if (searchTerm) {
@@ -54,6 +56,36 @@ function ManagePrinter() {
       setFilteredData(data); // Reset to original data if search term is empty
     }
   }, [searchTerm, data]);
+
+
+  const refillPaper = async (printerId) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/refill_paper', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ printer_id: printerId }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        // Optionally, refresh the data to reflect the updated paper count
+        const updatedData = data.map((printer) =>
+          printer.printer_id === printerId ? { ...printer, num_paper: 500 } : printer
+        );
+        setData(updatedData);
+      } else {
+        alert(result.message || 'Không thể nạp lại giấy');
+      }
+    } catch (error) {
+      console.error('Error refilling paper:', error);
+      alert('Đã xảy ra lỗi khi nạp lại giấy.');
+    }
+  };
+
+
 
   // Define table columns
   const columns = useMemo(
@@ -69,10 +101,13 @@ function ManagePrinter() {
       {
         Header: 'SỐ GIẤY',
         accessor: 'num_paper',
-        Cell: ({ value }) => (
+        Cell: ({ row, value }) => (
           <div>
             {value}
-            <button className={styles.button}>
+            <button 
+            className={styles.button}
+            onClick={() => refillPaper(row.original.printer_id)}
+            >
               <FaNewspaper style={{ verticalAlign: 'middle', marginLeft: '25px', height: '25px', width: '25px' }} />
             </button>
           </div>
@@ -183,9 +218,12 @@ function ManagePrinter() {
                 {rows.map((row) => {
                   prepareRow(row);
                   return (
-                    <tr {...row.getRowProps()}>
+                    // <tr {...row.getRowProps()}>
+                    <tr {...row.getRowProps()} key={row.id} className={styles.tr}> 
                       {row.cells.map((cell) => (
-                        <td className={styles.td} {...cell.getCellProps()}>
+                        // <td {...cell.getCellProps()} key={cell.column.id} className={styles.td}>
+                        <td key={cell.column.id} {...cell.getCellProps()} className={styles.td}>   
+                        {/* <td className={styles.td} {...cell.getCellProps()}>  */}
                           {cell.render("Cell")}
                         </td>
                       ))}
@@ -285,9 +323,47 @@ function ManagePrinter() {
               >
                 HỦY
               </button>
-              <button
+              {/* <button
                 className={styles.save_popup}
                 onClick={() => setIsSettingOpen(false)}
+              > */}
+              <button
+                className={styles.save_popup}
+                onClick={async () => {
+                  try {
+                    const response = await fetch('http://localhost:3000/api/modify_status', {
+                      method: 'PATCH',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        printerId: selectedPrinter?.printer_id,
+                        newSettings: selectedStatus,
+                      }),
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.success) {
+                      //alert('Cập nhật trạng thái thành công!');
+                      // pop up ... neu can ?..
+                      setIsSettingOpen(false);
+
+                      // Optionally refresh the data to reflect the updated status
+                      const updatedData = data.map((printer) =>
+                        printer.printer_id === selectedPrinter?.printer_id
+                          ? { ...printer, status: selectedStatus }
+                          : printer
+                      );
+                      setData(updatedData);
+                    } else {
+                      alert(`Lỗi: ${result.message || 'Không thể cập nhật trạng thái'}`);
+                    }
+                  } catch (error) {
+                    console.error('Error updating status:', error);
+                    alert('Đã xảy ra lỗi khi cập nhật trạng thái.');
+                  }
+                }}
               >
                 LƯU
               </button>

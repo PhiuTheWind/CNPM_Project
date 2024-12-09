@@ -13,66 +13,41 @@ import { Getinfo } from './utils/GetInfo'
 
 function StudentViewLog() {
     const log_url = `http://localhost:3000/api/log`;
-    const logdetail_url = `http://localhost:3000/api/logdetail`;
 
     const token = localStorage.getItem('userCredentials') ? JSON.parse(localStorage.getItem('userCredentials')).token : null;
     const [studentLogInfo, setStudentLogInfo] = useState([]);
-    
-    //List Log lưu trong studentLogInfo
-    
-    //Hàm trả về danh sách request 
-    const GetLogInfo = async () => {                
-        try {
-          const response = await axios.post(log_url,{},{
-            withCredentials: true,
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-          });
-     
-        if (response.status === 200) {
-            setStudentLogInfo(response.data)
-        }
-        else if (response.status === 404) {
-            navigate('/');           
-        }
-        console.log(response)
-    
-        }
-        catch (error) {
-          console.log(error)
-        }    
-    }     
-    
-    //   //Hàm trả về thông tin chi tiết của request với tham số là request_id ( request_id có dc ở hàm GetLogInfo)
-    const GetLogInfo_detail = async (request_id) => {                
-        try {
-          const response = await axios.post(logdetail_url,
-            {
-                request_id
-            },
-            {
-            withCredentials: true,
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-            });
-     
-        if (response.status === 200) {
-            setStudentLogInfo(response.data)
-        }
-        else if (response.status === 404) {
-            navigate('/');           
-        }
-        console.log(response)
-    
-        }
-        catch (error) {
-          console.log(error)
-        }    
-    }     
-      
 
+
+    const GetLogInfo = async () => {
+        try {
+            const response = await axios.post(log_url, {}, {
+                withCredentials: true,
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (response.status === 200) {
+                setStudentLogInfo(response.data)
+            }
+            else if (response.status === 404) {
+                navigate('/');
+            }
+            console.log(response)
+
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        return new Intl.DateTimeFormat('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        }).format(new Date(dateString));
+    };
 
     const navigate = useNavigate()
     const [studentInfo, setStudentInfo] = useState({
@@ -102,12 +77,25 @@ function StudentViewLog() {
         GetLogInfo();
     }, []);
 
-    const data = useMemo(() => studentLogInfo, [])
+    // Filter Data Based on Search Criteria
+    const filteredData = useMemo(() => {
+        return studentLogInfo.filter((log) => {
+            const logStartDate = new Date(log.start_date);
+            const logEndDate = new Date(log.end_date);
+
+            const isStartDateValid = start_date === null || logStartDate >= new Date(start_date);
+            const isEndDateValid = end_date === null || logEndDate <= new Date(end_date);
+            const isFilenameValid = filename === "" || log.file_name.toLowerCase().includes(filename.toLowerCase());
+
+            return isStartDateValid && isEndDateValid && isFilenameValid;
+        });
+    }, [studentLogInfo, start_date, end_date, filename]);
+    
     const columns = useMemo(
         () => [
             {
                 Header: 'STT',
-                accessor: 'stt',
+                accessor: 'request_id',
                 Cell: ({ value }) => <div style={{ width: '80px' }}>{value}</div>, // Align text left
             },
             {
@@ -116,8 +104,14 @@ function StudentViewLog() {
                 Cell: ({ value }) => <div style={{ textAlign: 'left' }}>{value}</div>, // Align text left
             },
             {
-                Header: 'NGÀY IN',
-                accessor: 'print_start_date',
+                Header: 'BẮT ĐẦU IN',
+                accessor: 'start_date',
+                Cell: ({ value }) => formatDate(value),
+            },
+            {
+                Header: 'KẾT THÚC IN',
+                accessor: 'end_date',
+                Cell: ({ value }) => formatDate(value),
             },
             {
                 Header: 'TÌNH TRẠNG',
@@ -151,7 +145,7 @@ function StudentViewLog() {
     const tableInstance = useTable(
         {
             columns,
-            data,
+            data: filteredData,
         },
         useSortBy
     );
@@ -244,16 +238,20 @@ function StudentViewLog() {
                                 <span className={styles.value}>{selectedrow?.file_name}</span>
                             </div>
                             <div className={styles.row}>
-                                <label className={styles.field}>Ngày in:</label>
-                                <span className={styles.value}>{selectedrow?.print_start_date}</span>
+                                <label className={styles.field}>Ngày bắt đầu in:</label>
+                                <span className={styles.value}>{formatDate(selectedrow?.start_date)}</span>
+                            </div>
+                            <div className={styles.row}>
+                                <label className={styles.field}>Ngày kết thúc in:</label>
+                                <span className={styles.value}>{formatDate(selectedrow?.end_date)}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Ngày nhận:</label>
-                                <span className={styles.value}>{selectedrow?.receive_date}</span>
+                                <span className={styles.value}>{formatDate(selectedrow?.received_date)}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Nơi nhận:</label>
-                                <span className={styles.value}>{selectedrow?.receive_place}</span>
+                                <span className={styles.value}>{selectedrow?.location}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Trạng thái:</label>
@@ -266,19 +264,19 @@ function StudentViewLog() {
                         <div className={styles.info}>
                             <div className={styles.row}>
                                 <label className={styles.field}>Khổ giấy:</label>
-                                <span className={styles.value}>{selectedrow?.size}</span>
+                                <span className={styles.value}>{selectedrow?.paper_size}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Trang in:</label>
-                                <span className={styles.value}>{selectedrow?.range_page}</span>
+                                <span className={styles.value}>{selectedrow?.selected_pages}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>In một/hai mặt:</label>
-                                <span className={styles.value}>{selectedrow?.side}</span>
+                                <span className={styles.value}>{selectedrow?.side_option}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Số bản sao:</label>
-                                <span className={styles.value}>{selectedrow?.copy}</span>
+                                <span className={styles.value}>{selectedrow?.num_copies}</span>
                             </div>
                         </div>
 

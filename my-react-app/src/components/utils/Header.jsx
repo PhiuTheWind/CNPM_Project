@@ -6,23 +6,13 @@ import { IoIosLogOut } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 
 function Header({ text, paper, showLogout, isStudent }) {
-    const navigate = useNavigate();
 
-    // Sử dụng console.log để kiểm tra giá trị của text và paper
-    console.log('Username:', text);
-    console.log('Paper:', paper);
-
-    const handleLogout = () => {
-        // Xóa dữ liệu từ localStorage
-        localStorage.clear();
-    
-        // Reset các state khác nếu cần
-        // (Ví dụ: bạn có thể truyền hàm reset từ parent component để reset state)
-    
-        // Điều hướng sang trang đăng nhập
-        navigate('/');
-      };
-
+    const navigate = useNavigate()
+    const handleClickAvatar = () =>{
+        if (isStudent){
+            navigate('/student_homepage/summary')
+        }
+    }
     return (
         <header className={styles.header}>
             <div className={styles.header_logo}>
@@ -63,7 +53,7 @@ function Header({ text, paper, showLogout, isStudent }) {
                 </div>
             )}
             <div className={styles.header_right}>
-                <div className={styles.avatar_container}>
+                <div className={styles.avatar_container} onClick={handleClickAvatar}>
                     <img src={ava} className={styles.avatar} alt="Avatar" />
                     <div className={styles.info}>
                         <p className={styles.username}>{text}</p>

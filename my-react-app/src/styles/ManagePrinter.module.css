@@ -24,6 +24,7 @@
     justify-content: center;
     align-items: center;
     width: 60%;
+    
     margin-left: 20%;
     background-color: #d3efff;
     border-radius: 10px;
@@ -35,7 +36,7 @@
 
 .table_wrapper {
     width: 100%;
-    max-height: 90vh;
+    height: 90vh;
     overflow: auto;
 }
 

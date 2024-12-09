@@ -1,5 +1,5 @@
 const infoController = require('../models/pageInformation');
-const {getInfo_Printer, getPageBalance} = require('../models/student');
+const { getInfo_Printer, getPageBalance } = require('../models/student');
 
 const maintenance = async (req, res) => {
     try {
@@ -67,23 +67,6 @@ const contact = async (req, res) => {
     }
 };
 
-const savePrintRequest = async (req, res) => {
-    const { username, fileName, fileFormat, properties } = req.body;
-    try {
-        const query = `
-            INSERT INTO print_requests (student_id, file_name, file_format, properties)
-            VALUES (?, ?, ?, ?)
-        `;
-        const values = [username, fileName, fileFormat, JSON.stringify(properties)];
-        await database.query(query, values);
-        res.status(201).json({ success: true, message: 'Request successfully stored.' });
-    } catch (error) {
-        console.error('Error when storing request.', error);
-        res.status(500).json({ success: false, message: 'Request stored failed' });
-    }
-};
-
-
 const get_printer_list_for_student = async (req, res, next) => {
     try {
         const result = await getInfo_Printer();
@@ -91,7 +74,7 @@ const get_printer_list_for_student = async (req, res, next) => {
             ...printer,
             printer_id: `PRINTER#${printer.printer_id}`
         }));
-    
+
         res.status(200).json({
             success: true,
             message: "Printer list fetched successfully",
@@ -108,7 +91,7 @@ const get_printer_list_for_student = async (req, res, next) => {
 
 const get_pagebalance = async (req, res, next) => {
     try {
-        const username = req.body;
+        const username = req.userInfo.username;
         const result = await getPageBalance(username);
 
         res.status(200).json({
@@ -129,7 +112,6 @@ module.exports = {
     maintenance,
     guideline,
     contact,
-    savePrintRequest,
     get_printer_list_for_student,
     get_pagebalance
 };

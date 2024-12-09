@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const studentLogController = require('../controllers/studentLogController');
+const printController = require('../controllers/printController');
 const authenticate = require('../middlewares/authenticate');
 
-router.post('/log', authenticate, studentLogController.GetStudentLog);
+router.post('/print', authenticate, printController.savePrintRequest);
 
 module.exports = router;
