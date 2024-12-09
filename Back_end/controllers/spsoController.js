@@ -196,6 +196,115 @@ const patch_config = async (req, res) => {
 
 };
 
+const get_history = async (req, res) => {
+    const { printer_id } = req.body;
+    if (!printer_id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Printer ID is required.',
+        });
+    }
+    
+    try {
+        // SQL query to join 'request' and 'printer' tables
+        const query = `
+            SELECT 
+                r.file_name,
+                r.request_id,
+                r.paper_size,
+                r.num_copies,
+                r.side_option,
+                r.selected_pages,
+                r.status AS request_status,
+                r.start_date,
+                r.end_date,
+                r.received_date,
+                r.student_send,
+                p.location,
+                s.stu_id,
+                s.stu_name
+            FROM 
+                request r
+            JOIN 
+                printer p ON r.printer_id = p.printer_id
+            JOIN
+                student s ON r.student_send = s.username
+            WHERE 
+                r.printer_id = ?;
+        `;
+
+        // 
+        const [result] = await database.query(query, [printer_id]);
+
+        // Check if the query returns any results
+        if (result.length > 0) {
+            return res.status(200).json({
+                success: true,
+                message: 'History fetched successfully.',
+                data: result,
+            });
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: `No history found for printer with ID ${printer_id}.`,
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching history:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch history. Please try again later.',
+        });
+    }
+
+};
+
+const get_history_all = async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                r.printer_id,
+                r.file_name,
+                r.request_id,
+                r.paper_size,
+                r.num_copies,
+                r.side_option,
+                r.selected_pages,
+                r.status AS request_status,
+                r.start_date,
+                r.end_date,
+                r.received_date,
+                r.student_send,
+
+                p.location,
+                s.stu_id,
+                s.stu_name
+            FROM 
+                request r
+            JOIN 
+                printer p ON r.printer_id = p.printer_id
+            JOIN 
+                student s ON r.student_send = s.username;
+        `;
+
+        const [result] = await database.query(query);
+        
+        return res.status(200).json({
+            success: true,
+            message: 'History retrieved successfully.',
+            data: result
+        });
+    } catch (error) {
+        console.error('Error retrieving history:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to retrieve history.',
+        });
+    }
+};
+
+
+
 module.exports = {
     add_printer,
     get_printer_list,
@@ -203,4 +312,6 @@ module.exports = {
     modify_status,
     get_config,
     patch_config,
+    get_history,
+    get_history_all
 };
