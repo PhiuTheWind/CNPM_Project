@@ -49,7 +49,7 @@ function PrintingConfigure() {
       setPopupMessage("Không xác định được số trang của tệp tin!");
       return;
     }
-  
+
     const printingConfig = {
       uploadedFiles,
       file_name: uploadedFiles[0].name,
@@ -60,16 +60,16 @@ function PrintingConfigure() {
       customPage,
       numPages,
     };
-  
+
     localStorage.setItem("printingConfig", JSON.stringify(printingConfig));
     navigate("/student_homepage/chooseprinter", { state: printingConfig });
   };
-  
-  
+
+
 
   const supportedExtensions = ["pdf", "docx", "jpg", "png"]; // Các loại file được hỗ trợ
 
-  
+
   // Get username and page balance
   useEffect(() => {
     // Khôi phục thông tin từ localStorage
@@ -94,7 +94,7 @@ function PrintingConfigure() {
       setCustomPage(customPage || "");
       setNumPages(numPages || 0);
 
-      
+
     }
 
     // Fetch thông tin sinh viên
@@ -118,17 +118,17 @@ function PrintingConfigure() {
 
   const handleFileUpload = async (event) => {
     const files = Array.from(event.target.files);
-  
+
     if (uploadedFiles.length > 0) {
       setErrorMessage("Bạn chỉ được upload 1 file một lần!");
       setPopupMessage("Bạn chỉ được upload 1 file một lần!");
       return;
     }
-  
+
     if (files.length > 0) {
       const file = files[0];
       const extension = file.name.split(".").pop().toLowerCase();
-  
+
       // Kiểm tra kích thước file
       const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
       if (file.size > MAX_FILE_SIZE) {
@@ -136,24 +136,24 @@ function PrintingConfigure() {
         setPopupMessage("Dung lượng tệp vượt quá 50MB!");
         return;
       }
-  
+
       if (!supportedExtensions.includes(extension)) {
         setErrorMessage("Định dạng tệp không được hỗ trợ!");
         setPopupMessage("Định dạng tệp không được hỗ trợ!");
         return;
       }
-  
+
       const newFile = {
         name: file.name.split(".").slice(0, -1).join("."),
         extension: extension,
         content: file,
       };
-  
+
       setUploadedFiles([newFile]);
       setRemovedFiles([]);
       setErrorMessage("");
       setPopupMessage("Tệp của bạn đã tải lên thành công!");
-  
+
       if (extension === "pdf") {
         await handleGetNumberOfPages(file);
       } else if (extension === "docx") {
@@ -161,8 +161,8 @@ function PrintingConfigure() {
       }
     }
   };
-  
-  
+
+
   const handleDeleteFile = () => {
     setUploadedFiles([]);
     setNumPages(0);
@@ -241,7 +241,7 @@ function PrintingConfigure() {
       setPopupMessage("Vui lòng nhập số bản sao hợp lệ!");
       return;
     }
-    
+
     if (pageSelection === "custom") {
       if (customPage === "" || isNaN(customPage) || Number(customPage) <= 0) {
         setPopupMessage("Vui lòng nhập số trang hợp lệ!");
@@ -277,7 +277,7 @@ function PrintingConfigure() {
     };
     reader.readAsArrayBuffer(file);
   };
-  
+
 
   const handleGetNumberOfPagesDocx = (file) => {
     const reader = new FileReader();
@@ -297,7 +297,7 @@ function PrintingConfigure() {
     };
     reader.readAsArrayBuffer(file);
   };
-  
+
 
   return (
     <div className={styles.container}>
@@ -369,13 +369,13 @@ function PrintingConfigure() {
                 </button>
               </div>
             )}
-          <div>
-            {numPages > 0 && (
-              <p className={styles.pageInfo}>Số trang: {numPages}</p>
-            )}
-          </div>
+            <div>
+              {numPages > 0 && (
+                <p className={styles.pageInfo}>Số trang: {numPages}</p>
+              )}
+            </div>
 
-          {/* end of upload box */}
+            {/* end of upload box */}
           </div>
         </div>
 

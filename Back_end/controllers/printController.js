@@ -2,7 +2,7 @@ const { addRequest } = require('../models/request');
 
 const savePrintRequest = async (req, res) => {
 
-    const username = req.userInfo.username
+    const username = req.userInfo.username;
 
     const result = await addRequest(username, req.body);
     if (result) {

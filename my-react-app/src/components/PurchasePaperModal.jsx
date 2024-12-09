@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import hook useNavigate
 import styles from '../styles/PurchasePaperModal.module.css'; // Import file CSS để tạo kiểu cho modal
 import OCB from '../assets/OCB.png'; // Import file ảnh OCB.png
-
-function PurchasePaperModal({onClose, name}) {
+import axios from 'axios';
+const token = localStorage.getItem('userCredentials') ? JSON.parse(localStorage.getItem('userCredentials')).token : null;
+function PurchasePaperModal({ onClose, name }) {
     const [paperCount, setPaperCount] = useState(100);
 
     const handleCloseModal = () => {
@@ -12,6 +13,21 @@ function PurchasePaperModal({onClose, name}) {
 
     const handlePayment = () => {
         alert(`Thanh toán thành công!`);
+        const response = axios.post('http://localhost:3000/api/buypage',
+            {
+                page: paperCount,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        if (response.status === 200) {
+            console.log("Cap nhat thanh cong");
+        }
+        else {
+            console.log("Cap nhat khong thanh cong");
+        }
         onClose();
     };
 

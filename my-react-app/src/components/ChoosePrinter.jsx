@@ -22,7 +22,7 @@ function ChoosePrinter() {
   const [successPopup, setSuccessPopup] = useState(false); // Popup cho trường hợp hợp lệ
   const navigate = useNavigate();
   const location = useLocation();
-  const { uploadedFiles, printSide, paperSize, numCopies, pageSelection, customPage, file_name } = location.state || {};
+  const { uploadedFiles, printSide, paperSize, numCopies, pageSelection, customPage, file_name, numPages } = location.state || {};
 
   const token = localStorage.getItem('userCredentials') ? JSON.parse(localStorage.getItem('userCredentials')).token : null;
   const [studentInfo, setStudentInfo] = useState({
@@ -46,7 +46,7 @@ function ChoosePrinter() {
         console.error(err);
       }
     };
-    
+
 
     fetchStudentInfo();
   }, []);
@@ -159,26 +159,27 @@ function ChoosePrinter() {
     numCopies,
     pageSelection,
     customPage,
-    printer_id: selectedPrinter?.printer_id
+    printer_id: selectedPrinter?.printer_id,
+    numPages
   };
   console.log(printingInfor);
 
-  
+
   const handleRedirectToHomepage = () => {
     if (!printingInfor.printer_id) {
       alert("Chưa chọn máy in. Vui lòng chọn lại.");
       return;
     }
-  
+
     sendPrintRequest(printingInfor); // Truyền đúng biến
     navigate("/student_homepage", { replace: true });
     setTimeout(() => {
       localStorage.removeItem("printingConfig");
     }, 100);
   };
-  
-  
-  
+
+
+
   const handleBackToPrintingConfig = () => {
     // Điều hướng quay lại trang /printing_configure với state đã lưu
     navigate('/student_homepage/printing_configure', {
@@ -215,6 +216,7 @@ function ChoosePrinter() {
           received_date: received_date_value,
           printer_id: printingInfor.printer_id,
           status: "Đang in",
+          num_page: printingInfor.numPages
         },
         {
           headers: {
@@ -243,7 +245,7 @@ function ChoosePrinter() {
 
 
 
-  
+
   return (
     <div className={styles.container}>
       <Header text={studentInfo.name} paper={studentInfo.pagebalance} showLogout={true} isStudent={true} />
