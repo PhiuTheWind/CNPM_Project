@@ -360,20 +360,25 @@ const get_yearly_statistics = async (req, res) => {
 
             const ID = row.printer_id;
             if (ID) {
-                printerFrequency[ID] = (printerFrequency[ID] || 0) + 1;
+                const printerKey = `Printer#${ID}`;
+                //printerFrequency[printerKey] = (printerFrequency[printerKey] || 0) + 1;
+                printerFrequency[printerKey] = {
+                    id: ID,
+                    count: (printerFrequency[printerKey]?.count || 0) + 1
+                };
             }
             
         });
 
-        const printerFrequencyArray = Object.entries(printerFrequency).map(([key, value]) => ({
-            [key]: value
-        }));
+        // const printerFrequencyArray = Object.entries(printerFrequency).map(([key, value]) => ({
+        //     [key]: value
+        // }));
 
         // Prepare the response
         const statistics = {
             paper_size: paperSizeCount,
             file_extension: fileExtensionsCount,
-            printer_frequency: printerFrequencyArray,
+            printer_frequency: printerFrequency,
             month_frequency: monthFrequency
         };
 

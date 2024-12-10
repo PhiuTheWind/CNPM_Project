@@ -8,19 +8,48 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { IoSearch } from "react-icons/io5";
 import { Chart as ChartJS } from 'chart.js/auto';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
+import axios from 'axios';
 
 function Report4SPSOYear() {
   const navigate = useNavigate();
   const [year, setYear] = useState(new Date().getFullYear());
+
+  const [statistics, setStatistics] = useState(null); // API data
+  const [loading, setLoading] = useState(false); // Loading state
+  const [error, setError] = useState(null); // Error state
+
   const months = [
     'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
     'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
   ];
-  const paper_size_data = [50, 10] // A4, A3
-  const file_type_data = [50, 10, 5, 5] // ["pdf", "doc", "jpg", "png"]
-  const printer_id = ['Printer#1', 'Printer#2', 'Printer#3', 'Printer#4', 'Printer#5', 'Printer#6', 'Printer#7', 'Printer#8', 'Printer#9', 'Printer#10']
-  const printer_freq = [20, 50, 10, 45, 30, 90, 10, 27, 3, 26]
-  const print_freq = [20, 50, 10, 45, 30, 90, 10, 27, 3, 26, 100, 66]
+
+   //const printer_id = ['Printer#1', 'Printer#2', 'Printer#3', 'Printer#4', 'Printer#5', 'Printer#6', 'Printer#7', 'Printer#8', 'Printer#9', 'Printer#10']
+
+  useEffect(() => {
+    const fetchStatistics = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await axios.post('http://localhost:3000/api/year_report', { year });
+        if (response.data.success) {
+          setStatistics(response.data.data);
+        } else {
+          setError(response.data.message || 'Failed to fetch data');
+        }
+      } catch (err) {
+        setError(err.message || 'Error occurred while fetching data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStatistics();
+  }, [year]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!statistics) return null;
 
 
   return (
@@ -56,7 +85,8 @@ function Report4SPSOYear() {
             datasets: [
               {
                 label: 'Số lượng',
-                data: paper_size_data,
+                //data: paper_size_data,
+                data: statistics.paper_size,
                 backgroundColor: ['#669A69', '#A2D997'],
               }
             ]
@@ -111,7 +141,8 @@ function Report4SPSOYear() {
             datasets: [
               {
                 label: 'Số file',
-                data: file_type_data,
+                //data: file_type_data,
+                data: statistics.file_extension,
                 backgroundColor: '#FCCCCC',
                 borderRadius: 5,
                 borderColor: '#FF8C8C',
@@ -179,18 +210,33 @@ function Report4SPSOYear() {
         <div className={styles.printer_barchart}>
           <Bar
             data={{
-              labels: printer_id,
+              labels: Object.keys(statistics.printer_frequency),
               datasets: [
                 {
                   label: 'Số file',
-                  data: printer_freq,
+                  data: Object.values(statistics.printer_frequency).map(printer => printer.count),
                   backgroundColor: '#E4D0FF',
                   borderRadius: 5,
                   borderColor: '#B379FF',
-                  borderWidth: 1.5
+                  borderWidth: 1.5,
                 }
               ]
             }}
+            // data={{
+            //   //labels: printer_id,
+            //   //labels: statistics.printer_frequency.id,
+            //   datasets: [
+            //     {
+            //       label: 'Số file',
+            //       //data: printer_freq,
+            //       //data: statistics.printer_frequency.count,
+            //       backgroundColor: '#E4D0FF',
+            //       borderRadius: 5,
+            //       borderColor: '#B379FF',
+            //       borderWidth: 1.5
+            //     }
+            //   ]
+            // }}
             options={{
               responsive: true,
               maintainAspectRatio: false,
@@ -256,7 +302,8 @@ function Report4SPSOYear() {
               datasets: [
                 {
                   label: 'Số lần in',
-                  data: print_freq,
+                  //data: print_freq,
+                  data: statistics.month_frequency,
                   backgroundColor: '#FFBA59',
                   borderColor: '#FFBA59',
                   borderWidth: 1.5
