@@ -8,6 +8,7 @@ import { IoSearch, IoEyeSharp } from "react-icons/io5"
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti"
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import axios from 'axios';
 
 function SpsoViewStuLog() {
     const navigate = useNavigate()
@@ -33,16 +34,14 @@ function SpsoViewStuLog() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/history');
-            const json = await response.json();
-
-            if (json.success) {
-                setData(json.data);
+            const response = await axios.get('http://localhost:3000/api/history');
+            if (response.data.success) {
+                setData(response.data.data);
             } else {
-                throw new Error(json.message);
+                throw new Error(response.data.message);
             }
         } catch (err) {
-            setError(err.message);
+            setError(err.message || 'An unexpected error occurred.');
         } finally {
             setLoading(false);
         }
@@ -54,13 +53,9 @@ function SpsoViewStuLog() {
 
     useEffect(() => {
         const filtered = data.filter((row) => {
-            
             const startDateFilter = start_date ? new Date(row.start_date) >= new Date(start_date) : true;
-            
             const endDateFilter = end_date ? new Date(row.start_date) <= new Date(end_date) : true;
-            
             const stuIdFilter = stuid ? row.stu_id.includes(stuid) : true;
-            
             const printerIdFilter = printerid ? row.printer_id === Number(printerid) : true;
 
             return startDateFilter && endDateFilter && stuIdFilter && printerIdFilter;

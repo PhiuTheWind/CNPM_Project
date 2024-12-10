@@ -25,22 +25,38 @@ function PrinterLog() {
     const [data, setData] = useState([]); // Dynamic data state
 
     const fetchHistory = async () => {
+        setLoading(true); 
         try {
-            const response = await axios.get('http://localhost:3000/api/printer_history', {
-                params: { printer_id: printerId }, // Automatically appends ?printer_id=1
+            const response = await axios.post('http://localhost:3000/api/printer_history', {
+                printer_id: printerId,
             });
     
             if (response.status === 200) {
-                setData(response.data.data); // Set the fetched data
+                const transformedData = response.data.data.map((item, index) => ({
+                    stt: index + 1,
+                    student_id: item.stu_id,
+                    file_name: item.file_name,
+                    print_start_date: new Date(item.start_date).toLocaleDateString('vi-VN'),
+                    status: item.request_status,
+                    size: item.paper_size,
+                    range_page: item.selected_pages,
+                    side: item.side_option === '1' ? 'Một mặt' : 'Hai mặt',
+                    copy: item.num_copies,
+                    receive_date: item.received_date ? new Date(item.received_date).toLocaleDateString('vi-VN') : 'Chưa nhận',
+                    receive_place: item.location,
+                }));
+                setData(transformedData);
+                setError(null); 
             } else {
-                setError(response.data.message); // Handle error message from API
+                setError('Failed to fetch data.');
             }
         } catch (error) {
             console.error('Error fetching printer history:', error);
             setError('Failed to fetch history.');
+        } finally {
+            setLoading(false); 
         }
     };
-
 
     useEffect(() => {
         fetchHistory();

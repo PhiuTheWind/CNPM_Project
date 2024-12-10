@@ -8,9 +8,11 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { IoSearch } from "react-icons/io5";
 import { Chart as ChartJS } from 'chart.js/auto';
 import { Bar, Doughnut, Line } from 'react-chartjs-2';
+import axios from 'axios';
 
 function Report4SPSOMonth() {
   const navigate = useNavigate();
+
   const [year, setYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState('Tháng 1');
   const [monthIdx, setMonthIdx] = useState(0);
@@ -19,11 +21,20 @@ function Report4SPSOMonth() {
     'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
     'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'
   ];
-  const paper_size_data = [50, 10] // A4, A3
-  const file_type_data = [50, 10, 5, 5] // ["pdf", "doc", "jpg", "png"]
-  const printer_id = ['Printer#1', 'Printer#2', 'Printer#3', 'Printer#4', 'Printer#5', 'Printer#6', 'Printer#7', 'Printer#8', 'Printer#9', 'Printer#10']
-  const printer_freq = [20, 50, 10, 45, 30, 90, 10, 27, 3, 26]
-  const print_freq = [20, 50, 10, 45, 30, 90, 10, 27, 3, 26]
+
+  const [paperSizeData, setPaperSizeData] = useState([]);
+  const [fileTypeData, setFileTypeData] = useState({});
+  const [printerFreqData, setPrinterFreqData] = useState([]);
+  const [printerIds, setPrinterIds] = useState([]);
+  const [printFreq, setPrintFreq] = useState([]);
+
+  
+
+  // const paper_size_data = [50, 10] // A4, A3
+  // const file_type_data = [50, 10, 5, 5] // ["pdf", "doc", "jpg", "png"]
+  // const printer_id = ['Printer#1', 'Printer#2', 'Printer#3', 'Printer#4', 'Printer#5', 'Printer#6', 'Printer#7', 'Printer#8', 'Printer#9', 'Printer#10']
+  // const printer_freq = [20, 50, 10, 45, 30, 90, 10, 27, 3, 26]
+  // const print_freq = [20, 50, 10, 45, 30, 90, 10, 27, 3, 26]
 
   // Function to generate a list of dates based on year and month
   const generateDates = (monthIndex, year) => {
@@ -39,10 +50,35 @@ function Report4SPSOMonth() {
     generateDates(index, year); // Generate dates for the selected month and year
   };
 
+  const fetchStatistics = async (month, year) => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/month_report', { month, year });
+      if (response.data.success) {
+        const { paper_size, file_extension, printer_frequency, month_frequency } = response.data.data;
+
+        setPaperSizeData([paper_size.A4, paper_size.A3]);
+        setFileTypeData(file_extension);
+        setPrinterFreqData(Object.values(printer_frequency).map(p => p.count));
+        setPrinterIds(Object.values(printer_frequency).map(p => `Printer#${p.id}`));
+        setPrintFreq(month_frequency);
+      } else {
+        console.error(response.data.message || 'Failed to fetch data');
+      }
+    } catch (error) {
+      console.error('Error fetching statistics:', error.message || error);
+    }
+  };
+
+  useEffect(() => {
+    generateDates(monthIdx, year);
+    fetchStatistics(monthIdx + 1, year); // Fetch data for the current month and year
+  }, [monthIdx, year]);
+
   useEffect(() => {
     generateDates(monthIdx, year); // Index 0 corresponds to "Tháng 1"
   }, [year]);
-
+  
+  
   return (
     <div className={styles.container}>
       <Header text='SPSO NAME' showLogout={true} isStudent={false} />
@@ -91,6 +127,9 @@ function Report4SPSOMonth() {
         </div>
       </div>
 
+
+      
+      
       <div className={styles.paper_size}>
         <div className={styles.paper_size_title}>
           <p>Khổ giấy</p>
@@ -101,7 +140,8 @@ function Report4SPSOMonth() {
             datasets: [
               {
                 label: 'Số lượng',
-                data: paper_size_data,
+                // data: paper_size_data,
+                data: paperSizeData,
                 backgroundColor: ['#669A69', '#A2D997'],
               }
             ]
@@ -152,11 +192,13 @@ function Report4SPSOMonth() {
         </div>
         <Bar className={styles.barchart}
           data={{
-            labels: ["pdf", "doc", "jpg", "png"],
+            //labels: ["pdf", "doc", "jpg", "png"],
+            labels: Object.keys(fileTypeData),
             datasets: [
               {
                 label: 'Số file',
-                data: file_type_data,
+                //data: file_type_data,
+                data: Object.values(fileTypeData),
                 backgroundColor: '#FCCCCC',
                 borderRadius: 5,
                 borderColor: '#FF8C8C',
@@ -224,11 +266,13 @@ function Report4SPSOMonth() {
         <div className={styles.printer_barchart}>
           <Bar
             data={{
-              labels: printer_id,
+              //labels: printer_id,
+              labels: printerIds,
               datasets: [
                 {
                   label: 'Số file',
-                  data: printer_freq,
+                  //data: printer_freq,
+                  data: printerFreqData,
                   backgroundColor: '#E4D0FF',
                   borderRadius: 5,
                   borderColor: '#B379FF',
@@ -301,7 +345,8 @@ function Report4SPSOMonth() {
               datasets: [
                 {
                   label: 'Số lần in',
-                  data: print_freq,
+                  //data: print_freq,
+                  data: printFreq,
                   backgroundColor: '#FFBA59',
                   borderColor: '#FFBA59',
                   borderWidth: 1.5

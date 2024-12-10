@@ -12,6 +12,7 @@ router.get('/sysconfig', spsoController.get_config);
 router.post('/printer_history', spsoController.get_history)
 router.get('/history', spsoController.get_history_all)
 router.post('/year_report',spsoController.get_yearly_statistics)
+router.post('/month_report',spsoController.get_month_statistics)
 //router.get('/report', spsoController.report);
 
 module.exports = router;    
