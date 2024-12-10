@@ -1,26 +1,51 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useTable, useSortBy } from 'react-table'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams  } from 'react-router-dom';
 import Header from "./utils/Header";
 import Footer from "./utils/Footer";
 import styles from '../styles/PrinterLog.module.css'
-import MOCK_DATA from '../assets/PRINTER_LOG_MOCK_DATA.json'
+import axios from 'axios';
 import { IoSearch, IoEyeSharp } from "react-icons/io5"
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti"
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 function PrinterLog() {
-    const location = useLocation();
-    const { printer_id } = location.state || {}; // Access the passed printer ID
-    const navigate = useNavigate()
+    const [searchParams] = useSearchParams();
+    const printerId = searchParams.get('printer_id');
 
-    const [start_date, setStartDate] = useState(null)
-    const [end_date, setEndDate] = useState(null)
-    const [selectedrow, setSelectedRow] = useState(null)
-    const [isView, setIsViewOpen] = useState(false)
+    const navigate = useNavigate();
 
-    const data = useMemo(() => MOCK_DATA, [])
+    const [start_date, setStartDate] = useState(null);
+    const [end_date, setEndDate] = useState(null);
+    const [selectedrow, setSelectedRow] = useState(null);
+    const [isView, setIsViewOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null); 
+    const [data, setData] = useState([]); // Dynamic data state
+
+    const fetchHistory = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/api/printer_history', {
+                params: { printer_id: printerId }, // Automatically appends ?printer_id=1
+            });
+    
+            if (response.status === 200) {
+                setData(response.data.data); // Set the fetched data
+            } else {
+                setError(response.data.message); // Handle error message from API
+            }
+        } catch (error) {
+            console.error('Error fetching printer history:', error);
+            setError('Failed to fetch history.');
+        }
+    };
+
+
+    useEffect(() => {
+        fetchHistory();
+    }, []);
+
     const columns = useMemo(
         () => [
             {
@@ -92,7 +117,7 @@ function PrinterLog() {
             <Header text='SPSO NAME' showLogout={true} />
 
             <div className={styles.printer}>
-                ID MÁY IN: {printer_id}
+                ID MÁY IN: {printerId}
             </div>
 
             <div className={styles.search}>

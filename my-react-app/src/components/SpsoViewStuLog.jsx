@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import Header from "./utils/Header";
 import Footer from "./utils/Footer";
 import styles from '../styles/SpsoViewStuLog.module.css'
-import MOCK_DATA from '../assets/PRINTER_LOG_MOCK_DATA.json'
 import { IoSearch, IoEyeSharp } from "react-icons/io5"
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti"
 import DatePicker from 'react-datepicker';
@@ -12,30 +11,75 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 function SpsoViewStuLog() {
     const navigate = useNavigate()
-
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [start_date, setStartDate] = useState(null)
     const [end_date, setEndDate] = useState(null)
     const [stuid, setStuID] = useState("")
     const [printerid, setPrinterID] = useState("")
     const [selectedrow, setSelectedRow] = useState(null)
     const [isView, setIsViewOpen] = useState(false)
+    const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
 
-    const data = useMemo(() => MOCK_DATA, [])
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        return new Intl.DateTimeFormat('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        }).format(new Date(dateString));
+    };
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/history');
+            const json = await response.json();
+
+            if (json.success) {
+                setData(json.data);
+            } else {
+                throw new Error(json.message);
+            }
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const filtered = data.filter((row) => {
+            
+            const startDateFilter = start_date ? new Date(row.start_date) >= new Date(start_date) : true;
+            
+            const endDateFilter = end_date ? new Date(row.start_date) <= new Date(end_date) : true;
+            
+            const stuIdFilter = stuid ? row.stu_id.includes(stuid) : true;
+            
+            const printerIdFilter = printerid ? row.printer_id === Number(printerid) : true;
+
+            return startDateFilter && endDateFilter && stuIdFilter && printerIdFilter;
+        });
+
+        setFilteredData(filtered);
+    }, [data, start_date, end_date, stuid, printerid]);
+
     const columns = useMemo(
         () => [
             {
-                Header: 'STT',
-                accessor: 'stt',
-                Cell: ({ value }) => <div style={{ width: '50px' }}>{value}</div>,
-            },
-            {
                 Header: 'MSSV',
-                accessor: 'student_id',
+                accessor: 'stu_id',
                 Cell: ({ value }) => <div style={{ width: '80px' }}>{value}</div>,
             },
             {
                 Header: 'MÁY IN',
-                Cell: () => <div style={{ width: '100px' }}>PRINTER#1</div>,
+                accessor: 'printer_id',
+                Cell: ({ value }) => <div style={{ width: '100px' }}>PRINTER#{value}</div>,
             },
             {
                 Header: 'TÊN FILE',
@@ -44,11 +88,12 @@ function SpsoViewStuLog() {
             },
             {
                 Header: 'NGÀY IN',
-                accessor: 'print_start_date',
+                accessor: 'start_date',
+                Cell: ({ value }) => formatDate(value),
             },
             {
                 Header: 'TÌNH TRẠNG',
-                accessor: 'status',
+                accessor: 'request_status',
                 Cell: ({ value }) => (
                     <div
                         className={`${styles.statusBadge} ${value === 'Đã nhận' ? styles.recv : value === 'Chưa nhận' ? styles.unrecv : styles.print}`}
@@ -78,7 +123,7 @@ function SpsoViewStuLog() {
     const tableInstance = useTable(
         {
             columns,
-            data,
+            data: filteredData,
         },
         useSortBy
     );
@@ -93,7 +138,7 @@ function SpsoViewStuLog() {
 
     return (
         <div className={styles.container}>
-            <Header text='SPSO NAME' showLogout={true} isStudent={false}/>
+            <Header text='SPSO NAME' showLogout={true} isStudent={false} />
 
             <div className={styles.search}>
                 <div className={styles.input_group}>
@@ -116,7 +161,7 @@ function SpsoViewStuLog() {
                 </div>
                 <div className={styles.input_stuid}>
                     <label className={styles.search_label}><IoSearch /> MSSV</label>
-                    <input 
+                    <input
                         type='text'
                         className={styles.stuinput}
                         placeholder='Nhập MSSV'
@@ -126,8 +171,8 @@ function SpsoViewStuLog() {
                 </div>
                 <div className={styles.input_id}>
                     <label className={styles.search_label}><IoSearch /> ID máy in</label>
-                    <input 
-                        type='text'
+                    <input
+                        type='number'
                         className={styles.input}
                         placeholder='Nhập ID máy in'
                         value={printerid}
@@ -177,45 +222,57 @@ function SpsoViewStuLog() {
                         <h2 className={styles.h2}>Thông Tin Yêu Cầu In</h2>
                         <div className={styles.info}>
                             <div className={styles.row}>
+                                <label className={styles.field}>MSSV:</label>
+                                <span className={styles.value}>{selectedrow?.stu_id}</span>
+                            </div>
+                            <div className={styles.row}>
+                                <label className={styles.field}>Tên sinh viên:</label>
+                                <span className={styles.value}>{selectedrow?.stu_name}</span>
+                            </div>
+                            <div className={styles.row}>
                                 <label className={styles.field}>Tên file:</label>
                                 <span className={styles.value}>{selectedrow?.file_name}</span>
                             </div>
                             <div className={styles.row}>
-                                <label className={styles.field}>Ngày in:</label>
-                                <span className={styles.value}>{selectedrow?.print_start_date}</span>
+                                <label className={styles.field}>Ngày bắt đầu in:</label>
+                                <span className={styles.value}>{formatDate(selectedrow?.start_date)}</span>
+                            </div>
+                            <div className={styles.row}>
+                                <label className={styles.field}>Ngày kết thúc in:</label>
+                                <span className={styles.value}>{formatDate(selectedrow?.end_date)}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Ngày nhận:</label>
-                                <span className={styles.value}>{selectedrow?.receive_date}</span>
+                                <span className={styles.value}>{formatDate(selectedrow?.received_date)}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Nơi nhận:</label>
-                                <span className={styles.value}>{selectedrow?.receive_place}</span>
+                                <span className={styles.value}>{selectedrow?.location}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Trạng thái:</label>
-                                <span className={`${styles.value} ${selectedrow?.status === 'Đã nhận' ? styles.receive : selectedrow?.status === 'Chưa nhận' ? styles.unreceive : styles.printing}`}
+                                <span className={`${styles.value} ${selectedrow?.request_status === 'Đã nhận' ? styles.receive : selectedrow?.status === 'Chưa nhận' ? styles.unreceive : styles.printing}`}
                                 >
-                                    {selectedrow?.status}
+                                    {selectedrow?.request_status}
                                 </span>
                             </div>
                         </div>
                         <div className={styles.info}>
                             <div className={styles.row}>
                                 <label className={styles.field}>Khổ giấy:</label>
-                                <span className={styles.value}>{selectedrow?.size}</span>
+                                <span className={styles.value}>{selectedrow?.paper_size}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Trang in:</label>
-                                <span className={styles.value}>{selectedrow?.range_page}</span>
+                                <span className={styles.value}>{selectedrow?.selected_pages}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>In một/hai mặt:</label>
-                                <span className={styles.value}>{selectedrow?.side}</span>
+                                <span className={styles.value}>{selectedrow?.side_option}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Số bản sao:</label>
-                                <span className={styles.value}>{selectedrow?.copy}</span>
+                                <span className={styles.value}>{selectedrow?.num_copies}</span>
                             </div>
                         </div>
 
