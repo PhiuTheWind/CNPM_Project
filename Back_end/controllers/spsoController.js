@@ -198,6 +198,7 @@ const patch_config = async (req, res) => {
 
 const get_history = async (req, res) => {
     const { printer_id } = req.body;
+    //const {printer_id } = query;
     if (!printer_id) {
         return res.status(400).json({
             success: false,
@@ -303,6 +304,97 @@ const get_history_all = async (req, res) => {
     }
 };
 
+const get_yearly_statistics = async (req, res) => {
+    const year = req.body.year;  // Retrieve the year from the body
+    
+    if (!year) {
+        return res.status(400).json({ success: false, message: 'Year is required.' });
+    }
+
+    try {
+        // Fetch data for the specified year
+        const query = `
+            SELECT 
+                printer_id,
+                file_name, 
+                paper_size, 
+                end_date
+            FROM request 
+            WHERE YEAR(end_date) = ?
+        `;
+        const [results] = await database.query(query, [year]);
+
+        // Initialize counts
+        const paperSizeCount = [0, 0]; // [Count_A4, Count_A3]
+        const fileExtensionsCount = {};
+        const monthFrequency = Array(12).fill(0); // Array for 12 months
+        const printerFrequency ={};
+
+        results.forEach(row => {
+            // Count paper sizes
+            //paperSizeCount[0] += 1;
+            if (row.paper_size == 'A4') {
+                paperSizeCount[0] += 1;
+            } else if (row.paper_size == 'A3') {
+                paperSizeCount[1] += 1;
+            }
+
+            // Count file extensions
+            const fileName = row.file_name;
+            if(fileName){
+                const extension = fileName.split('.').pop();
+                fileExtensionsCount[extension] = (fileExtensionsCount[extension] || 0) + 1;
+            }
+            
+
+            //Count months, format yyyy/mm/dd
+            const endDate = row.end_date;
+            if(endDate)
+            {
+                const dateObj = new Date(endDate);
+                const month = dateObj.getMonth(); // Extract month (0-11)
+                if (month >= 0 && month <= 11) {
+                    monthFrequency[month] += 1;
+            }   
+            }
+
+            const ID = row.printer_id;
+            if (ID) {
+                printerFrequency[ID] = (printerFrequency[ID] || 0) + 1;
+            }
+            
+        });
+
+        const printerFrequencyArray = Object.entries(printerFrequency).map(([key, value]) => ({
+            [key]: value
+        }));
+
+        // Prepare the response
+        const statistics = {
+            paper_size: paperSizeCount,
+            file_extension: fileExtensionsCount,
+            printer_frequency: printerFrequencyArray,
+            month_frequency: monthFrequency
+        };
+
+        // Return the response
+        return res.status(200).json({
+            success: true,
+            message: `Statistics for the year ${year} retrieved successfully.`,
+            data: statistics
+        });
+
+    } catch (error) {
+        console.error('Error retrieving yearly statistics:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to retrieve yearly statistics.',
+        });
+    }
+};
+
+
+
 
 
 module.exports = {
@@ -313,5 +405,6 @@ module.exports = {
     get_config,
     patch_config,
     get_history,
-    get_history_all
+    get_history_all,
+    get_yearly_statistics
 };
