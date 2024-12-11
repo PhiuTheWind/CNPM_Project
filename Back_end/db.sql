@@ -30,9 +30,9 @@ CREATE TABLE IF NOT EXISTS `Request` (
     `request_id` INT,
     `paper_size` VARCHAR(10),
     `num_copies` INT,
-    `side_option` VARCHAR(10), 
+    `side_option` VARCHAR(255), 
 
-    `selected_pages` JSON, 
+    `selected_pages` VARCHAR(255), 
     `status` VARCHAR(255),
     `start_date` DATE, 
     `end_date`	DATE,
@@ -133,32 +133,3 @@ VALUES
   (100, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4');
   
 
-
-
-INSERT IGNORE INTO `Request` 
-(`file_name`, `paper_size`, `num_copies`, `side_option`, `selected_pages`, `status`, `start_date`, `end_date`, `received_date`, `student_send`, `printer_id`)
-VALUES
-('assignment1.doc', 'A4', 2, 1, '"all"', "Đã nhận", '2024-11-01', '2024-11-02', '2024-11-03', 'student1', 1),
-('report2.pdf', 'A3', 1, 2 , '"all"', "Chưa nhận", '2024-11-02', '2024-11-03', NULL, 'student1', 2),
-('notes3.doc', 'A4', 3, 2, '"all"', "Đã nhận", '2024-11-03', '2024-11-04', '2024-11-05', 'student5', 3),
-('project4.pdf', 'A3', 4, 1, '"all"', "Chưa nhận", '2024-11-04', '2024-11-05', NULL, 'student3', 4),
-('document5.doc', 'A4', 1, 1, '"even"', "Đã nhận", '2024-11-05', '2024-11-06', '2024-11-07', 'student1', 5),
-('assignment6.pdf', 'A3', 2, 2, '"all"', "Đang in", '2024-11-06', NULL, NULL, 'student3', 6),
-('summary7.doc', 'A4', 5, 1, '"all"', "Đã nhận", '2024-11-07', '2024-11-08', '2024-11-09', 'student1', 7),
-('presentation8.pdf', 'A3', 3, 2, '"all"', "Chưa nhận", '2024-11-08', '2024-11-09', NULL, 'student4', 8),
-('report9.doc', 'A4', 4, 2, '"all"', "Đã nhận", '2024-11-09', '2024-11-10', '2024-11-11', 'student5', 9),
-('notes10.pdf', 'A3', 1, 2, '"even"', "Chưa nhận", '2024-11-10', '2024-11-11', NULL, 'student1', 10),
-('assignment2.doc', 'A4', 2, 1, '"all"', "Đã nhận", '2024-11-01', '2024-11-02', '2024-11-03', 'student2', 1),
-('notes10.doc', 'A4', 3, 2, '"all"', "Đã nhận", '2024-11-03', '2024-11-04', '2024-11-05', 'student2', 3),
-('assignment1.doc', 'A4', 2, 1, '"all"', "Đã nhận", '2024-12-01', '2024-12-02', '2024-12-03', 'student1', 1),
-('report2.pdf', 'A3', 1, 2 , '"even"', "Chưa nhận", '2024-12-02', '2024-12-03', NULL, 'student1', 2),
-('notes3.doc', 'A4', 3, 2, '"all"', "Đã nhận", '2024-12-03', '2024-12-04', '2024-12-05', 'student5', 3),
-('project4.pdf', 'A3', 4, 1, '"odd"', "Chưa nhận", '2024-12-04', '2024-12-05', NULL, 'student3', 4),
-('document5.doc', 'A4', 1, 1, '"all"', "Đã nhận", '2024-12-05', '2024-12-06', '2024-11-07', 'student1', 5),
-('assignment6.pdf', 'A3', 2, 2, '"all"', "Đang in", '2024-12-06', NULL, NULL, 'student3', 6),
-('summary7.doc', 'A4', 5, 1, '"all"', "Đã nhận", '2024-12-07', '2024-12-08', '2024-12-09', 'student1', 7),
-('presentation8.pdf', 'A3', 3, 2, '"all"', "Chưa nhận", '2024-12-08', '2024-11-09', NULL, 'student4', 8),
-('report9.doc', 'A4', 4, 2, '"all"', "Đã nhận", '2024-12-09', '2024-12-10', '2024-12-11', 'student5', 9),
-('notes10.pdf', 'A3', 1, 2, '"odd"', "Chưa nhận", '2024-12-10', '2024-12-11', NULL, 'student1', 10),
-('assignment2.doc', 'A4', 2, 1, '"all"', "Đã nhận", '2024-12-01', '2024-12-02', '2024-12-03', 'student2', 1),
-('notes10.doc', 'A4', 3, 2, '"all"', "Đã nhận", '2024-12-03', '2024-12-04', '2024-12-05', 'student2', 3);
