@@ -161,8 +161,8 @@ function ChoosePrinter() {
     customPage,
     printer_id: selectedPrinter?.printer_id,
     numPages,
-    
-    page_need_to_print,       
+
+    page_need_to_print,
   };
   console.log(printingInfor);
 
@@ -219,7 +219,7 @@ function ChoosePrinter() {
           received_date: received_date_value,
           printer_id: printingInfor.printer_id,
           status: "Đang in",
-          num_page: printingInfor.numPages
+          num_page: printingInfor.page_need_to_print
         },
         {
           headers: {
