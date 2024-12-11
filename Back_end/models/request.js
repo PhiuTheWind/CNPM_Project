@@ -22,29 +22,22 @@ async function addRequest(username, body) {
     if (i_status === "Đang in") {
         end_date = null;
         received_date = null;
-      } else if (i_status === "Chưa nhận") {
+    } else if (i_status === "Chưa nhận") {
         received_date = null;
-      }
+    }
     try {
         const query = `
             INSERT IGNORE INTO Request (file_name, paper_size, num_copies, side_option, selected_pages, status, start_date, end_date, received_date, student_send, printer_id)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
         const values = [file_name, paper_size, num_copies, side_option, JSON.stringify(selected_pages), i_status, start_date, received_date, end_date, student_send, printer_id];
-        var page_consume = 0;
+        var page_consume = num_page
         await database.query(query, values);
-        if (selected_pages === "all") {
-            if (paper_size === "A4") {
-                page_consume = num_page * num_copies / (side_option + 1);
-            }
-            else {
-                page_consume = 2 * num_page * num_copies / (side_option + 1);
-            }
-        }
         await decreasePage(username, page_consume);
         return true;
     }
     catch (error) {
+        console.log(error);
         console.error('Error when storing request.');
         return false;
     }

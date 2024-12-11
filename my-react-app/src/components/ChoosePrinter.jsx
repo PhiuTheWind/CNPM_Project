@@ -22,7 +22,7 @@ function ChoosePrinter() {
   const [successPopup, setSuccessPopup] = useState(false); // Popup cho trường hợp hợp lệ
   const navigate = useNavigate();
   const location = useLocation();
-  const { uploadedFiles, printSide, paperSize, numCopies, pageSelection, customPage, file_name, numPages } = location.state || {};
+  const { uploadedFiles, printSide, paperSize, numCopies, pageSelection, customPage, file_name, numPages, page_need_to_print } = location.state || {};
 
   const token = localStorage.getItem('userCredentials') ? JSON.parse(localStorage.getItem('userCredentials')).token : null;
   const [studentInfo, setStudentInfo] = useState({
@@ -160,7 +160,9 @@ function ChoosePrinter() {
     pageSelection,
     customPage,
     printer_id: selectedPrinter?.printer_id,
-    numPages
+    numPages,
+
+    page_need_to_print,
   };
   console.log(printingInfor);
 
@@ -190,6 +192,7 @@ function ChoosePrinter() {
         numCopies,
         pageSelection,
         customPage,
+        page_need_to_print,
         //printer_id
       },
     });
@@ -216,7 +219,7 @@ function ChoosePrinter() {
           received_date: received_date_value,
           printer_id: printingInfor.printer_id,
           status: "Đang in",
-          num_page: printingInfor.numPages
+          num_page: printingInfor.page_need_to_print
         },
         {
           headers: {

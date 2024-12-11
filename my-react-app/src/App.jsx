@@ -22,6 +22,7 @@ import ChoosePrinter from './components/ChoosePrinter.jsx';
 import PurchasePaperModal from './components/PurchasePaperModal.jsx';
 import StudentSummary from './components/StudentSummary.jsx';
 
+
 function App() {
   const [user, setUser] = useState({ token: null, isSPSO: false, listFiles: [] });
   const [cookies] = useCookies();
@@ -65,6 +66,7 @@ function App() {
             <Route path="/spso_homepage/spso_report_year" element={<Report4SPSOYear />} />
 
           <Route path="/printing_configure" element={<PrintingConfigure />} />
+          <Route path="/PurchasePaperModal" element={<PurchasePaperModal />} />
         </Routes>
         
       </Router>
