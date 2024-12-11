@@ -45,6 +45,7 @@ async function addRequest(username, body) {
         return true;
     }
     catch (error) {
+        console.log(error);
         console.error('Error when storing request.');
         return false;
     }

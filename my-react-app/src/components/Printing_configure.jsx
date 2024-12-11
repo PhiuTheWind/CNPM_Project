@@ -10,11 +10,23 @@ import PdfIcon from "../assets/pdf-icon.png";
 import JpgIcon from "../assets/jpg-icon.png";
 import PngIcon from "../assets/png-icon.png";
 import SuccessModal from "./SuccessModal.jsx"; // Import SuccessModal component
+import BuymorepaperModal from "./Buymorepaper.jsx"; // Import BuymorepaperModal component
 import { Getinfo } from './utils/GetInfo';
 import { useNavigate } from 'react-router-dom';
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 import mammoth from "mammoth";
 import axios from "axios";
+import process from 'process';
+import { PageNumber } from "docx";
+import PurchasePaperModal from './PurchasePaperModal';
+
+window.process = process;
+
+
+// import DocxIcon from '../assets/docx-icon.png'; // Thay bằng đường dẫn thực tế
+// import PdfIcon from '../assets/pdf-icon.png';
+// import JpgIcon from '../assets/jpg-icon.png';
+// import PngIcon from '../assets/jpg-icon.png';
 
 // Cấu hình worker cho pdf.js từ CDN
 pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -36,39 +48,20 @@ function PrintingConfigure() {
   const [paperSize, setPaperSize] = useState(""); // Tùy chọn khổ giấy
   const [numCopies, setNumCopies] = useState(""); // Số bản sao
   const [showSuccessModal, setShowSuccessModal] = useState(false); // Trạng thái cho modal thành công
+  const [Buymorepapers, setBuyMorepapers] = useState(false); // Trạng thái cho modal mua thêm giấy
   const [numPages, setNumPages] = useState(0); // Khởi tạo số trang bằng 0
-
+  //const [numPages_file, setNumPages_file] = useState(0); // Khởi tạo số trang bằng 0
+  const [supportedExtensions, setSupportedExtensions] = useState([]); // Khởi tạo state rỗng
+  const [student_page, setStudentPage] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [page_need_to_print, setPageNeedToPrint] = useState(0);
+  
   const fileIcons = {
     docx: DocxIcon,
     pdf: PdfIcon,
     jpg: JpgIcon,
     png: PngIcon,
   };
-  const handleRedirect = () => {
-    if (numPages === 0) {
-      setPopupMessage("Không xác định được số trang của tệp tin!");
-      return;
-    }
-
-    const printingConfig = {
-      uploadedFiles,
-      file_name: uploadedFiles[0].name,
-      printSide,
-      paperSize,
-      numCopies,
-      pageSelection,
-      customPage,
-      numPages,
-    };
-
-    localStorage.setItem("printingConfig", JSON.stringify(printingConfig));
-    navigate("/student_homepage/chooseprinter", { state: printingConfig });
-  };
-
-
-
-  const supportedExtensions = ["pdf", "docx", "jpg", "png"]; // Các loại file được hỗ trợ
-
 
   // Get username and page balance
   useEffect(() => {
@@ -84,6 +77,8 @@ function PrintingConfigure() {
         pageSelection,
         customPage,
         numPages,
+
+        page_need_to_print,          
       } = JSON.parse(savedConfig);
 
       setUploadedFiles(uploadedFiles || []);
@@ -93,6 +88,7 @@ function PrintingConfigure() {
       setPageSelection(pageSelection || "all");
       setCustomPage(customPage || "");
       setNumPages(numPages || 0);
+      setPageNeedToPrint(page_need_to_print || 0);
 
 
     }
@@ -102,6 +98,8 @@ function PrintingConfigure() {
       try {
         const data = await Getinfo();
         setStudentInfo(data); // Update state với dữ liệu nhận được
+        setStudentPage(data.pagebalance);
+        console.log(student_page);
       } catch (err) {
         setErrorMessage('Failed to fetch student information');
         console.error(err);
@@ -109,8 +107,28 @@ function PrintingConfigure() {
     };
 
     fetchStudentInfo();
-  }, []);
 
+    const fetchConfig = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/sysconfig');
+        const data_spso = await response.json();
+       
+        if (data_spso.success) {
+        console.log('Fetched Data:', data_spso);
+        const typeArray = data_spso.type.split(',');
+        console.log(typeArray); // Output: ["pdf", "docx", "jpg", "png"]
+        setSupportedExtensions(typeArray); // Lưu vào state ["pdf", "docx", "jpg", "png"]
+        }
+        else {
+          console.error('Error:', error);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    fetchConfig();
+  }, []);
 
   const getFileIcon = (extension) => {
     return fileIcons[extension] || Upload_icon;
@@ -161,7 +179,36 @@ function PrintingConfigure() {
       }
     }
   };
+    const handleOpenModal = () => {
+        setIsModalOpen(true); // Show the modal
+    };
 
+    const handleCloseModal = () => {
+        setIsModalOpen(false); // Hide the modal
+        setBuyMorepapers(false);  
+    };
+
+  const handleRedirect = () => {
+    if (numPages === 0) {
+      setPopupMessage("Không xác định được số trang của tệp tin!");
+      return;
+    }
+
+    const printingConfig = {
+      uploadedFiles,
+      file_name: uploadedFiles[0].name + "." + (uploadedFiles[0].extension === "docx" ? "doc": uploadedFiles[0].extension),
+      printSide,
+      paperSize,
+      numCopies,
+      pageSelection,
+      customPage,
+      numPages,
+      page_need_to_print,
+    };
+
+    localStorage.setItem("printingConfig", JSON.stringify(printingConfig));
+    navigate("/student_homepage/chooseprinter", { state: printingConfig });
+  };
 
   const handleDeleteFile = () => {
     setUploadedFiles([]);
@@ -223,6 +270,60 @@ function PrintingConfigure() {
       throw error;
     }
   };
+    const calculateSelectedPages = (pageSelection, numPages, customPage = "") => {
+    let selectedPages = [];
+    
+    switch (pageSelection) {
+      case "all":
+        for (let i = 1; i <= numPages; i++) {
+          selectedPages.push(i);
+        }
+        break;
+      
+      case "even":
+        for (let i = 1; i <= numPages; i++) {
+          if (i % 2 === 0) {
+            selectedPages.push(i);
+          }
+        }
+        break;
+      
+      case "odd":
+        for (let i = 1; i <= numPages; i++) {
+          if (i % 2 !== 0) {
+            selectedPages.push(i);
+          }
+        }
+        break;
+      
+      case "custom":
+        const validFormat = /^(\d+(-\d+)?)(,\s*\d+(-\d+)?)*$/;
+        if (!validFormat.test(customPage)) {
+          throw new Error("Lỗi tùy chỉnh số trang. Vui lòng kiểm tra lại!");
+        }
+        
+        const ranges = customPage.split(",").map((range) => range.trim());
+        ranges.forEach((range) => {
+          if (range.includes("-")) {
+            const [start, end] = range.split("-").map(Number);
+            if (start <= end) {
+              for (let i = start; i <= end; i++) {
+                selectedPages.push(i);
+              }
+            }
+          } else {
+            selectedPages.push(Number(range));
+          }
+        });
+        break;
+      
+      default:
+        throw new Error("Lựa chọn số trang không hợp lệ!");
+    }
+  
+    return selectedPages;
+  };
+  
 
   const handleCheckSettings = () => {
     if (uploadedFiles.length === 0) {
@@ -241,22 +342,69 @@ function PrintingConfigure() {
       setPopupMessage("Vui lòng nhập số bản sao hợp lệ!");
       return;
     }
+  
+    try {
+      const selectedPages = calculateSelectedPages(pageSelection, numPages, customPage);
+      let totalPageCount = selectedPages.length;  // Tính tổng số trang
 
-    if (pageSelection === "custom") {
-      if (customPage === "" || isNaN(customPage) || Number(customPage) <= 0) {
-        setPopupMessage("Vui lòng nhập số trang hợp lệ!");
+      if(printSide === "two_side") {
+        if(totalPageCount % 2 !== 0) {
+          totalPageCount /=  2;
+          totalPageCount = totalPageCount + 0.5;
+        }
+        else totalPageCount /=  2;
+      }
+
+      if (paperSize === "A3") {
+        totalPageCount *= 2;
+      }
+
+      if (numCopies !== 0) {
+        totalPageCount *= numCopies;
+      }
+
+      // Kiểm tra số trang in vượt quá số trang còn lại
+      if (student_page < totalPageCount) {
+        setBuyMorepapers(true);
         return;
       }
-    } else if (pageSelection !== "all" && pageSelection !== "even" && pageSelection !== "odd") {
-      setPopupMessage("Vui lòng chọn kiểu in hợp lệ!");
-      setCustomPage(0);
-      return;
-    }
+  
+      // // Kiểm tra số trang vượt quá số trang trong file
+      // if (selectedPages[selectedPages.length - 1] > numPages) {
+      //   setPopupMessage("Số trang in vượt quá số trang của file!");
+      //   return;
+      // }
 
-    setShowSuccessModal(true); // Hiển thị modal thành công
+      for (var i = 0; i < selectedPages.length; i++)
+      {
+        if (selectedPages[i] > numPages) {
+          setPopupMessage("Số trang in vượt quá số trang của file!");
+          return;
+        }
+      }
+
+      console.log("Selected Pages:", selectedPages);
+      console.log("Total Pages:", selectedPages.length);
+      console.log("Total Pages to compare with Student_Pages: ", totalPageCount);
+
+
+      //setCustomPage(selectedPages);
+      setShowSuccessModal(true); // Hiển thị modal thành công
+      setPageNeedToPrint(totalPageCount);
+    } 
+    
+    catch (error) {
+      setPopupMessage(error.message);
+    }
   };
+  
   const handleSuccessModalClose = () => {
     setShowSuccessModal(false);
+  };
+  //console.log(uploadedFiles);
+
+  const handleBuymorepaperClose = () => {
+    setBuyMorepapers(false);
   };
   console.log(uploadedFiles);
 
@@ -298,6 +446,8 @@ function PrintingConfigure() {
     reader.readAsArrayBuffer(file);
   };
 
+  // Hiển thị định dạng dưới dạng chuỗi
+  const extensionsString = supportedExtensions.join(", ");
 
   return (
     <div className={styles.container}>
@@ -330,7 +480,7 @@ function PrintingConfigure() {
               )}
 
               <p className={styles.fileInfo}>
-                .pdf, .docx, .jpg, .png
+                {extensionsString}
                 <br />
                 Độ lớn tệp tin tối đa 50MB
               </p>
@@ -341,13 +491,23 @@ function PrintingConfigure() {
               <ul>
                 {uploadedFiles.map((file, index) => (
                   <li key={index} className={styles.file_item}>
-                    <img src={getFileIcon(file.extension)} alt={file.name} className={styles.file_icon} />
+                    <img
+                      src={getFileIcon(file.extension)}
+                      alt={file.name}
+                      className={styles.file_icon}
+                    />
                     <span>{file.name}</span>
                     <div>
-                      <button className={styles.inspect_button} onClick={() => handleInspectFile(file)}>
+                      <button
+                        className={styles.inspect_button}
+                        onClick={() => handleInspectFile(file)}
+                      >
                         🔍 Xem trước
                       </button>
-                      <button className={styles.delete_button} onClick={handleDeleteFile}>
+                      <button
+                        className={styles.delete_button}
+                        onClick={() => handleDeleteFile(file)}
+                      >
                         🗑️
                       </button>
                     </div>
@@ -438,8 +598,9 @@ function PrintingConfigure() {
               </select>
               {pageSelection === "custom" && (
                 <input
+                 
                   type="text"
-                  placeholder="Nhập số trang"
+                  placeholder="Nhập số trang. Ví dụ: 1-5, 8, 11-13"
                   className={styles.inputField}
                   value={customPage}
                   onChange={(e) => setCustomPage(e.target.value)}
@@ -476,6 +637,19 @@ function PrintingConfigure() {
           onRedirect={handleRedirect}
         />
       )}
+
+      {Buymorepapers && (
+        <BuymorepaperModal
+          message="Thiếu giấy! Xin vui lựa chọn mua thêm giấy hoặc chỉnh lại số giấy muốn in!"
+          onClose={handleBuymorepaperClose}
+          onClick={handleOpenModal} // Mở PurchasePaperModal
+        />
+      )}
+
+      {isModalOpen && (
+        <PurchasePaperModal onClose={handleCloseModal} name={studentInfo.name} />
+      )}
+
       <Footer />
     </div>
 
