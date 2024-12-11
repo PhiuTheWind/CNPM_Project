@@ -130,7 +130,7 @@ function ManagePrinter() {
           <button
             className={styles.button}
             onClick={() => {
-              navigate('/spso_homepage/manage_printer/printer_log', {state: { printer_id: row.original.printer_id }})
+              navigate(`/spso_homepage/manage_printer/printer_log?printer_id=${row.original.printer_id}`);
             }}
           >
             <IoEyeSharp className={styles.icon} />
