@@ -259,11 +259,11 @@ function SpsoViewStuLog() {
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Trang in:</label>
-                                <span className={styles.value}>{selectedrow?.selected_pages}</span>
+                                <span className={styles.value}>{(selectedrow?.selected_pages).toLowerCase() === "all" ? "Tất cả trang" : (selectedrow?.selected_pages).toLowerCase() === "even" ? "Trang chẵn" : (selectedrow?.selected_pages).toLowerCase() === "odd" ? "Trang lẻ" : selectedrow?.selected_pages}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>In một/hai mặt:</label>
-                                <span className={styles.value}>{selectedrow?.side_option}</span>
+                                <span className={styles.value}>{selectedrow?.side_option === 'one_side' ? "Một mặt" : "Hai mặt"}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Số bản sao:</label>

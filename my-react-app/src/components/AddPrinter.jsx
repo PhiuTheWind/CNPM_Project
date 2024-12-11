@@ -54,6 +54,7 @@ function AddPrinter() {
       const result = await response.json();
       if (response.ok) {
         setSuccessMessage(result.message);
+        alert("Đã thêm thành công");
         setErrorMessage("");
         // Reset form
         setPrinterName("");
@@ -62,6 +63,7 @@ function AddPrinter() {
         setStatus("");
       } else {
         setErrorMessage(result.message || "Có lỗi xảy ra, vui lòng thử lại.");
+        alert("Có lỗi xảy ra, vui lòng thử lại.");
         setSuccessMessage("");
       }
     } catch (error) {

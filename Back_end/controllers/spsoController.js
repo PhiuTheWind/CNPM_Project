@@ -348,7 +348,7 @@ const get_yearly_statistics = async (req, res) => {
             
 
             //Count months, format yyyy/mm/dd
-            const endDate = row.end_date;
+            const endDate = row.start_date;
             if(endDate)
             {
                 const dateObj = new Date(endDate);

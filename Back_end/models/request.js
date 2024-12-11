@@ -13,14 +13,19 @@ async function addRequest(username, body) {
     let received_date = body.received_date;
     const student_send = username;
     const printer_id = body.printer_id;
-    const num_page = body.num_page
-    const custom = body.custom
+    const num_page = body.num_page;
+    var custom = body.custom;
     if (i_status === "Đang in") {
         end_date = null;
         received_date = null;
     } else if (i_status === "Chưa nhận") {
         received_date = null;
     }
+
+    if (selected_pages !== "custom"){
+        custom = selected_pages;
+    }
+
     try {
         const query = `
             INSERT IGNORE INTO Request (file_name, paper_size, num_copies, side_option, selected_pages, status, start_date, end_date, received_date, student_send, printer_id)

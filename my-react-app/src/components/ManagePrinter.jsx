@@ -248,12 +248,12 @@ function ManagePrinter() {
 
               <div className={styles.row}>
                 <label className={styles.field}>Tên Máy In:</label>
-                <span className={styles.value}></span>
+                <span className={styles.value}>{selectedPrinter?.printer_name}</span>
               </div>
 
               <div className={styles.row}>
                 <label className={styles.field}>Địa Chỉ IP:</label>
-                <span className={styles.value}></span>
+                <span className={styles.value}>{selectedPrinter?.ip}</span>
               </div>
 
               <div className={styles.row}>

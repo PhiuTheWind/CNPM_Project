@@ -110,26 +110,26 @@ INSERT IGNORE INTO `maintenance` (`content`, `date_update`)
 VALUES
 ('Ahahahahahahahahahhahahaahahahhahahahahahahahahahaha', '2024-11-25 15:30:30');
 
-INSERT IGNORE INTO `Printer` (`num_paper`, `location`, `status`, `printer_name`, `ip`)
-VALUES
-  (100, '402A5-CS1', 'Bật', 'Printer A5', '192.168.1.1'),
-  (200, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
-  (110, '402A3-CS1', 'Bảo trì', 'Printer A3', '192.168.1.3'),
-  (200, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4'),
-  (105, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
-  (300, '402A1-CS1', 'Bảo trì', 'Printer A1', '192.168.1.5'),
-  (200, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4'),
-  (200, '402A3-CS2', 'Tắt', 'Printer A3', '192.168.1.3'),
-  (100, '402A5-CS2', 'Bảo trì', 'Printer A5', '192.168.1.1'),
-  (110, '402A6-CS2', 'Bật', 'Printer A6', '192.168.1.6'),
-  (102, '402A7-CS1', 'Tắt', 'Printer A7', '192.168.1.7'),
-  (101, '402A3-CS1', 'Bảo trì', 'Printer A3', '192.168.1.3'),
-  (105, '402A4-CS2', 'Bật', 'Printer A4', '192.168.1.2'),
-  (100, '402A5-CS1', 'Tắt', 'Printer A5', '192.168.1.1'),
-  (140, '402A7-CS1', 'Bảo trì', 'Printer A7', '192.168.1.7'),
-  (150, '402A5-CS2', 'Bật', 'Printer A5', '192.168.1.1'),
-  (50, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
-  (105, '402A3-CS2', 'Bảo trì', 'Printer A3', '192.168.1.3'),
-  (100, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4');
+-- INSERT IGNORE INTO `Printer` (`num_paper`, `location`, `status`, `printer_name`, `ip`)
+-- VALUES
+--   (100, '402A5-CS1', 'Bật', 'Printer A5', '192.168.1.1'),
+--   (200, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
+--   (110, '402A3-CS1', 'Bảo trì', 'Printer A3', '192.168.1.3'),
+--   (200, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4'),
+--   (105, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
+--   (300, '402A1-CS1', 'Bảo trì', 'Printer A1', '192.168.1.5'),
+--   (200, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4'),
+--   (200, '402A3-CS2', 'Tắt', 'Printer A3', '192.168.1.3'),
+--   (100, '402A5-CS2', 'Bảo trì', 'Printer A5', '192.168.1.1'),
+--   (110, '402A6-CS2', 'Bật', 'Printer A6', '192.168.1.6'),
+--   (102, '402A7-CS1', 'Tắt', 'Printer A7', '192.168.1.7'),
+--   (101, '402A3-CS1', 'Bảo trì', 'Printer A3', '192.168.1.3'),
+--   (105, '402A4-CS2', 'Bật', 'Printer A4', '192.168.1.2'),
+--   (100, '402A5-CS1', 'Tắt', 'Printer A5', '192.168.1.1'),
+--   (140, '402A7-CS1', 'Bảo trì', 'Printer A7', '192.168.1.7'),
+--   (150, '402A5-CS2', 'Bật', 'Printer A5', '192.168.1.1'),
+--   (50, '402A4-CS1', 'Tắt', 'Printer A4', '192.168.1.2'),
+--   (105, '402A3-CS2', 'Bảo trì', 'Printer A3', '192.168.1.3'),
+--   (100, '402A2-CS1', 'Bật', 'Printer A2', '192.168.1.4');
   
 

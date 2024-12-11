@@ -116,6 +116,7 @@ function StudentSummary() {
 
     const handleCloseModal = () => {
         setIsModalOpen(false); // Hide the modal
+        window.location.reload();
     };
 
     return (

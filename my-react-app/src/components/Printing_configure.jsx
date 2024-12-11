@@ -128,7 +128,7 @@ function PrintingConfigure() {
     };
 
     fetchConfig();
-  }, []);
+  }, [studentInfo]);
 
   const getFileIcon = (extension) => {
     return fileIcons[extension] || Upload_icon;
@@ -185,7 +185,7 @@ function PrintingConfigure() {
 
     const handleCloseModal = () => {
         setIsModalOpen(false); // Hide the modal
-        setBuyMorepapers(false);  
+        setBuyMorepapers(false); 
     };
 
   const handleRedirect = () => {

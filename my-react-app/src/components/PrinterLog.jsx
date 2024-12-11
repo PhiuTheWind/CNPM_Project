@@ -23,6 +23,16 @@ function PrinterLog() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null); 
     const [data, setData] = useState([]); // Dynamic data state
+    const [filteredData, setFilteredData] = useState([]);
+
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        return new Intl.DateTimeFormat('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        }).format(new Date(dateString));
+    };
 
     const fetchHistory = async () => {
         setLoading(true); 
@@ -32,20 +42,7 @@ function PrinterLog() {
             });
     
             if (response.status === 200) {
-                const transformedData = response.data.data.map((item, index) => ({
-                    stt: index + 1,
-                    student_id: item.stu_id,
-                    file_name: item.file_name,
-                    print_start_date: new Date(item.start_date).toLocaleDateString('vi-VN'),
-                    status: item.request_status,
-                    size: item.paper_size,
-                    range_page: item.selected_pages,
-                    side: item.side_option === '1' ? 'Một mặt' : 'Hai mặt',
-                    copy: item.num_copies,
-                    receive_date: item.received_date ? new Date(item.received_date).toLocaleDateString('vi-VN') : 'Chưa nhận',
-                    receive_place: item.location,
-                }));
-                setData(transformedData);
+                setData(response.data.data);
                 setError(null); 
             } else {
                 setError('Failed to fetch data.');
@@ -62,30 +59,42 @@ function PrinterLog() {
         fetchHistory();
     }, []);
 
+    useEffect(() => {
+        const filtered = data.filter((row) => {
+            const startDateFilter = start_date ? new Date(row.start_date) >= new Date(start_date) : true;
+            const endDateFilter = end_date ? new Date(row.end_date) <= new Date(end_date) : true;
+
+            return startDateFilter && endDateFilter;
+        });
+
+        setFilteredData(filtered);
+    }, [data, start_date, end_date]);
+
     const columns = useMemo(
         () => [
             {
-                Header: 'STT',
-                accessor: 'stt',
-                Cell: ({ value }) => <div style={{ width: '80px' }}>{value}</div>, // Align text left
+                Header: 'ID YÊU CẦU',
+                accessor: 'request_id',
+                Cell: ({ value }) => <div style={{ width: '120px',  textAlign: 'center' }}>{value}</div>, // Align text left
             },
             {
                 Header: 'MSSV',
-                accessor: 'student_id',
+                accessor: 'stu_id',
                 Cell: ({ value }) => <div style={{ width: '100px' }}>{value}</div>, // Align text left
             },
             {
                 Header: 'TÊN FILE',
                 accessor: 'file_name',
-                Cell: ({ value }) => <div style={{ textAlign: 'left' }}>{value}</div>, // Align text left
+                Cell: ({ value }) => <div style={{ width: '200px', textAlign: 'center' }}>{value}</div>, // Align text left
             },
             {
                 Header: 'NGÀY IN',
-                accessor: 'print_start_date',
+                accessor: 'start_date',
+                Cell: ({ value }) => formatDate(value),
             },
             {
                 Header: 'TÌNH TRẠNG',
-                accessor: 'status',
+                accessor: 'request_status',
                 Cell: ({ value }) => (
                     <div
                         className={`${styles.statusBadge} ${value === 'Đã nhận' ? styles.recv : value === 'Chưa nhận' ? styles.unrecv : styles.print}`}
@@ -115,7 +124,7 @@ function PrinterLog() {
     const tableInstance = useTable(
         {
             columns,
-            data,
+            data: filteredData,
         },
         useSortBy
     );
@@ -199,49 +208,61 @@ function PrinterLog() {
                         <h2 className={styles.h2}>Thông Tin Yêu Cầu In</h2>
                         <div className={styles.info}>
                             <div className={styles.row}>
-                                <label className={styles.field}>Mã số sinh viên:</label>
-                                <span className={styles.value}>{selectedrow?.student_id}</span>
+                                <label className={styles.field}>MSSV:</label>
+                                <span className={styles.value}>{selectedrow?.stu_id}</span>
+                            </div>
+                            <div className={styles.row}>
+                                <label className={styles.field}>Tên sinh viên:</label>
+                                <span className={styles.value}>{selectedrow?.stu_name}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Tên file:</label>
                                 <span className={styles.value}>{selectedrow?.file_name}</span>
                             </div>
                             <div className={styles.row}>
-                                <label className={styles.field}>Ngày in:</label>
-                                <span className={styles.value}>{selectedrow?.print_start_date}</span>
+                                <label className={styles.field}>ID máy in:</label>
+                                <span className={styles.value}>{printerId}</span>
+                            </div>
+                            <div className={styles.row}>
+                                <label className={styles.field}>Ngày bắt đầu in:</label>
+                                <span className={styles.value}>{formatDate(selectedrow?.start_date)}</span>
+                            </div>
+                            <div className={styles.row}>
+                                <label className={styles.field}>Ngày kết thúc in:</label>
+                                <span className={styles.value}>{formatDate(selectedrow?.end_date)}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Ngày nhận:</label>
-                                <span className={styles.value}>{selectedrow?.receive_date}</span>
+                                <span className={styles.value}>{formatDate(selectedrow?.received_date)}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Nơi nhận:</label>
-                                <span className={styles.value}>{selectedrow?.receive_place}</span>
+                                <span className={styles.value}>{selectedrow?.location}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Trạng thái:</label>
-                                <span className={`${styles.value} ${selectedrow?.status === 'Đã nhận' ? styles.receive : selectedrow?.status === 'Chưa nhận' ? styles.unreceive : styles.printing}`}
+                                <span className={`${styles.value} ${selectedrow?.request_status === 'Đã nhận' ? styles.receive : selectedrow?.status === 'Chưa nhận' ? styles.unreceive : styles.printing}`}
                                 >
-                                    {selectedrow?.status}
+                                    {selectedrow?.request_status}
                                 </span>
                             </div>
                         </div>
                         <div className={styles.info}>
                             <div className={styles.row}>
                                 <label className={styles.field}>Khổ giấy:</label>
-                                <span className={styles.value}>{selectedrow?.size}</span>
+                                <span className={styles.value}>{selectedrow?.paper_size}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Trang in:</label>
-                                <span className={styles.value}>{selectedrow?.range_page}</span>
+                                <span className={styles.value}>{(selectedrow?.selected_pages).toLowerCase() === "all" ? "Tất cả trang" : (selectedrow?.selected_pages).toLowerCase() === "even" ? "Trang chẵn" : (selectedrow?.selected_pages).toLowerCase() === "odd" ? "Trang lẻ" : selectedrow?.selected_pages}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>In một/hai mặt:</label>
-                                <span className={styles.value}>{selectedrow?.side}</span>
+                                <span className={styles.value}>{selectedrow?.side_option === 'one_side' ? "Một mặt" : "Hai mặt"}</span>
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Số bản sao:</label>
-                                <span className={styles.value}>{selectedrow?.copy}</span>
+                                <span className={styles.value}>{selectedrow?.num_copies}</span>
                             </div>
                         </div>
 

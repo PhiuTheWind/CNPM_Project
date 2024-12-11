@@ -49,7 +49,7 @@ function ChoosePrinter() {
 
 
     fetchStudentInfo();
-  }, []);
+  }, [studentInfo]);
 
   const fetchPrinters = async () => {
     try {
