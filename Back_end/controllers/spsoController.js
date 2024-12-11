@@ -318,9 +318,9 @@ const get_yearly_statistics = async (req, res) => {
                 printer_id,
                 file_name, 
                 paper_size, 
-                end_date
+                start_date
             FROM request 
-            WHERE YEAR(end_date) = ?
+            WHERE YEAR(start_date) = ?
         `;
         const [results] = await database.query(query, [year]);
 
@@ -416,9 +416,9 @@ const get_month_statistics = async (req, res) => {
                 printer_id,
                 file_name, 
                 paper_size, 
-                end_date
+                start_date
             FROM request 
-            WHERE YEAR(end_date) = ? AND MONTH(end_date) = ?
+            WHERE YEAR(start_date) = ? AND MONTH(start_date) = ?
         `;
         const [results] = await database.query(query, [year, month]);
 
@@ -443,8 +443,8 @@ const get_month_statistics = async (req, res) => {
             }
 
             // Count daily frequencies
-            if (row.end_date) {
-                const dateObj = new Date(row.end_date);
+            if (row.start_date) {
+                const dateObj = new Date(row.start_date);
                 const day = dateObj.getDate(); // Extract day of the month (1-31)
                 if (day >= 1 && day <= daysInMonth) {
                     monthFrequency[day - 1] += 1; // Adjust for zero-based index
