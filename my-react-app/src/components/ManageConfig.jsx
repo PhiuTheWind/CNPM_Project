@@ -27,10 +27,10 @@ function ManageConfig() {
         const date = data.date ? new Date(data.date.split('/').reverse().join('-')) : new Date(); // Format YYYY-MM-DD
         
         const fileTypes = {
-          pdf: data.type?.includes('pdf:PdfIcon') || false,
-          docx: data.type?.includes('docx:DocxIcon') || false,
-          jpg: data.type?.includes('jpg:JpgIcon') || false,
-          png: data.type?.includes('png:PngIcon') || false,
+          pdf: data.type?.includes('pdf') || false,
+          docx: data.type?.includes('docx') || false,
+          jpg: data.type?.includes('jpg') || false,
+          png: data.type?.includes('png') || false,
         };
 
         // set config theo env
