@@ -238,6 +238,10 @@ function StudentViewLog() {
                                 <span className={styles.value}>{selectedrow?.file_name}</span>
                             </div>
                             <div className={styles.row}>
+                                <label className={styles.field}>ID máy in:</label>
+                                <span className={styles.value}>{selectedrow?.printer_id}</span>
+                            </div>
+                            <div className={styles.row}>
                                 <label className={styles.field}>Ngày bắt đầu in:</label>
                                 <span className={styles.value}>{formatDate(selectedrow?.start_date)}</span>
                             </div>

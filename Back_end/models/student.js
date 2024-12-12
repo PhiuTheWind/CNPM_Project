@@ -52,7 +52,7 @@ async function getStudentLogInfo(username) {
                                         FROM request E
                                         JOIN printer F ON F.printer_id = E.printer_id
                                         WHERE E.student_send = ?
-                                        ORDER BY E.end_date DESC`, [username]);
+                                        ORDER BY E.request_id DESC`, [username]);
         
         return result;
     } catch (err) {

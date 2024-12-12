@@ -19,7 +19,7 @@ function SpsoHomepage() {
         <div className={styles.whiteRectangle}>
           <button className={styles.button} onClick={() => navigate('/spso_homepage/manage_printer')}>
             Quản lý máy in
-            <FaBell className={styles.noti}/>
+            {/* <FaBell className={styles.noti}/> */}
           </button>
           <button className={styles.button} onClick={() => navigate('/spso_homepage/manage_cofig')}>
             Quản lý cấu hình hệ thống

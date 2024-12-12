@@ -72,9 +72,9 @@ function SpsoViewStuLog() {
                 Cell: ({ value }) => <div style={{ width: '80px' }}>{value}</div>,
             },
             {
-                Header: 'MÁY IN',
+                Header: 'ID MÁY IN',
                 accessor: 'printer_id',
-                Cell: ({ value }) => <div style={{ width: '100px' }}>PRINTER#{value}</div>,
+                Cell: ({ value }) => <div style={{ width: '100px' }}>{value}</div>,
             },
             {
                 Header: 'TÊN FILE',
@@ -229,6 +229,10 @@ function SpsoViewStuLog() {
                                 <span className={styles.value}>{selectedrow?.file_name}</span>
                             </div>
                             <div className={styles.row}>
+                                <label className={styles.field}>ID máy in:</label>
+                                <span className={styles.value}>{selectedrow?.printer_id}</span>
+                            </div>
+                            <div className={styles.row}>
                                 <label className={styles.field}>Ngày bắt đầu in:</label>
                                 <span className={styles.value}>{formatDate(selectedrow?.start_date)}</span>
                             </div>
@@ -246,7 +250,7 @@ function SpsoViewStuLog() {
                             </div>
                             <div className={styles.row}>
                                 <label className={styles.field}>Trạng thái:</label>
-                                <span className={`${styles.value} ${selectedrow?.request_status === 'Đã nhận' ? styles.receive : selectedrow?.status === 'Chưa nhận' ? styles.unreceive : styles.printing}`}
+                                <span className={`${styles.value} ${selectedrow?.request_status === 'Đã nhận' ? styles.receive : selectedrow?.request_status === 'Chưa nhận' ? styles.unreceive : styles.printing}`}
                                 >
                                     {selectedrow?.request_status}
                                 </span>

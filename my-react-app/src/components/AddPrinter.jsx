@@ -6,7 +6,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 
 function AddPrinter() {
   const [isActive, setIsActive] = useState(false);
-  const [selectedStatus, setStatus] = useState("");
+  const [selectedStatus, setStatus] = useState("Bật");
   const [numPaper, setNumPaper] = useState(500); // Default paper count
   const [printerName, setPrinterName] = useState("");
   const [location, setLocation] = useState("");

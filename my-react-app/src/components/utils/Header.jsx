@@ -61,7 +61,7 @@ function Header({ text, paper, showLogout, isStudent }) {
                     <img src={ava} className={styles.avatar} alt="Avatar" />
                     <div className={styles.info}>
                         <p className={styles.username}>{text}</p>
-                        {showLogout && isStudent && <p className={styles.paper}>Số trang: {paper}</p>}
+                        {showLogout && isStudent && <p className={styles.paper}>Số giấy: {paper}</p>}
                     </div>
                 </div>
                 {showLogout && (
