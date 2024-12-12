@@ -89,8 +89,6 @@ function PrintingConfigure() {
       setCustomPage(customPage || "");
       setNumPages(numPages || 0);
       setPageNeedToPrint(page_need_to_print || 0);
-
-
     }
 
     // Fetch thông tin sinh viên
@@ -107,7 +105,9 @@ function PrintingConfigure() {
     };
 
     fetchStudentInfo();
+  }, [studentInfo]);
 
+  useEffect (() => {
     const fetchConfig = async () => {
       try {
         const response = await fetch('http://localhost:3000/api/sysconfig');
@@ -128,12 +128,13 @@ function PrintingConfigure() {
     };
 
     fetchConfig();
-  }, [studentInfo]);
+  }, []);
 
   const getFileIcon = (extension) => {
     return fileIcons[extension] || Upload_icon;
   };
 
+  var file_name1;
   const handleFileUpload = async (event) => {
     const files = Array.from(event.target.files);
 
@@ -177,6 +178,12 @@ function PrintingConfigure() {
       } else if (extension === "docx") {
         handleGetNumberOfPagesDocx(file);
       }
+      if (extension == "png" || extension == "jpg")
+      {
+        setNumPages(1);
+      }
+      file_name1 = extension;
+      console.log(file_name1);
     }
   };
     const handleOpenModal = () => {
@@ -217,6 +224,7 @@ function PrintingConfigure() {
     setSelectedFileURL(null);
     setPopupMessage("Tệp đã bị xóa!");
   };
+
 
   const handleInspectFile = (file) => {
     if (file.extension === "jpg" || file.extension === "png") {
@@ -324,78 +332,143 @@ function PrintingConfigure() {
     return selectedPages;
   };
   
-
   const handleCheckSettings = () => {
-    if (uploadedFiles.length === 0) {
-      setPopupMessage("Vui lòng tải lên một tệp để in!");
-      return;
-    }
-    if (printSide === "") {
-      setPopupMessage("Vui lòng chọn in một mặt hoặc hai mặt!");
-      return;
-    }
-    if (paperSize === "") {
-      setPopupMessage("Vui lòng chọn khổ giấy!");
-      return;
-    }
-    if (!Number.isInteger(Number(numCopies)) || Number(numCopies) <= 0) {
-      setPopupMessage("Vui lòng nhập số bản sao hợp lệ!");
-      return;
-    }
-  
-    try {
-      const selectedPages = calculateSelectedPages(pageSelection, numPages, customPage);
-      let totalPageCount = selectedPages.length;  // Tính tổng số trang
-
-      if(printSide === "two_side") {
-        if(totalPageCount % 2 !== 0) {
-          totalPageCount /=  2;
-          totalPageCount = totalPageCount + 0.5;
-        }
-        else totalPageCount /=  2;
-      }
-
-      if (paperSize === "A3") {
-        totalPageCount *= 2;
-      }
-
-      if (numCopies !== 0) {
-        totalPageCount *= numCopies;
-      }
-
-      // Kiểm tra số trang in vượt quá số trang còn lại
-      if (student_page < totalPageCount) {
-        setBuyMorepapers(true);
-        return;
-      }
-  
-      // // Kiểm tra số trang vượt quá số trang trong file
-      // if (selectedPages[selectedPages.length - 1] > numPages) {
-      //   setPopupMessage("Số trang in vượt quá số trang của file!");
-      //   return;
-      // }
-
-      for (var i = 0; i < selectedPages.length; i++)
+      if (file_name1 == "png" || file_name1 == "jpg")
       {
-        if (selectedPages[i] > numPages) {
-          setPopupMessage("Số trang in vượt quá số trang của file!");
+        let totalpage = 0;
+        if (uploadedFiles.length === 0) {
+          setPopupMessage("Vui lòng tải lên một tệp để in!");
           return;
         }
+
+        if (printSide === "") {
+          setPopupMessage("Vui lòng chọn in một mặt hoặc hai mặt!");
+          return;
+        }
+
+        if (paperSize === "") {
+          setPopupMessage("Vui lòng chọn khổ giấy!");
+          return;
+        }
+
+        if (!Number.isInteger(Number(numCopies)) || Number(numCopies) <= 0) {
+          setPopupMessage("Vui lòng nhập số bản sao hợp lệ!");
+          return;
+        }
+        
+        if (pageSelection == "odd" || pageSelection == "even" || pageSelection == "custom")
+        {
+            totalpage = 1;
+        }
+
+        try {
+        
+          if (numCopies !== 0) {
+            totalpage *= numCopies;
+          }
+
+          if(printSide === "two_side") {
+            if(totalpage % 2 !== 0) {
+              totalpage /=  2;
+              totalpage = totalPageCount + 0.5;
+            }
+            else totalpage /=  2;
+          }
+  
+          if (paperSize === "A3") {
+            totalpage *= 2;
+          }
+    
+            //console.log("Selected Pages:", selectedPages);
+            console.log("Total Pages:", totalpage);
+            console.log("Total Pages to compare with Student_Pages: ", totalpage);
+    
+    
+            //setCustomPage(selectedPages);
+            setShowSuccessModal(true); // Hiển thị modal thành công
+            setPageNeedToPrint(totalpage);
+
+        }
+
+        catch(error)
+        {
+          setPopupMessage(error.message);
+        }
       }
 
-      console.log("Selected Pages:", selectedPages);
-      console.log("Total Pages:", selectedPages.length);
-      console.log("Total Pages to compare with Student_Pages: ", totalPageCount);
+      else
+      {
+        if (uploadedFiles.length === 0) {
+          setPopupMessage("Vui lòng tải lên một tệp để in!");
+          return;
+        }
+        if (printSide === "") {
+          setPopupMessage("Vui lòng chọn in một mặt hoặc hai mặt!");
+          return;
+        }
+        if (paperSize === "") {
+          setPopupMessage("Vui lòng chọn khổ giấy!");
+          return;
+        }
+        if (!Number.isInteger(Number(numCopies)) || Number(numCopies) <= 0) {
+          setPopupMessage("Vui lòng nhập số bản sao hợp lệ!");
+          return;
+        }
+
+        try {
+          const selectedPages = calculateSelectedPages(pageSelection, numPages, customPage);
+          let totalPageCount = selectedPages.length;  // Tính tổng số trang
+
+          if(printSide === "two_side") {
+            if(totalPageCount % 2 !== 0) {
+              totalPageCount /=  2;
+              totalPageCount = totalPageCount + 0.5;
+            }
+            else totalPageCount /=  2;
+          }
+
+          if (paperSize === "A3") {
+            totalPageCount *= 2;
+          }
+
+          if (numCopies !== 0) {
+            totalPageCount *= numCopies;
+          }
+
+          // Kiểm tra số trang in vượt quá số trang còn lại
+          if (student_page < totalPageCount) {
+            setBuyMorepapers(true);
+            return;
+          }
+      
+          // // Kiểm tra số trang vượt quá số trang trong file
+          // if (selectedPages[selectedPages.length - 1] > numPages) {
+          //   setPopupMessage("Số trang in vượt quá số trang của file!");
+          //   return;
+          // }
+
+          for (var i = 0; i < selectedPages.length; i++)
+          {
+            if (selectedPages[i] > numPages) {
+              setPopupMessage("Số trang in vượt quá số trang của file!");
+              return;
+            }
+          }
+
+          console.log("Selected Pages:", selectedPages);
+          console.log("Total Pages:", selectedPages.length);
+          console.log("Total Pages to compare with Student_Pages: ", totalPageCount);
 
 
-      //setCustomPage(selectedPages);
-      setShowSuccessModal(true); // Hiển thị modal thành công
-      setPageNeedToPrint(totalPageCount);
-    } 
-    
-    catch (error) {
-      setPopupMessage(error.message);
-    }
+          //setCustomPage(selectedPages);
+          setShowSuccessModal(true); // Hiển thị modal thành công
+          setPageNeedToPrint(totalPageCount);
+        } 
+        
+        catch (error) {
+          setPopupMessage(error.message);
+        }
+      }
   };
   
   const handleSuccessModalClose = () => {
