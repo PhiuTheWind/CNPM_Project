@@ -32,7 +32,19 @@ For Administrators (SPSO)
 6. Terminate "npm run start".
 7. Go to VITE local address ("http://localhost:5173").
 
+**Installation**
+1. Student:
+   ## Example Accounts
 
+  Below is an example of the data structure for student accounts:
+  
+  | Username   | Password   | Student ID | Student Name            | Page Number |
+  |------------|------------|------------|-------------------------|-------------|
+  | student1   | password1  | 2252898    | Huỳnh Ngọc Vân          | 100         |
+  | student2   | password2  | 2252327    | Lê Hà Nguyên Khánh      | 100         |
+  | student3   | password3  | 2252293    | Huỳnh Mai Quốc Khang    | 100         |
+  | student4   | password4  | 2252608    | Hoàng Văn Phi           | 100         |
+  | student5   | password5  | 2252023    | Lê Đỗ Minh Anh          | 100         |
 **Contact**
 
 
