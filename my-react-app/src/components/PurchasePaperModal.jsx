@@ -28,6 +28,7 @@ function PurchasePaperModal({ onClose, name }) {
         else {
             console.log("Cap nhat khong thanh cong");
         }
+        window.location.reload();
         onClose();
     };
 
