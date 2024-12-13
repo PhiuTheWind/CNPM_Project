@@ -102,7 +102,7 @@ DELIMITER ;
 
 ## **Contact**
 
-For support or inquiries, please contact the IT Department at HCMUT:
+For support or inquiries, please contact the us:
 
 - **Email**: phi.hoangsut0504@hcmut.edu.vn, phihv0504@gmail.com
 - **Phone**: +84 28 1234 5678
