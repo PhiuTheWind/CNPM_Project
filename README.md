@@ -32,7 +32,7 @@ For Administrators (SPSO)
 6. Terminate "npm run start".
 7. Go to VITE local address ("http://localhost:5173").
 
-**Installation**
+**Login**
 1. Student:
    ## Example Accounts
 
@@ -46,8 +46,16 @@ For Administrators (SPSO)
   | student4   | password4  | 2252608    | Hoàng Văn Phi           | 100         |
   | student5   | password5  | 2252023    | Lê Đỗ Minh Anh          | 100         |
 
+2. SPSO
+  ## Admin Account Details
 
-  
+| Field Name   | Description                              | Example              |
+|--------------|------------------------------------------|----------------------|
+| `username`   | Admin username                          | `spso1`              |
+| `password`   | Default password for admin login         | `password1`          |
+
+
+
 **Contact**
 
 
