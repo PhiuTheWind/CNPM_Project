@@ -104,5 +104,5 @@ DELIMITER ;
 
 For support or inquiries, please contact the IT Department at HCMUT:
 
-- **Email**: phi.hoangsut0504@hcmut.edu.vn
+- **Email**: phi.hoangsut0504@hcmut.edu.vn, phihv0504@gmail.com
 - **Phone**: +84 28 1234 5678
