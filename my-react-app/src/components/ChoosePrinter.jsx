@@ -49,7 +49,7 @@ function ChoosePrinter() {
 
 
     fetchStudentInfo();
-  }, [studentInfo]);
+  }, []);
 
   const fetchPrinters = async () => {
     try {
@@ -173,11 +173,17 @@ function ChoosePrinter() {
       return;
     }
 
-    sendPrintRequest(printingInfor); // Truyền đúng biến
-    navigate("/student_homepage", { replace: true });
-    setTimeout(() => {
-      localStorage.removeItem("printingConfig");
-    }, 100);
+    // sendPrintRequest(printingInfor); // Truyền đúng biến
+    // navigate("/student_homepage", { replace: true });
+    // setTimeout(() => {
+    //   window.location.reload();
+    //   localStorage.removeItem("printingConfig");
+    // }, 100);
+    sendPrintRequest(printingInfor); // Send the print request
+    localStorage.removeItem("printingConfig"); // Clear printing configuration
+
+    navigate("/student_homepage", { replace: true }); // Navigate to homepage
+    window.location.reload(); // Force reload immediately
   };
 
 

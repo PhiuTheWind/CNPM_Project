@@ -75,7 +75,7 @@ function StudentViewLog() {
 
         fetchStudentInfo();
         GetLogInfo();
-    }, [studentInfo]);
+    }, []);
 
     // Filter Data Based on Search Criteria
     const filteredData = useMemo(() => {

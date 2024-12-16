@@ -32,7 +32,7 @@ function StudentHomepage() {
     };
 
     fetchStudentInfo();
-  }, [studentInfo]);
+  }, []);
   
   return (
 
