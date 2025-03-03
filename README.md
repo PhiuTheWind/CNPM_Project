@@ -49,7 +49,7 @@ Below is an example structure for student accounts:
 
 | Username   | Password   | Student ID | Student Name            | Page Number |
 |------------|------------|------------|-------------------------|-------------|
-| student1   | password1  | 2252898    | Huỳnh Ngọc Vân          | 100         |
+| student1   | password1  | 2252898    | Huỳnh Ngọc Văn          | 100         |
 | student2   | password2  | 2252327    | Lê Hà Nguyên Khánh      | 100         |
 | student3   | password3  | 2252293    | Huỳnh Mai Quốc Khang    | 100         |
 | student4   | password4  | 2252608    | Hoàng Văn Phi           | 100         |
