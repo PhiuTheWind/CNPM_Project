@@ -2,6 +2,16 @@
 
 The **Student Smart Printing Service (HCMUT_SSPS)** is a campus-wide application developed by Ho Chi Minh City University of Technology (HCMUT) to enhance the printing experience for students. It provides seamless access to printers, document upload features, and quota management, while administrators have a dedicated platform for efficient printer oversight and system configuration.
 
+<h3>Upload File UI</h3>
+<img src="https://github.com/PhiuTheWind/CNPM_Project/blob/3407e08089cfbf1bdb225e1a129e4a4f5b0feffd/docs/Upload%20file%20UI.png?raw=true" width="1000"/>
+
+<h3>Printing Log UI</h3>
+<img src="https://github.com/PhiuTheWind/CNPM_Project/blob/3407e08089cfbf1bdb225e1a129e4a4f5b0feffd/docs/Printing%20log%20UI.png?raw=true" width="1000"/>
+
+<h3>Dashboard</h3>
+<img src="docs/Dashboard.png" width="1000"/>
+
+
 ---
 
 ## **Features**
